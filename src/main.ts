@@ -8,8 +8,8 @@ class ProcessApi {
         this.#modules = {};
     }
 
-    register(name: string, module: Module) {
-        this.#modules[name] = module;
+    register(module: Module) {
+        this.#modules[module.name] = module;
     }
 
     getModule(name: string): Module | undefined {
