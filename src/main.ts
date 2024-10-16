@@ -1,15 +1,15 @@
 import {Module} from "./interfaces/module.ts";
 import {Args} from "./interfaces/args.ts";
 
-export class ProcessApi {
+class ProcessApi {
     #modules: Record<string, Module>;
 
     constructor() {
         this.#modules = {};
     }
 
-    register(module: Module) {
-        this.#modules[module.name] = module;
+    register(name: string, module: Module) {
+        this.#modules[name] = module;
     }
 
     getModule(name: string): Module | undefined {
@@ -20,3 +20,6 @@ export class ProcessApi {
         return this.#modules[module][method](args);
     }
 }
+
+export { ProcessApi };
+export type { Module, Args };

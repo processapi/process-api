@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 export interface Args {
-    [key: string]: unknown;
+    [key: string]: any;
 };
