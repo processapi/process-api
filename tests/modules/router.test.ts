@@ -6,7 +6,8 @@ const sampleRoutes = {
     "home": "/",
     "about": "/about",
     "person": "/person/:id",
-    "contacts": "/person/:id/contacts"
+    "contacts": "/person/:id/contacts",
+    "contact": "/person/:id/contact/:contactId"
 };
 
 Deno.test("RouterModule init sets routes correctly", async () => {
@@ -35,4 +36,61 @@ Deno.test("RouterModule getRoute throws error for invalid route", async () => {
         Error,
         "Route not found: invalid"
     );
+});
+
+Deno.test("RouterModule.getRoute - should return the correct route with parameters", async () => {
+    await RouterModule.init({
+        "home": "/",
+        "about": "/about",
+        "person": "/person/:id",
+        "contactDetails": "/person/:id/contact/:contactId"
+    });
+
+    const route = await RouterModule.getRoute("person", { id: "123" });
+    assertEquals(route, "/person/123");
+
+    const compoundRoute = await RouterModule.getRoute("contactDetails", { id: "123", contactId: "456" });
+    assertEquals(compoundRoute, "/person/123/contact/456");
+});
+
+Deno.test("RouterModule.getRoute - should throw an error if route is not found", async () => {
+    await RouterModule.init({
+        "home": "/",
+        "about": "/about"
+    });
+
+    await assertThrowsAsync(
+        async () => {
+            await RouterModule.getRoute("nonExistentRoute");
+        },
+        Error,
+        "Route not found: nonExistentRoute"
+    );
+});
+
+Deno.test("RouterModule.getRoute - should throw an error if a parameter is missing", async () => {
+    await RouterModule.init({
+        "person": "/person/:id"
+    });
+
+    await assertThrowsAsync(
+        async () => {
+            await RouterModule.getRoute("person");
+        },
+        Error,
+        "Missing parameter: id"
+    );
+});
+
+Deno.test("RouterModule.getRoute - should handle routes without parameters", async () => {
+    await RouterModule.init({
+        "home": "/",
+        "about": "/about"
+    });
+
+    const homeRoute = await RouterModule.getRoute("home");
+    assertEquals(homeRoute, "/");
+
+    const aboutRoute = await RouterModule.getRoute("about");
+    assertEquals(aboutRoute, "/about");
 });
