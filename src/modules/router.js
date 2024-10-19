@@ -53,7 +53,10 @@ class RouterModule {
      * await api.call("router", "init", { routes });
      */
     static async init(args) {
-        validateArgs(args, { routes: { type: 'object', required: true } }, "RouterModule.init: ");
+        validateArgs(args, { 
+            routes: { type: 'object', required: true } 
+        }, "RouterModule.init: ");
+        
         const routes = args.routes;
 
         this.routes = routes;
