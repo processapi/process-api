@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main></main>
+
+    <script type="module">
+        import { ProcessApi } from "/src/main.js";
+        import { RouterModule } from "./src/modules/router.js";
+        import { ViewLoaderModule } from "./src/modules/view-loader.js";
+        import { routes } from "./app/routes.js";
+
+        globalThis.api = new ProcessApi();
+        globalThis.api.register(RouterModule);
+        globalThis.api.register(ViewLoaderModule);
+
+        api.call("router", "init", { routes });
+    </script>
+</body>
+</html>

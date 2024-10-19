@@ -21,6 +21,8 @@
  */
 
 export function validateArgs(args, def, prefix) {
+  prefix ||= "";
+  
   if (!args) {
     throw new Error(`${prefix}Arguments are required`.trim());
   }
@@ -31,10 +33,19 @@ export function validateArgs(args, def, prefix) {
       throw new Error(`${prefix}Argument ${key} is required`.trim());
     }
 
-    if (args[key] && typeof args[key] !== arg.type) {
-      throw new Error(
-        `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
-      );
+    if (typeof args[key] === "object") {
+      if (args[key].constructor.name.toLowerCase() !== def[key].type.toLowerCase()) {
+        throw new Error(
+          `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
+        );
+      }
+    }
+    else {
+      if (args[key] && typeof args[key] !== arg.type) {
+        throw new Error(
+          `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
+        );
+      }  
     }
 
     if (args[key] === undefined && arg.default) {

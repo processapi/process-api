@@ -31,40 +31,40 @@ Deno.test("RouterModule dispose sets routes to null", async () => {
   assertEquals(RouterModule["routes"], null);
 });
 
-Deno.test("RouterModule getRoute returns correct route", async () => {
+Deno.test("RouterModule get returns correct route", async () => {
   await RouterModule.init({ routes: sampleRoutes });
-  const route = await RouterModule.getRoute({ route: "home" });
+  const route = await RouterModule.get({ route: "home" });
   assertEquals(route, "/");
 });
 
-Deno.test("RouterModule getRoute throws error for invalid route", async () => {
+Deno.test("RouterModule get throws error for invalid route", async () => {
   await RouterModule.init({ routes: sampleRoutes });
   await assertThrowsAsync(
     async () => {
-      await RouterModule.getRoute({ route: "invalid" });
+      await RouterModule.get({ route: "invalid" });
     },
     Error,
     "Route not found: invalid",
   );
 });
 
-Deno.test("RouterModule.getRoute - should return the correct route with parameters", async () => {
+Deno.test("RouterModule.get - should return the correct route with parameters", async () => {
   await RouterModule.init({ routes: sampleRoutes });
 
-  const route = await RouterModule.getRoute({
+  const route = await RouterModule.get({
     route: "person",
     params: { id: "123" },
   });
   assertEquals(route, "/person/123");
 
-  const compoundRoute = await RouterModule.getRoute({
+  const compoundRoute = await RouterModule.get({
     route: "contact",
     params: { id: "123", contactId: "456" },
   });
   assertEquals(compoundRoute, "/person/123/contact/456");
 });
 
-Deno.test("RouterModule.getRoute - should throw an error if route is not found", async () => {
+Deno.test("RouterModule.get - should throw an error if route is not found", async () => {
   await RouterModule.init({
     routes: {
       "home": "/",
@@ -74,14 +74,14 @@ Deno.test("RouterModule.getRoute - should throw an error if route is not found",
 
   await assertThrowsAsync(
     async () => {
-      await RouterModule.getRoute({ route: "nonExistentRoute" });
+      await RouterModule.get({ route: "nonExistentRoute" });
     },
     Error,
     "Route not found: nonExistentRoute",
   );
 });
 
-Deno.test("RouterModule.getRoute - should throw an error if a parameter is missing", async () => {
+Deno.test("RouterModule.get - should throw an error if a parameter is missing", async () => {
   await RouterModule.init({
     routes: {
       "person": "/person/:id",
@@ -90,14 +90,14 @@ Deno.test("RouterModule.getRoute - should throw an error if a parameter is missi
 
   await assertThrowsAsync(
     async () => {
-      await RouterModule.getRoute({ route: "person" });
+      await RouterModule.get({ route: "person" });
     },
     Error,
     "Missing parameter: id",
   );
 });
 
-Deno.test("RouterModule.getRoute - should handle routes without parameters", async () => {
+Deno.test("RouterModule.get - should handle routes without parameters", async () => {
   await RouterModule.init({
     routes: {
       "home": "/",
@@ -105,9 +105,9 @@ Deno.test("RouterModule.getRoute - should handle routes without parameters", asy
     },
   });
 
-  const homeRoute = await RouterModule.getRoute({ route: "home" });
+  const homeRoute = await RouterModule.get({ route: "home" });
   assertEquals(homeRoute, "/");
 
-  const aboutRoute = await RouterModule.getRoute({ route: "about" });
+  const aboutRoute = await RouterModule.get({ route: "about" });
   assertEquals(aboutRoute, "/about");
 });

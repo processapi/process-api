@@ -97,7 +97,7 @@ class RouterModule {
    * @example with parameters
    * const route = await crs.call("router", "getRoute", { route: "person", params: { id: 1 } });
    */
-  static async getRoute(args) {
+  static async get(args) {
     validateArgs(args, {
       route: { type: "string", default: "home" },
       params: { type: "object", default: {} },

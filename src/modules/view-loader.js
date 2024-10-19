@@ -48,6 +48,8 @@
  * });
  */
 
+import { validateArgs } from "../validate/validate-args.js";
+
 class ViewLoaderModule {
   static name = Object.freeze("view_loader");
 
@@ -69,6 +71,12 @@ class ViewLoaderModule {
    * });
    */
   static async load(args) {
+    validateArgs(args, {
+      view: { type: "string", required: true },
+      container: { type: "HTMLElement", required: true },
+      rootFolder: { type: "string", required: false },
+    });
+
     const rootFolder = args.rootFolder || "app";
     const view = args.view;
     const data = args.data;
