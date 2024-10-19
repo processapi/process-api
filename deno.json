@@ -1,5 +1,8 @@
 {
-  "lint": {
-      "include": ["src/"]
-  }
+	"fmt": {
+		"useTabs": true
+	},
+	"lint": {
+		"include": ["src/"]
+	}
 }

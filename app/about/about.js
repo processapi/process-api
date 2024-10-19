@@ -1,9 +1,9 @@
 export default class AboutView extends HTMLElement {
-  static tag = "about-view";
+	static tag = "about-view";
 
-  load(data) {
-    console.log(data);
-  }
+	load(data) {
+		console.log(data);
+	}
 }
 
 customElements.define(AboutView.tag, AboutView);

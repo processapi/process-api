@@ -51,54 +51,54 @@
 import { validateArgs } from "../validate/validate-args.js";
 
 class ViewLoaderModule {
-  /**
-   * @property name
-   * @type {string}
-   * @static
-   * @description Name of the module
-   */
-  static name = Object.freeze("view_loader");
+	/**
+	 * @property name
+	 * @type {string}
+	 * @static
+	 * @description Name of the module
+	 */
+	static name = Object.freeze("view_loader");
 
-  /**
-   * @method load
-   * @description Load a view into a container by crateing the view element and appending it to the container
-   * @param args {object} arguments for the view loader
-   * @param args.view {string} name of the view - this must correlate with the file name convention
-   * @param args.data {object} data to pass to the view if the view has a load method
-   * @param args.container {HTMLElement} container to load the view into, recommended to use a HTMLMainElement
-   * @param args.rootFolder {string} root folder of the view, default is "app"
-   * @returns {Promise<void>}
-   *
-   * @example
-   * await api.call("view_loader", 'load', {
-   *     view: 'home-view',
-   *     data: { key: 'value' },
-   *     container: mainElement
-   * });
-   */
-  static async load(args) {
-    validateArgs(args, {
-      view: { type: "string", required: true },
-      container: { type: "HTMLElement", required: true },
-      rootFolder: { type: "string", required: false },
-    });
+	/**
+	 * @method load
+	 * @description Load a view into a container by crateing the view element and appending it to the container
+	 * @param args {object} arguments for the view loader
+	 * @param args.view {string} name of the view - this must correlate with the file name convention
+	 * @param args.data {object} data to pass to the view if the view has a load method
+	 * @param args.container {HTMLElement} container to load the view into, recommended to use a HTMLMainElement
+	 * @param args.rootFolder {string} root folder of the view, default is "app"
+	 * @returns {Promise<void>}
+	 *
+	 * @example
+	 * await api.call("view_loader", 'load', {
+	 *     view: 'home-view',
+	 *     data: { key: 'value' },
+	 *     container: mainElement
+	 * });
+	 */
+	static async load(args) {
+		validateArgs(args, {
+			view: { type: "string", required: true },
+			container: { type: "HTMLElement", required: true },
+			rootFolder: { type: "string", required: false },
+		});
 
-    const rootFolder = args.rootFolder || "app";
-    const view = args.view;
-    const data = args.data;
-    const container = args.container;
+		const rootFolder = args.rootFolder || "app";
+		const view = args.view;
+		const data = args.data;
+		const container = args.container;
 
-    const module = await import(`/${rootFolder}/${view}/${view}.js`);
-    const tag = module.default.tag;
+		const module = await import(`/${rootFolder}/${view}/${view}.js`);
+		const tag = module.default.tag;
 
-    const viewElement = document.createElement(tag);
-    container.innerHTML = "";
-    container.appendChild(viewElement);
+		const viewElement = document.createElement(tag);
+		container.innerHTML = "";
+		container.appendChild(viewElement);
 
-    if (viewElement.load) {
-      viewElement.load(data);
-    }
-  }
+		if (viewElement.load) {
+			viewElement.load(data);
+		}
+	}
 }
 
 export { ViewLoaderModule };

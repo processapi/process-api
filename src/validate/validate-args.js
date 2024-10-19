@@ -21,31 +21,31 @@
  */
 
 export function validateArgs(args, def, prefix = "") {
-  if (!args) {
-    throw new Error(`${prefix}Arguments are required`.trim());
-  }
+	if (!args) {
+		throw new Error(`${prefix}Arguments are required`.trim());
+	}
 
-  for (const key in def) {
-    const arg = def[key];
-    const value = args[key];
+	for (const key in def) {
+		const arg = def[key];
+		const value = args[key];
 
-    if (arg.required && value === undefined) {
-      throw new Error(`${prefix}Argument ${key} is required`.trim());
-    }
+		if (arg.required && value === undefined) {
+			throw new Error(`${prefix}Argument ${key} is required`.trim());
+		}
 
-    if (value !== undefined) {
-      const expectedType = arg.type.toLowerCase();
-      const actualType = typeof value === "object"
-        ? value.constructor.name.toLowerCase()
-        : typeof value;
+		if (value !== undefined) {
+			const expectedType = arg.type.toLowerCase();
+			const actualType = typeof value === "object"
+				? value.constructor.name.toLowerCase()
+				: typeof value;
 
-      if (actualType !== expectedType) {
-        throw new Error(
-          `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
-        );
-      }
-    } else if (arg.default !== undefined) {
-      args[key] = arg.default;
-    }
-  }
+			if (actualType !== expectedType) {
+				throw new Error(
+					`${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
+				);
+			}
+		} else if (arg.default !== undefined) {
+			args[key] = arg.default;
+		}
+	}
 }

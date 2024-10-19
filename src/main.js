@@ -35,61 +35,61 @@
  * @class ProcessApi
  */
 class ProcessApi {
-  #modules = {};
+	#modules = {};
 
-  /**
-   * @method register
-   * @description Register a module to the api
-   * @param {class} module to register
-   * @returns {void}
-   *
-   * @example
-   * api.register(ExampleModule);
-   */
-  register(module) {
-    this.#modules[module.name] = module;
-  }
+	/**
+	 * @method register
+	 * @description Register a module to the api
+	 * @param {class} module to register
+	 * @returns {void}
+	 *
+	 * @example
+	 * api.register(ExampleModule);
+	 */
+	register(module) {
+		this.#modules[module.name] = module;
+	}
 
-  /**
-   * @method getModule
-   * @description Get a module from the api
-   * @param {string} name of the module
-   * @returns {class} module
-   * @throws {Error} if module is not found
-   *
-   * @example
-   * const module = api.getModule('example');
-   * module.method_name({ arg1: 'value' });
-   */
-  getModule(name) {
-    return this.#modules[name];
-  }
+	/**
+	 * @method getModule
+	 * @description Get a module from the api
+	 * @param {string} name of the module
+	 * @returns {class} module
+	 * @throws {Error} if module is not found
+	 *
+	 * @example
+	 * const module = api.getModule('example');
+	 * module.method_name({ arg1: 'value' });
+	 */
+	getModule(name) {
+		return this.#modules[name];
+	}
 
-  /**
-   * @method call
-   * @description Call a method from a module
-   * @param {string} module name
-   * @param {string} method name
-   * @param {object} args to pass to the method
-   * @returns {any} result of the method
-   * @throws {Error} if module or method is not found or if the method throws an error
-   *
-   * @example
-   * api.call('example', 'method_name', { arg1: 'value' });
-   */
-  call(module, method, args) {
-    const instance = this.getModule(module);
-    
-    if (!instance) {
-      throw new Error(`Module "${module}" not found`);
-    }
+	/**
+	 * @method call
+	 * @description Call a method from a module
+	 * @param {string} module name
+	 * @param {string} method name
+	 * @param {object} args to pass to the method
+	 * @returns {any} result of the method
+	 * @throws {Error} if module or method is not found or if the method throws an error
+	 *
+	 * @example
+	 * api.call('example', 'method_name', { arg1: 'value' });
+	 */
+	call(module, method, args) {
+		const instance = this.getModule(module);
 
-    if (!instance[method]) {
-      throw new Error(`Method "${method}" not found in module "${module}"`);
-    }
+		if (!instance) {
+			throw new Error(`Module "${module}" not found`);
+		}
 
-    return this.#modules[module][method](args);
-  }
+		if (!instance[method]) {
+			throw new Error(`Method "${method}" not found in module "${module}"`);
+		}
+
+		return this.#modules[module][method](args);
+	}
 }
 
 export { ProcessApi };
