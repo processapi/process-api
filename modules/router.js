@@ -1,7 +1,9 @@
 // deno-lint-ignore-file require-await
 
 /**
- * Module interface for the router module
+ * The RouterModule is a module that provides routing capabilities to the application.
+ * It is used to lookup routes from a dictionary of routes.
+ * 
  * Routes example: { 
  *     "home": "/", 
  *     "about": "/about", 
@@ -10,8 +12,7 @@
  *     "contact": "/person/:id/contacts/:contactId" 
  * }
  * 
- * @interface
- * @name Module
+ * @class RouterModule
  * @method init - Initialize the module
  * @method dispose - Dispose the module
  * @method getRoute - Get the route from the route dictionary
@@ -19,15 +20,39 @@
  */
 
 class RouterModule {
+    /**
+     * @field routes
+     * @description Routes dictionary used as a lookup table for the routes supported
+     * @type {Dictionary}
+     * @static
+     */
     static routes;
-    static name = "router";
 
     /**
-     * Initialize the router module by providing the routes lookup dictionary
-     * @param routes {Dictionary} - Dictionary of routes
-     * @returns {Promise<void>}
+     * @field name
+     * @description Name of the module
+     * @type {string}
+     * @static
+     * @readonly
      */
-    static async init(routes) {
+    static name = Object.freeze("router");
+
+    /**
+     * @method init
+     * @description Initialize the router module by providing the routes lookup dictionary
+     * @param args {Dictionary} - Dictionary of routes
+     * @returns {Promise<void>}
+     * @throws {Error} - If routes dictionary is not provided
+     * 
+     * @example
+     * await RouterModule.init({ routes });
+     * 
+     * @example
+     * await api.call("router", "init", { routes });
+     */
+    static async init(args) {
+        const routes = args?.routes;
+
         if (!routes) {
             throw new Error("Routes dictionary not provided");
         }
@@ -36,19 +61,44 @@ class RouterModule {
     }
 
     /**
-     * Destroy the router module by clearning the instanciated resources
+     * @method dispose
+     * @description Destroy the router module by clearning the instanciated resources
      * @returns {Promise<void>}
+     * 
+     * @example
+     * await RouterModule.dispose();
+     * 
+     * @example
+     * await crs.call("router", "dispose");
      */
     static async dispose() {
         this.routes = null;
     }
 
     /**
-     * Get the route from the route dictionary
-     * @param route {string} - Route to lookup
+     * @method getRoute
+     * @description Get the route from the route dictionary
+     * @param args {Object} - Route to lookup and parameters to replace in the route
+     * @param args.route {string} - Route to lookup defaults to "home" if not provided
+     * @param args.params {Dictionary} - Parameters to replace in the route
      * @returns {Promise<string>}
+     * 
+     * @example without parameters
+     * const route = await RouterModule.getRoute({ route: "home" });
+     * 
+     * @example with parameters
+     * const route = await RouterModule.getRoute({ route: "person", params: { id: 1 } });
+     * 
+     * @example without parameters
+     * const route = await crs.call("router", "getRoute", { route: "home" });
+     * 
+     * @example with parameters
+     * const route = await crs.call("router", "getRoute", { route: "person", params: { id: 1 } });
      */
-    static async getRoute(route, params = {}) {
+    static async getRoute(args) {
+        const route = args?.route ?? "home";
+        const params = args?.params ?? {};
+
         if (this.routes && this.routes[route]) {
             return extractParams(this.routes[route], params);
         }
@@ -57,6 +107,13 @@ class RouterModule {
     }
 }
 
+/**
+ * @function extractParams
+ * @description Extract parameters from the route
+ * @param {string} route - route to process
+ * @param {string} params - parameters to replace in the route
+ * @returns {string} - processed route
+ */
 function extractParams(route, params) {
     return route.replace(/:([a-zA-Z]+)/g, (_, key) => {
         if (params[key] === undefined) {
