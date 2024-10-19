@@ -22,7 +22,10 @@ Deno.test("ComponentModule.load_html - should return HTML content when url is pr
 	};
 	globalThis.fetch = mockFetch;
 
-	const html = await ComponentModule.load_html({ url: "component.js", hasCss: false });
+	const html = await ComponentModule.load_html({
+		url: "component.js",
+		hasCss: false,
+	});
 	assertEquals(html, "<div>Component HTML</div>");
 });
 

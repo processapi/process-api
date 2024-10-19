@@ -24,7 +24,7 @@ export class MessagingModule {
 	 * @param {Object} args
 	 * @param {string} args.topic - the topic name
 	 * @param {Function} args.callback - the callback function to call when a message is published to the topic
-	 * 
+	 *
 	 * @example
 	 * MessagingModule.subscribe({
 	 *     topic: "my-topic",
@@ -32,7 +32,7 @@ export class MessagingModule {
 	 * 			console.log(message);
 	 * 		}
 	 * });
-	 * 
+	 *
 	 * @example
 	 * await api.call("messaging", "subscribe", {
 	 *     topic: "my-topic",
@@ -62,13 +62,13 @@ export class MessagingModule {
 	 * @param {Object} args
 	 * @param {string} args.topic - the topic name
 	 * @param {Function} args.callback - the callback function to remove from the subscribers list
-	 * 
+	 *
 	 * @example
 	 * MessagingModule.unsubscribe({
 	 *     topic: "my-topic",
 	 *     callback: myCallback
 	 * });
-	 * 
+	 *
 	 * @example
 	 * await api.call("messaging", "unsubscribe", {
 	 *     topic: "my-topic",
@@ -99,7 +99,7 @@ export class MessagingModule {
 	 * @param {Object} args
 	 * @param {string} args.topic - the topic name
 	 * @param {Object} args.message - the message to publish
-	 * 
+	 *
 	 * @example
 	 * MessagingModule.publish({
 	 *    topic: "my-topic",
@@ -107,7 +107,7 @@ export class MessagingModule {
 	 * 	      text: "Hello World"
 	 *    }
 	 * });
-	 * 
+	 *
 	 * @example
 	 * await api.call("messaging", "publish", {
 	 *     topic: "my-topic",
