@@ -1,9 +1,5 @@
 {
   "lint": {
-    "ignore": [
-      "deps",
-      "dist",
-      "vendor"
-    ]
+      "include": ["src/"]
   }
 }
