@@ -12,13 +12,19 @@
       import { ProcessApi } from "/src/main.js";
       import { RouterModule } from "./src/modules/router.js";
       import { ViewLoaderModule } from "./src/modules/view-loader.js";
+      import { ComponentModule } from "./src/modules/component.js";
       import { routes } from "./app/routes.js";
 
+      const mainElement = document.querySelector("main");
+
       globalThis.api = new ProcessApi();
-      globalThis.api.register(RouterModule);
-      globalThis.api.register(ViewLoaderModule);
+      api.register(RouterModule);
+      api.register(ViewLoaderModule);
+      api.register(ComponentModule);
 
       api.call("router", "init", { routes });
+
+      api.call("view_loader", "load", { view: "home", container: mainElement });
     </script>
   </body>
 </html>

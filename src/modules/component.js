@@ -30,7 +30,9 @@ class ComponentModule {
 
         let html = await fetch(htmlPath).then(result => result.text());
 
-        if (hasCss === true) {
+        // we assume that component has a css file.
+        // set hasCss to false if component does not have a css file.
+        if (hasCss !== false) {
             const cssPath = url.replace(".js", ".css");
             html = `<link rel="stylesheet" href="${cssPath}">${html}`;
         }

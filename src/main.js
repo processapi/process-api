@@ -78,6 +78,16 @@ class ProcessApi {
    * api.call('example', 'method_name', { arg1: 'value' });
    */
   call(module, method, args) {
+    const instance = this.getModule(module);
+    
+    if (!instance) {
+      throw new Error(`Module "${module}" not found`);
+    }
+
+    if (!instance[method]) {
+      throw new Error(`Method "${method}" not found in module "${module}"`);
+    }
+
     return this.#modules[module][method](args);
   }
 }
