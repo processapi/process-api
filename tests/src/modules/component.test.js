@@ -8,7 +8,7 @@ Deno.test("ComponentModule.load_html - should throw an error if url is not provi
 	await assertThrowsAsync(
 		() => ComponentModule.load_html({}),
 		Error,
-		"ComponentModule.load_html: Argument url is required",
+		'ComponentModule.load_html: Argument "url" is required',
 	);
 });
 

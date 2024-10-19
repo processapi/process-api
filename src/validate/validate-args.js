@@ -30,7 +30,7 @@ export function validateArgs(args, def, prefix = "") {
 		const value = args[key];
 
 		if (arg.required && value === undefined) {
-			throw new Error(`${prefix}Argument ${key} is required`.trim());
+			throw new Error(`${prefix}Argument "${key}" is required`.trim());
 		}
 
 		if (value !== undefined) {
@@ -41,7 +41,7 @@ export function validateArgs(args, def, prefix = "") {
 
 			if (actualType !== expectedType) {
 				throw new Error(
-					`${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
+					`${prefix}Argument "${key}" should be of type "${arg.type}"`.trim(),
 				);
 			}
 		} else if (arg.default !== undefined) {

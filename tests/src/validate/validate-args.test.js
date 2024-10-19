@@ -20,7 +20,7 @@ Deno.test("validateArgs - should throw an error if required argument is missing"
 		() =>
 			validateArgs({}, { view: { type: "string", required: true } }, "Test: "),
 		Error,
-		"Test: Argument view is required",
+		'Test: Argument "view" is required',
 	);
 });
 
@@ -33,7 +33,7 @@ Deno.test("validateArgs - should throw an error if argument type is incorrect", 
 				"Test: ",
 			),
 		Error,
-		"Test: Argument view should be of type string",
+		'Test: Argument "view" should be of type "string"',
 	);
 });
 

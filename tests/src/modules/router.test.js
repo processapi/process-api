@@ -16,7 +16,7 @@ Deno.test("RouterModule init throws error if routes are not provided", async () 
 			await RouterModule.init({});
 		},
 		Error,
-		"RouterModule.init: Argument routes is required",
+		'RouterModule.init: Argument "routes" is required',
 	);
 });
 

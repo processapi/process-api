@@ -5,7 +5,7 @@ Deno.test("MessagingModule.publish - should throw an error if topic is not provi
 await assertThrowsAsync(
 	() => MessagingModule.publish({ message: { text: "Hello World" } }),
 	Error,
-	"MessagingModule.publish: Argument topic is required",
+	'MessagingModule.publish: Argument "topic" is required',
 );
 });
 
@@ -13,7 +13,7 @@ Deno.test("MessagingModule.publish - should throw an error if message is not pro
 await assertThrowsAsync(
 	() => MessagingModule.publish({ topic: "my-topic" }),
 	Error,
-	"MessagingModule.publish: Argument message is required",
+	'MessagingModule.publish: Argument "message" is required',
 );
 });
 
