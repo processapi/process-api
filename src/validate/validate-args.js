@@ -20,35 +20,31 @@
  * });
  */
 
-export function validateArgs(args, def, prefix) {
-  prefix ||= "";
-  
+export function validateArgs(args, def, prefix = "") {
   if (!args) {
     throw new Error(`${prefix}Arguments are required`.trim());
   }
 
   for (const key in def) {
     const arg = def[key];
-    if (arg.required && !args[key]) {
+    const value = args[key];
+
+    if (arg.required && value === undefined) {
       throw new Error(`${prefix}Argument ${key} is required`.trim());
     }
 
-    if (typeof args[key] === "object") {
-      if (args[key].constructor.name.toLowerCase() !== def[key].type.toLowerCase()) {
+    if (value !== undefined) {
+      const expectedType = arg.type.toLowerCase();
+      const actualType = typeof value === "object"
+        ? value.constructor.name.toLowerCase()
+        : typeof value;
+
+      if (actualType !== expectedType) {
         throw new Error(
           `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
         );
       }
-    }
-    else {
-      if (args[key] && typeof args[key] !== arg.type) {
-        throw new Error(
-          `${prefix}Argument ${key} should be of type ${arg.type}`.trim(),
-        );
-      }  
-    }
-
-    if (args[key] === undefined && arg.default) {
+    } else if (arg.default !== undefined) {
       args[key] = arg.default;
     }
   }
