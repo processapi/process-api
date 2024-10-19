@@ -103,8 +103,7 @@ class RouterModule {
       params: { type: "object", default: {} },
     }, "RouterModule.getRoute: ");
 
-    const route = args.route;
-    const params = args.params;
+    const {route, params} = args;
 
     if (this.routes && this.routes[route]) {
       return extractParams(this.routes[route], params);
