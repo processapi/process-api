@@ -6,7 +6,8 @@
  *     "home": "/", 
  *     "about": "/about", 
  *     "person": "person/:id", 
- *     "contacts": "/person/:id/contacts" 
+ *     "contacts": "/person/:id/contacts",
+ *     "contact": "/person/:id/contacts/:contactId" 
  * }
  * 
  * @interface
@@ -17,18 +18,16 @@
  * @property name - Name of the module
  */
 
-import { Module } from "./../src/interfaces/module.ts";
-
-class RouterModule implements Module {
-    private static routes: Record<string, string> | null = {};    
-    public static name: string = "router";
+class RouterModule {
+    static routes;
+    static name = "router";
 
     /**
      * Initialize the router module by providing the routes lookup dictionary
      * @param routes {Dictionary} - Dictionary of routes
      * @returns {Promise<void>}
      */
-    static async init(routes: Record<string, string>): Promise<void> {
+    static async init(routes) {
         if (!routes) {
             throw new Error("Routes dictionary not provided");
         }
@@ -40,7 +39,7 @@ class RouterModule implements Module {
      * Destroy the router module by clearning the instanciated resources
      * @returns {Promise<void>}
      */
-    public static async dispose(): Promise<void> {
+    static async dispose() {
         this.routes = null;
     }
 
@@ -49,7 +48,7 @@ class RouterModule implements Module {
      * @param route {string} - Route to lookup
      * @returns {Promise<string>}
      */
-    public static async getRoute(route: string, params: Record<string, string> = {}): Promise<string> {
+    static async getRoute(route, params = {}) {
         if (this.routes && this.routes[route]) {
             return extractParams(this.routes[route], params);
         }
@@ -58,7 +57,7 @@ class RouterModule implements Module {
     }
 }
 
-function extractParams(route: string, params: Record<string, string>): string {
+function extractParams(route, params) {
     return route.replace(/:([a-zA-Z]+)/g, (_, key) => {
         if (params[key] === undefined) {
             throw new Error(`Missing parameter: ${key}`);

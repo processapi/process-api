@@ -1,14 +1,14 @@
-import { ProcessApi, Args, Module} from "./../../src/main.ts";
+import { ProcessApi } from "../../src/main.js";
 import { assertExists, assertEquals } from "jsr:@std/assert";
 
-class MathModule implements Module {
+class MathModule {
     static name = "math";
 
-    static add(args: Args) {
+    static add(args) {
         return args.a + args.b;
     }
 
-    static subtract(args: Args) {
+    static subtract(args) {
         return args.a - args.b;
     }
 }

@@ -1,6 +1,6 @@
 import { assertEquals } from "jsr:@std/assert";
 import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.ts";
-import { RouterModule } from "./../../modules/router.ts";
+import { RouterModule } from "../../modules/router.js";
 
 const sampleRoutes = {
     "home": "/",
