@@ -1,6 +1,8 @@
 // deno-lint-ignore-file require-await
 
+import { createSign } from "jsr:@std/internal@^1.0.4/build-message";
 import { validateArgs } from "../validate/validate-args.js";
+import { ProcessApi } from "../main.js";
 
 /**
  * The RouterModule is a module that provides routing capabilities to the application.
@@ -58,8 +60,11 @@ class RouterModule {
 		}, "RouterModule.init: ");
 
 		const routes = args.routes;
-
 		this.routes = routes;
+
+		addEventListener('popstate', routeUpdated);
+		addEventListener('hashchange', routeUpdated);
+		addEventListener('load', routeUpdated);
 	}
 
 	/**
@@ -75,6 +80,9 @@ class RouterModule {
 	 */
 	static async dispose() {
 		this.routes = null;
+		removeEventListener('popstate', routeUpdated);
+		removeEventListener('hashchange', routeUpdated);
+		removeEventListener('load', routeUpdated);		
 	}
 
 	/**
@@ -111,6 +119,31 @@ class RouterModule {
 
 		throw new Error(`Route not found: ${route}`);
 	}
+
+	/**
+	 * @method goto
+	 * @description Navigate to a route with the provided parameters
+	 * @param {Object} args 
+	 * @param {string} args.route - Route to navigate to
+	 * @param {Object} args.params - Parameters to replace in the route
+	 * @returns {Promise<void>}
+	 */
+	static async goto(args) {
+		validateArgs(args, {
+			route: { type: "string", required: true },
+			params: { type: "object", default: {} },
+		}, "RouterModule.goto: ");
+
+		const { route, params } = args;
+
+		const path = await this.get({ route, params });
+		history.pushState({}, "", path);
+
+		args.api.try("messaging", "publish", {
+			topic: "routeChanged",
+			message: { route, params }
+		})
+	}
 }
 
 /**
@@ -127,6 +160,10 @@ function extractParams(route, params) {
 		}
 		return params[key];
 	});
+}
+
+function routeUpdated(event) {
+	console.log("Route updated: ", event);
 }
 
 export { RouterModule };
