@@ -71,16 +71,17 @@ class ProcessApi {
 	 * @param {string} module name
 	 * @param {string} method name
 	 * @param {object} args to pass to the method
+	 * @param {boolean} failIfModuleNotFound if true throw an error if the module is not found
 	 * @returns {any} result of the method
 	 * @throws {Error} if module or method is not found or if the method throws an error
 	 *
 	 * @example
 	 * api.call('example', 'method_name', { arg1: 'value' });
 	 */
-	call(module, method, args) {
+	async call(module, method, args, failIfModuleNotFound = true) {
 		const instance = this.getModule(module);
 
-		if (!instance) {
+		if (!instance && failIfModuleNotFound) {
 			throw new Error(`Module "${module}" not found`);
 		}
 
@@ -88,7 +89,25 @@ class ProcessApi {
 			throw new Error(`Method "${method}" not found in module "${module}"`);
 		}
 
-		return this.#modules[module][method](args);
+		return await this.#modules[module][method](args);
+	}
+
+	/**
+	 * @method try
+	 * @description Try to call a method from a module, but if the module does not exist it will not throw an error.
+	 * You could use call instead with the failIfModuleNotFound parameter set to false.
+	 * This is just a bit more clear making the code more readable.
+	 * @param {string} module 
+	 * @param {string} method 
+	 * @param {Object} args 
+	 * 
+	 * @example
+	 * api.try('example', 'method_name', { arg1: 'value' });
+	 */
+	async try(module, method, args) {
+		return await this.call(module, method, args, false).catch((error) => {
+			console.error(error);
+		});
 	}
 }
 
