@@ -1,4 +1,6 @@
 // deno-lint-ignore-file require-await
+import { validateArgs } from "../validate/validate-args.js";
+
 /**
  * @class MessagingModule
  * @description Messaging module provides the ability to send and receive messages
@@ -39,7 +41,7 @@ export class MessagingModule {
 	 * 	   }
 	 * });
 	 */
-	static async subscribers(args) {
+	static async subscribe(args) {
 		validateArgs(args, {
 			topic: { type: "string", required: true },
 			callback: { type: "function", required: true },
