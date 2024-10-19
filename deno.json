@@ -1,9 +1,9 @@
 {
-    "lint": {
-        "ignore": [
-            "deps",
-            "dist",
-            "vendor"
-        ]
-    }
+  "lint": {
+    "ignore": [
+      "deps",
+      "dist",
+      "vendor"
+    ]
+  }
 }
