@@ -23,7 +23,7 @@ class ComponentModule {
         validateArgs(args, {
             url: { type: "string", required: true },
             hasCss: { type: "boolean", required: false }
-        }, "ComponentModule.loadHTML: ");
+        }, "ComponentModule.load_html: ");
 
         const { url, hasCss } = args;
         const htmlPath = url.replace(".js", ".html");
