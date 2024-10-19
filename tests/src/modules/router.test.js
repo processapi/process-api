@@ -10,6 +10,16 @@ const sampleRoutes = {
     "contact": "/person/:id/contact/:contactId"
 };
 
+Deno.test("RouterModule init throws error if routes are not provided", async () => {
+    await assertThrowsAsync(
+        async () => {
+            await RouterModule.init({});
+        },
+        Error,
+        "RouterModule.init: Argument routes is required"
+    );
+})
+
 Deno.test("RouterModule init sets routes correctly", async () => {
     await RouterModule.init({ routes: sampleRoutes });
     assertEquals(RouterModule["routes"], sampleRoutes);
@@ -23,7 +33,7 @@ Deno.test("RouterModule dispose sets routes to null", async () => {
 
 Deno.test("RouterModule getRoute returns correct route", async () => {
     await RouterModule.init({ routes: sampleRoutes });
-    const route = await RouterModule.getRoute("home");
+    const route = await RouterModule.getRoute({ route: "home" });
     assertEquals(route, "/");
 });
 

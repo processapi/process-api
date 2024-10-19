@@ -1,5 +1,7 @@
 // deno-lint-ignore-file require-await
 
+import { validateArgs } from "../validate/validate-args.js";
+
 /**
  * The RouterModule is a module that provides routing capabilities to the application.
  * It is used to lookup routes from a dictionary of routes.
@@ -51,11 +53,8 @@ class RouterModule {
      * await api.call("router", "init", { routes });
      */
     static async init(args) {
-        const routes = args?.routes;
-
-        if (!routes) {
-            throw new Error("Routes dictionary not provided");
-        }
+        validateArgs(args, { routes: { type: 'object', required: true } }, "RouterModule.init: ");
+        const routes = args.routes;
 
         this.routes = routes;
     }
@@ -96,8 +95,13 @@ class RouterModule {
      * const route = await crs.call("router", "getRoute", { route: "person", params: { id: 1 } });
      */
     static async getRoute(args) {
-        const route = args?.route ?? "home";
-        const params = args?.params ?? {};
+        validateArgs(args, { 
+            route: { type: 'string', default: "home" }, 
+            params: { type: 'object', default: {} } 
+        }, "RouterModule.getRoute: ");
+
+        const route = args.route;
+        const params = args.params;
 
         if (this.routes && this.routes[route]) {
             return extractParams(this.routes[route], params);
@@ -110,8 +114,8 @@ class RouterModule {
 /**
  * @function extractParams
  * @description Extract parameters from the route
- * @param {string} route - route to process
- * @param {string} params - parameters to replace in the route
+ * @param route {string} - route to process
+ * @param params {Object} - parameters to replace in the route
  * @returns {string} - processed route
  */
 function extractParams(route, params) {
