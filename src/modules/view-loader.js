@@ -51,6 +51,12 @@
 import { validateArgs } from "../validate/validate-args.js";
 
 class ViewLoaderModule {
+  /**
+   * @property name
+   * @type {string}
+   * @static
+   * @description Name of the module
+   */
   static name = Object.freeze("view_loader");
 
   /**

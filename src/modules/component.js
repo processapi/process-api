@@ -5,6 +5,12 @@ import { validateArgs } from "../validate/validate-args.js";
  * @description Helper class for working with web components.
  */
 class ComponentModule {
+    /**
+     * @property name
+     * @type {string}
+     * @static
+     * @description Name of the module
+     */
     static name = Object.freeze("component");
 
     /**
