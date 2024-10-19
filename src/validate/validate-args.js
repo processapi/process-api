@@ -22,17 +22,17 @@
 
 export function validateArgs(args, def, prefix) {
     if (!args) {
-        throw new Error(`${prefix} Arguments are required`.trim());
+        throw new Error(`${prefix}Arguments are required`.trim());
     }
 
     for (const key in def) {
         const arg = def[key];
         if (arg.required && !args[key]) {
-            throw new Error(`${prefix} Argument ${key} is required`.trim());
+            throw new Error(`${prefix}Argument ${key} is required`.trim());
         }
 
         if (args[key] && typeof args[key] !== arg.type) {
-            throw new Error(`${prefix} Argument ${key} should be of type ${arg.type}`.trim());
+            throw new Error(`${prefix}Argument ${key} should be of type ${arg.type}`.trim());
         }
 
         if (args[key] === undefined && arg.default) {
