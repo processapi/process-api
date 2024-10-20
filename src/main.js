@@ -80,8 +80,12 @@ class ProcessApi {
 	 */
 	async call(module, method, args, failIfModuleNotFound = true) {
 		const instance = this.getModule(module);
+		
+		if (!instance && !failIfModuleNotFound) {
+			return;
+		}
 
-		if (!instance && failIfModuleNotFound) {
+		if (!instance) {
 			throw new Error(`Module "${module}" not found`);
 		}
 

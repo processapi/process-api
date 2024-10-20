@@ -1,19 +1,22 @@
 // deno-lint-ignore-file require-await
 
-import { createSign } from "jsr:@std/internal@^1.0.4/build-message";
 import { validateArgs } from "../validate/validate-args.js";
-import { ProcessApi } from "../main.js";
+
+const DEFAULT_ROUTE = "home";
 
 /**
  * The RouterModule is a module that provides routing capabilities to the application.
  * It is used to lookup routes from a dictionary of routes.
+ * The one route that is required is the home route.
+ * This will affect views in that if you navigate to "/" it should show the home view.
  *
  * Routes example: {
  *     "home": "/",
  *     "about": "/about",
  *     "person": "person/:id",
  *     "contacts": "/person/:id/contacts",
- *     "contact": "/person/:id/contacts/:contactId"
+ *     "contact": "/person/:id/contacts/:contactId",
+ *     "filter": "/filter?name=:name&age=:age",
  * }
  *
  * @class RouterModule
@@ -62,9 +65,11 @@ class RouterModule {
 		const routes = args.routes;
 		this.routes = routes;
 
-		addEventListener('popstate', routeUpdated);
-		addEventListener('hashchange', routeUpdated);
-		addEventListener('load', routeUpdated);
+		this.routeUpdateHandler = routeUpdated.bind(args.api);
+
+		addEventListener('popstate', this.routeUpdateHandler);
+		addEventListener('hashchange', this.routeUpdateHandler);
+		addEventListener('load', this.routeUpdateHandler);
 	}
 
 	/**
@@ -80,9 +85,11 @@ class RouterModule {
 	 */
 	static async dispose() {
 		this.routes = null;
-		removeEventListener('popstate', routeUpdated);
-		removeEventListener('hashchange', routeUpdated);
-		removeEventListener('load', routeUpdated);		
+
+		removeEventListener('popstate', this.routeUpdateHandler);
+		removeEventListener('hashchange', this.routeUpdateHandler);
+		removeEventListener('load', this.routeUpdateHandler);
+		this.routeUpdateHandler = null;	
 	}
 
 	/**
@@ -162,8 +169,68 @@ function extractParams(route, params) {
 	});
 }
 
-function routeUpdated(event) {
-	console.log("Route updated: ", event);
+/**
+ * @function urlToParts
+ * @description This converts a URL to its parts of the route and parameters.
+ * @param {string} url 
+ * 
+ * @returns {Object} - Object with route and parameters
+ * 
+ * @exmaple 
+ * The URL "/person/1/contacts/2" will be converted to:
+ * {
+ *     route: ["/person", "/contacts"],
+ *     params: {
+ * 		   id: 1,
+ * 		   contactId: 2
+ *     }
+ * }
+ */
+function urlToParts(url, search) {
+    const [route, queryString] = url.split("?");
+    const parts = route.split("/").filter(Boolean);
+    const routeParts = [];
+    const routeParams = {};
+
+    // Process route parts
+    for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 0) {
+            routeParts.push(parts[i]);
+        } else {
+            routeParams[parts[i - 1].slice(1)] = parts[i];
+        }
+    }
+
+    // Process query string parameters
+    if (queryString) {
+        const queryParams = new URLSearchParams(queryString);
+        for (const [key, value] of queryParams.entries()) {
+            routeParams[key] = value;
+        }
+    }
+
+    // Process search parameters
+    if (search) {
+        const searchParams = new URLSearchParams(search);
+        for (const [key, value] of searchParams.entries()) {
+            routeParams[key] = value;
+        }
+    }
+
+    if (routeParts.length === 0) {
+        routeParts.push(DEFAULT_ROUTE);
+    }
+
+    return { route: routeParts, params: routeParams };
+}
+
+function routeUpdated() {
+	const parts = urlToParts(location.pathname, location.search);
+
+	this.try("messaging", "publish", {
+		topic: "routeChanged",
+		message: parts
+	});
 }
 
 export { RouterModule };

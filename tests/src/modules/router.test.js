@@ -3,6 +3,7 @@ import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.
 import { RouterModule } from "../../../src/modules/router.js";
 
 const sampleRoutes = {
+	"": "/",
 	"home": "/",
 	"about": "/about",
 	"person": "/person/:id",
