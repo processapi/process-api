@@ -6,7 +6,7 @@ SurrealDBModule.url = "http://localhost:8000";
 
 Deno.test("SurrealDBModule - status", async () => {
     const status = await SurrealDBModule.status();
-    assertEquals(status, { status: "ok" });
+    assertEquals(status, { status: "OK" });
 });
 
 Deno.test("SurrealDBModule - version", async () => {
@@ -15,6 +15,16 @@ Deno.test("SurrealDBModule - version", async () => {
 });
 
 Deno.test("SurrealDBModule - signin", async () => {
-    const result = await SurrealDBModule.signin();
-    assertEquals(result, { status: "ok" });
+    const result = await SurrealDBModule.signin({ user: "root", pass: "root" });
+    assertEquals(result, { status: "OK" });
 })
+
+Deno.test("SurrealDBModule - create namespace", async () => {
+    const result = await SurrealDBModule.create_namespace({ ns: "test" });
+    assertEquals(result, { status: "OK" });
+});
+
+Deno.test("SurrealDBModule - create database", async () => {
+    const result = await SurrealDBModule.create_database({ ns: "test", db: "test" });
+    assertEquals(result, { status: "OK" });
+});

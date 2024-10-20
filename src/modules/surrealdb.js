@@ -7,29 +7,62 @@ const DEFAULT_SERVER = "http://localhost:8000";
 class SurrealDBModule {
     static name = Object.freeze("surrealdb");
 
-    static async connect(args) {
+    static async create_namespace(args) {
+        if (this.token == null) {
+            throw new Error("You must sign in first.");
+        }
+
         validateArgs(args, {
-            url: { type: "string", required: false },
-            namespace: { type: "string", required: true },
-            db: { type: "string", required: true },
-        }, "SurrealDBModule.connect: ");
+            ns: { type: "string", required: true }
+        });
 
-        const { url, namespace, db } = args;
-
-        this.url = url ?? DEFAULT_SERVER;
-        this.namespace = namespace;
-        this.db = db;
+        const query = `DEFINE NAMESPACE IF NOT EXISTS ${args.ns};`
+        await this.run_query({ query });
+        return { status: "OK" };
     }
 
-    static async disconnect() {
-        this.url = null;
-        this.namespace = null;
-        this.db = null;
+    static async create_database(args) {
+        if (this.token == null) {
+            throw new Error("You must sign in first.");
+        }
+
+        validateArgs(args, {
+            ns: { type: "string", required: true },
+            db: { type: "string", required: true }
+        });
+
+        const query = `
+            DEFINE DATABASE IF NOT EXISTS ${args.db};
+        `
+        await this.run_query({ query });
+        return { status: "OK" };
+    }
+
+    static async run_query(args) {
+        if (this.token == null) {
+            throw new Error("You must sign in first.");
+        }
+
+        validateArgs(args, {
+            ns: { type: "string", required: false },
+            db: { type: "string", required: false },
+            query: { type: "string", required: true }
+        });
+
+        if (args.ns != null && args.db != null) {
+            args.query = `USE NS ${args.ns}; USE DB ${args.db}; ${args.query}`;
+        }
+
+        const body = {
+            query: args.query
+        }
+
+        return await callServer(`${this.url}/sql`, "POST", body, `Bearer ${this.token}`);
     }
 
     static async status() {
         const result = await callServer(`${this.url}/status`, "GET");
-        return result ?? { status: "ok" };
+        return result ?? { status: "OK" };
     }
 
     static async version() {
@@ -40,41 +73,77 @@ class SurrealDBModule {
         validateArgs(args, {
             ns: { type: "string", required: false },
             db: { type: "string", required: false },
-            user: { type: "string", required: false },
-            pass: { type: "string", required: false }
+            user: { type: "string", required: true },
+            pass: { type: "string", required: true }
         });
 
-        let { ns, db, user, pass } = args;
-        user ||= "root";
-        pass ||= "root";
+        const auth = btoa(`${args.user}:${args.pass}`);
+        const body = createBody(args)
+        const result = await callServer(`${this.url}/signin`, "POST", body, `Basic ${auth}`, args.ns, args.db);
 
-        const body = {
-            user,
-            pass
+        this.token = result.token;
+
+        if (result.code === 200) {
+            return { status: "OK" };
         }
+    }
 
-        if (ns) {
-            body.ns = ns;
-        }
+    static async signup(args) {
+        validateArgs(args, {
+            ns: { type: "string", required: true },
+            db: { type: "string", required: true },
+            user: { type: "string", required: true },
+            pass: { type: "string", required: true }
+        });
 
-        if (db) {
-            body.db = db;
-        }
-
-        const result = await callServer(`${this.url}/signin`, "POST", { ns, db, user, pass });
-        return result ?? { status: "ok" };
+        const body = createBody(args)
+        const result = await callServer(`${this.url}/signup`, "POST", body);
+        return result ?? { status: "OK" };
     }
 }
 
-async function callServer(url, method, body) {
+function createBody(args) {
+    let { ns, db, user, pass } = args;
+
+    const body = {
+        user,
+        pass
+    }
+
+    if (ns != null) {
+        body.ns = ns;
+    }
+
+    if (db != null) {
+        body.db = db;
+    }
+
+    return body;
+}
+
+async function callServer(url, method, body, auth, ns, db) {
     let response;
+
     try {
         const options = {
             method: method,
             headers: {
+                'Accept': 'application/json',
                 "Content-Type": "application/json",
             },
         };
+
+        if (auth) {
+            options.headers.Authorization = auth;
+        }
+
+        if (ns) {
+            options.headers.ns = ns;
+        }
+
+        if (db) {
+            options.headers.db = db;
+        }
 
         if (body) {
             options.body = JSON.stringify(body);
