@@ -1,4 +1,7 @@
 {
+	"tasks": {
+		"surreal": "surreal start --user root --password root surrealkv:./data/mydatabase.db"
+	},
 	"fmt": {
 		"useTabs": true
 	},
