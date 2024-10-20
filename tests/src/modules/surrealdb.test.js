@@ -13,3 +13,8 @@ Deno.test("SurrealDBModule - version", async () => {
     const version = await SurrealDBModule.version();
     assert(version.length > 0);
 });
+
+Deno.test("SurrealDBModule - signin", async () => {
+    const result = await SurrealDBModule.signin();
+    assertEquals(result, { status: "ok" });
+})

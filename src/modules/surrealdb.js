@@ -1,3 +1,7 @@
+// https://surrealdb.com/docs/surrealdb/integration/http#accessing-endpoints-via-postman
+
+import { validateArgs } from "../validate/validate-args.js";
+
 const DEFAULT_SERVER = "http://localhost:8000";
 
 class SurrealDBModule {
@@ -24,26 +28,61 @@ class SurrealDBModule {
     }
 
     static async status() {
-        const result = await performGet(`${this.url}/status`);
+        const result = await callServer(`${this.url}/status`, "GET");
         return result ?? { status: "ok" };
     }
 
     static async version() {
-        return await performGet(`${this.url}/version`);
+        return await callServer(`${this.url}/version`, "GET");
+    }
+
+    static async signin(args = {}) {
+        validateArgs(args, {
+            ns: { type: "string", required: false },
+            db: { type: "string", required: false },
+            user: { type: "string", required: false },
+            pass: { type: "string", required: false }
+        });
+
+        let { ns, db, user, pass } = args;
+        user ||= "root";
+        pass ||= "root";
+
+        const body = {
+            user,
+            pass
+        }
+
+        if (ns) {
+            body.ns = ns;
+        }
+
+        if (db) {
+            body.db = db;
+        }
+
+        const result = await callServer(`${this.url}/signin`, "POST", { ns, db, user, pass });
+        return result ?? { status: "ok" };
     }
 }
 
-async function performGet(url) {
+async function callServer(url, method, body) {
     let response;
     try {
-        response = await fetch(url, {
-            method: "GET",
+        const options = {
+            method: method,
             headers: {
                 "Content-Type": "application/json",
             },
-        });
+        };
+
+        if (body) {
+            options.body = JSON.stringify(body);
+        }
+
+        response = await fetch(url, options);
     } catch (error) {
-        throw new Error(`Failed to get: ${error}`);
+        throw new Error(`Failed to call ${url}: ${error}`);
     }
 
     return await processResponse(response, url);
