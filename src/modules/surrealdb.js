@@ -17,8 +17,7 @@ class SurrealDBModule {
         });
 
         const query = `DEFINE NAMESPACE IF NOT EXISTS ${args.ns};`
-        await this.run_query({ query });
-        return { status: "OK" };
+        return await this.run_query({ query });
     }
 
     static async create_database(args) {
@@ -34,8 +33,7 @@ class SurrealDBModule {
         const query = `
             DEFINE DATABASE IF NOT EXISTS ${args.db};
         `
-        await this.run_query({ query });
-        return { status: "OK" };
+        return await this.run_query({ query });
     }
 
     static async run_query(args) {
@@ -49,15 +47,11 @@ class SurrealDBModule {
             query: { type: "string", required: true }
         });
 
-        if (args.ns != null && args.db != null) {
-            args.query = `USE NS ${args.ns}; USE DB ${args.db}; ${args.query}`;
-        }
-
         const body = {
             query: args.query
         }
 
-        return await callServer(`${this.url}/sql`, "POST", body, `Bearer ${this.token}`);
+        return await callServer(`${this.url}/sql`, "POST", body, `Bearer ${this.token}`, args.ns, args.db);
     }
 
     static async status() {

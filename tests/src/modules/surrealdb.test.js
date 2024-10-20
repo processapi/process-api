@@ -21,10 +21,12 @@ Deno.test("SurrealDBModule - signin", async () => {
 
 Deno.test("SurrealDBModule - create namespace", async () => {
     const result = await SurrealDBModule.create_namespace({ ns: "test" });
-    assertEquals(result, { status: "OK" });
+    assertEquals(result.length, 1);
+    assertEquals(result[0].status, "OK");
 });
 
 Deno.test("SurrealDBModule - create database", async () => {
     const result = await SurrealDBModule.create_database({ ns: "test", db: "test" });
-    assertEquals(result, { status: "OK" });
+    assertEquals(result.length, 1);
+    assertEquals(result[0].status, "OK");
 });
