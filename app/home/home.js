@@ -13,7 +13,6 @@ export default class HomeView extends HTMLElement {
 	}
 
 	load(data) {
-		console.log(data);
 	}
 }
 

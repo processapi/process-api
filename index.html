@@ -13,6 +13,7 @@
 			import { RouterModule } from "./src/modules/router.js";
 			import { ViewLoaderModule } from "./src/modules/view-loader.js";
 			import { ComponentModule } from "./src/modules/component.js";
+			import { MessagingModule } from "./src/modules/messaging.js";
 			import { routes } from "./app/routes.js";
 
 			const mainElement = document.querySelector("main");
@@ -21,10 +22,11 @@
 			api.register(RouterModule);
 			api.register(ViewLoaderModule);
 			api.register(ComponentModule);
+			api.register(MessagingModule);
 
 			api.call("router", "init", { routes });
-
-			api.call("view_loader", "load", { view: "home", container: mainElement });
+			api.call("view_loader", "set_container", { container: mainElement });
+			api.call("view_loader", "listen");
 		</script>
 	</body>
 </html>

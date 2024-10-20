@@ -1,8 +1,15 @@
 export default class AboutView extends HTMLElement {
 	static tag = "about-view";
 
-	load(data) {
-		console.log(data);
+	constructor() {
+		super();
+		this.attachShadow({ mode: "open" });
+	}
+	
+	async connectedCallback() {
+		this.shadowRoot.innerHTML = await api.call("component", "load_html", {
+			url: import.meta.url,
+		});
 	}
 }
 

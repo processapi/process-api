@@ -93,7 +93,9 @@ class ProcessApi {
 			throw new Error(`Method "${method}" not found in module "${module}"`);
 		}
 
+		args ||= {};
 		args.api = this;
+		
 		const result = await this.#modules[module][method](args);
 		delete args.api;
 

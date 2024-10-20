@@ -1,3 +1,4 @@
+// deno-lint-ignore-file require-await
 /**
  * @class ViewLoaderModule
  * @description Module for loading views
@@ -60,6 +61,27 @@ class ViewLoaderModule {
 	static name = Object.freeze("view_loader");
 
 	/**
+	 * @method mainElement
+	 * @description Set the main element to load views into - recommended to use a HTMLMainElement
+	 * @param args {object} arguments for the view loader
+	 * @param args.container {HTMLElement} container to load the view into
+	 * @returns {Promise<void>}
+	 * 
+	 * @example
+	 * await ViewLoaderModule.set_container({container: mainElement});
+	 * 
+	 * @example 
+	 * await api.call("view_loader", 'set_container', {container: mainElement});
+	 */
+	static async set_container(args) {
+		validateArgs(args, {
+			container: { type: "HTMLElement", required: true }
+		});
+
+		this.mainElement = args.container
+	}
+
+	/**
 	 * @method load
 	 * @description Load a view into a container by crateing the view element and appending it to the container
 	 * @param args {object} arguments for the view loader
@@ -79,14 +101,14 @@ class ViewLoaderModule {
 	static async load(args) {
 		validateArgs(args, {
 			view: { type: "string", required: true },
-			container: { type: "HTMLElement", required: true },
+			container: { type: "HTMLElement", required: false },
 			rootFolder: { type: "string", required: false },
 		});
 
 		const rootFolder = args.rootFolder || "app";
 		const view = args.view;
 		const data = args.data;
-		const container = args.container;
+		const container = args.container ?? this.mainElement;
 
 		const module = await import(`/${rootFolder}/${view}/${view}.js`);
 		const tag = module.default.tag;
@@ -99,6 +121,33 @@ class ViewLoaderModule {
 			viewElement.load(data);
 		}
 	}
+
+	static async listen(args) {
+		this.routeChangedHandler = routeChanged.bind(args.api);
+
+		args.api.try("messaging", "subscribe", {
+			topic: "routeChanged",
+			callback: this.routeChangedHandler
+		});		
+	}
+
+	static async unlisten(args) {
+		args.api.try("messaging", "unsubscribe", {
+			topic: "routeChanged",
+			callback: this.routeChangedHandler
+		});
+
+		this.routeChangedHandler = null;
+	}
+}
+
+async function routeChanged(event) {
+	const args = {
+		view: event.route[0],
+		data: event.params
+	};
+	
+	api.call("view_loader", "load", args);
 }
 
 export { ViewLoaderModule };
