@@ -1,178 +1,101 @@
 // https://surrealdb.com/docs/surrealdb/integration/http#accessing-endpoints-via-postman
-
+import Surreal from "./surreal/cdn.js";
 import { validateArgs } from "../validate/validate-args.js";
 
 const DEFAULT_SERVER = "http://localhost:8000";
 
 class SurrealDBModule {
-    static name = Object.freeze("surrealdb");
+	static name = Object.freeze("surrealdb");
 
-    static async create_namespace(args) {
-        if (this.token == null) {
-            throw new Error("You must sign in first.");
-        }
+	static async connect(args) {
+		validateArgs(args, {
+			username  : { type: "string", required: true },
+			password  : { type: "string", required: true },
+			url		  : { type: "string", required: false, default: DEFAULT_SERVER },
+			namespace : { type: "string", required: false },
+			database  : { type: "string", required: false },
+		}, "SurrealDBModule.connect: ");
 
-        validateArgs(args, {
-            ns: { type: "string", required: true }
-        });
+		if (this.db != null) {
+			await this.disconnect();
+		}
 
-        const query = `DEFINE NAMESPACE IF NOT EXISTS ${args.ns};`
-        return await this.run_query({ query });
-    }
+		this.db = new Surreal();
 
-    static async create_database(args) {
-        if (this.token == null) {
-            throw new Error("You must sign in first.");
-        }
+		const { username, password, url, namespace, database } = args;
 
-        validateArgs(args, {
-            ns: { type: "string", required: true },
-            db: { type: "string", required: true }
-        });
+		await this.db.connect( url );
+		await this.db.signin({ username, password });
+		await this.create_namespace({ namespace });
+		await this.create_database({ namespace, database });
+		await this.db.use({ namespace, database });
+	}
 
-        const query = `
-            DEFINE DATABASE IF NOT EXISTS ${args.db};
-        `
-        return await this.run_query({ query });
-    }
+	static async disconnect() {
+		if (this.db != null) {
+			await this.db.close();
+			delete this.db;
+		}
+	}
 
-    static async run_query(args) {
-        if (this.token == null) {
-            throw new Error("You must sign in first.");
-        }
+	static async create_namespace(args) {
+		if (this.db == null) {
+			throw new Error("SurrealDBModule.create_namespace: Database not connected");
+		}
 
-        validateArgs(args, {
-            ns: { type: "string", required: false },
-            db: { type: "string", required: false },
-            query: { type: "string", required: true }
-        });
+		validateArgs(args, {
+			namespace : { type: "string", required: true },
+		}, "SurrealDBModule.create_namespace: ");
 
-        const body = {
-            query: args.query
-        }
+		await this.db.query(`
+            DEFINE NAMESPACE IF NOT EXISTS ${args.namespace};
+        `);
+	}
 
-        return await callServer(`${this.url}/sql`, "POST", body, `Bearer ${this.token}`, args.ns, args.db);
-    }
+	static async create_database(args) {
+		if (this.db == null) {
+			throw new Error("SurrealDBModule.create_database: Database not connected");
+		}
 
-    static async status() {
-        const result = await callServer(`${this.url}/status`, "GET");
-        return result ?? { status: "OK" };
-    }
+		validateArgs(args, {
+			namespace : { type: "string", required: true },
+			database : { type: "string", required: true },
+		}, "SurrealDBModule.create_database: ");
 
-    static async version() {
-        return await callServer(`${this.url}/version`, "GET");
-    }
+		await this.db.query(`
+			USE NS ${args.namespace};
+            DEFINE DATABASE IF NOT EXISTS ${args.database};
+        `);
+	}
 
-    static async signin(args = {}) {
-        validateArgs(args, {
-            ns: { type: "string", required: false },
-            db: { type: "string", required: false },
-            user: { type: "string", required: true },
-            pass: { type: "string", required: true }
-        });
+	static async run_query(args) {
+		if (this.db == null) {
+			throw new Error("SurrealDBModule.run_query: Database not connected");
+		}
 
-        const auth = btoa(`${args.user}:${args.pass}`);
-        const body = createBody(args)
-        const result = await callServer(`${this.url}/signin`, "POST", body, `Basic ${auth}`, args.ns, args.db);
+		return await this.db.query(args.query);
+	}
 
-        this.token = result.token;
+	static async status() {
+		if (this.db == null) {
+			throw new Error("SurrealDBModule.status: Database not connected");
+		}
 
-        if (result.code === 200) {
-            return { status: "OK" };
-        }
-    }
+		return await this.db.query("INFO FOR DB;");
+	}
 
-    static async signup(args) {
-        validateArgs(args, {
-            ns: { type: "string", required: true },
-            db: { type: "string", required: true },
-            user: { type: "string", required: true },
-            pass: { type: "string", required: true }
-        });
+	static async signin(args = {}) {
+		if (this.db == null) {
+			throw new Error("SurrealDBModule.signin: Database not connected");
+		}
 
-        const body = createBody(args)
-        const result = await callServer(`${this.url}/signup`, "POST", body);
-        return result ?? { status: "OK" };
-    }
-}
+		validateArgs(args, {
+			username  : { type: "string", required: true },
+			password  : { type: "string", required: true },
+		}, "SurrealDBModule.signin: ");
 
-function createBody(args) {
-    let { ns, db, user, pass } = args;
-
-    const body = {
-        user,
-        pass
-    }
-
-    if (ns != null) {
-        body.ns = ns;
-    }
-
-    if (db != null) {
-        body.db = db;
-    }
-
-    return body;
-}
-
-async function callServer(url, method, body, auth, ns, db) {
-    let response;
-
-    try {
-        const options = {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                "Content-Type": "application/json",
-            },
-        };
-
-        if (auth) {
-            options.headers.Authorization = auth;
-        }
-
-        if (ns) {
-            options.headers.ns = ns;
-        }
-
-        if (db) {
-            options.headers.db = db;
-        }
-
-        if (body) {
-            options.body = JSON.stringify(body);
-        }
-
-        response = await fetch(url, options);
-    } catch (error) {
-        throw new Error(`Failed to call ${url}: ${error}`);
-    }
-
-    return await processResponse(response, url);
-}
-
-async function processResponse(response, url) {
-    if (!response.ok) {
-        throw new Error(`Failed to call ${url}: ${response.statusText}`);
-    }
-
-    const contentType = response.headers.get("content-type");
-    if (!contentType) {
-        await response.body?.cancel();
-        return;
-    }
-
-    if (contentType.includes("application/json")) {
-        return await response.json();
-    }
-
-    if (contentType.includes("text/plain")) {
-        return await response.text();
-    }
-
-    if (contentType.includes("application/octet-stream")) {
-        return await response.blob();
-    }
+		return await this.db.signin( args );
+	}
 }
 
 export { SurrealDBModule };

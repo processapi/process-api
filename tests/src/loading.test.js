@@ -25,7 +25,7 @@ Deno.test("ProcessApi - loading", async () => {
 Deno.test("ProcessApi - try", async () => {
 	const api = new ProcessApi();
 	api.register(MathModule);
-	
+
 	const result = await api.try("math", "add", { a: 1, b: 2 });
 	assertExists(result);
 	assertEquals(result, 3);
@@ -33,7 +33,7 @@ Deno.test("ProcessApi - try", async () => {
 
 Deno.test("ProcessApi - try on non module", async () => {
 	const api = new ProcessApi();
-	
+
 	const result = await api.try("math", "add", { a: 1, b: 2 });
 	assertEquals(result, undefined);
 });

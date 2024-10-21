@@ -67,9 +67,9 @@ class RouterModule {
 
 		this.routeUpdateHandler = routeUpdated.bind(args.api);
 
-		addEventListener('popstate', this.routeUpdateHandler);
-		addEventListener('hashchange', this.routeUpdateHandler);
-		addEventListener('load', this.routeUpdateHandler);
+		addEventListener("popstate", this.routeUpdateHandler);
+		addEventListener("hashchange", this.routeUpdateHandler);
+		addEventListener("load", this.routeUpdateHandler);
 	}
 
 	/**
@@ -86,10 +86,10 @@ class RouterModule {
 	static async dispose() {
 		this.routes = null;
 
-		removeEventListener('popstate', this.routeUpdateHandler);
-		removeEventListener('hashchange', this.routeUpdateHandler);
-		removeEventListener('load', this.routeUpdateHandler);
-		this.routeUpdateHandler = null;	
+		removeEventListener("popstate", this.routeUpdateHandler);
+		removeEventListener("hashchange", this.routeUpdateHandler);
+		removeEventListener("load", this.routeUpdateHandler);
+		this.routeUpdateHandler = null;
 	}
 
 	/**
@@ -130,7 +130,7 @@ class RouterModule {
 	/**
 	 * @method goto
 	 * @description Navigate to a route with the provided parameters
-	 * @param {Object} args 
+	 * @param {Object} args
 	 * @param {string} args.route - Route to navigate to
 	 * @param {Object} args.params - Parameters to replace in the route
 	 * @returns {Promise<void>}
@@ -148,8 +148,8 @@ class RouterModule {
 
 		args.api.try("messaging", "publish", {
 			topic: "routeChanged",
-			message: { route, params }
-		})
+			message: { route, params },
+		});
 	}
 }
 
@@ -172,11 +172,11 @@ function extractParams(route, params) {
 /**
  * @function urlToParts
  * @description This converts a URL to its parts of the route and parameters.
- * @param {string} url 
- * 
+ * @param {string} url
+ *
  * @returns {Object} - Object with route and parameters
- * 
- * @exmaple 
+ *
+ * @exmaple
  * The URL "/person/1/contacts/2" will be converted to:
  * {
  *     route: ["/person", "/contacts"],
@@ -187,41 +187,41 @@ function extractParams(route, params) {
  * }
  */
 function urlToParts(url, search) {
-    const [route, queryString] = url.split("?");
-    const parts = route.split("/").filter(Boolean);
-    const routeParts = [];
-    const routeParams = {};
+	const [route, queryString] = url.split("?");
+	const parts = route.split("/").filter(Boolean);
+	const routeParts = [];
+	const routeParams = {};
 
-    // Process route parts
-    for (let i = 0; i < parts.length; i++) {
-        if (i % 2 === 0) {
-            routeParts.push(parts[i]);
-        } else {
-            routeParams[parts[i - 1].slice(1)] = parts[i];
-        }
-    }
+	// Process route parts
+	for (let i = 0; i < parts.length; i++) {
+		if (i % 2 === 0) {
+			routeParts.push(parts[i]);
+		} else {
+			routeParams[parts[i - 1].slice(1)] = parts[i];
+		}
+	}
 
-    // Process query string parameters
-    if (queryString) {
-        const queryParams = new URLSearchParams(queryString);
-        for (const [key, value] of queryParams.entries()) {
-            routeParams[key] = value;
-        }
-    }
+	// Process query string parameters
+	if (queryString) {
+		const queryParams = new URLSearchParams(queryString);
+		for (const [key, value] of queryParams.entries()) {
+			routeParams[key] = value;
+		}
+	}
 
-    // Process search parameters
-    if (search) {
-        const searchParams = new URLSearchParams(search);
-        for (const [key, value] of searchParams.entries()) {
-            routeParams[key] = value;
-        }
-    }
+	// Process search parameters
+	if (search) {
+		const searchParams = new URLSearchParams(search);
+		for (const [key, value] of searchParams.entries()) {
+			routeParams[key] = value;
+		}
+	}
 
-    if (routeParts.length === 0) {
-        routeParts.push(DEFAULT_ROUTE);
-    }
+	if (routeParts.length === 0) {
+		routeParts.push(DEFAULT_ROUTE);
+	}
 
-    return { route: routeParts, params: routeParams };
+	return { route: routeParts, params: routeParams };
 }
 
 function routeUpdated() {
@@ -229,7 +229,7 @@ function routeUpdated() {
 
 	this.try("messaging", "publish", {
 		topic: "routeChanged",
-		message: parts
+		message: parts,
 	});
 }
 

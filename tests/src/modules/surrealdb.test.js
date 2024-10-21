@@ -1,32 +1,51 @@
-import { assertEquals, assert } from "jsr:@std/assert";
+import { assert, assertEquals, assertExists } from "jsr:@std/assert";
 import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.ts";
 import { SurrealDBModule } from "../../../src/modules/surrealdb.js";
 
-SurrealDBModule.url = "http://localhost:8000";
+SurrealDBModule.url = "http://127.0.0.1:8000";
 
 Deno.test("SurrealDBModule - status", async () => {
-    const status = await SurrealDBModule.status();
-    assertEquals(status, { status: "OK" });
-});
+	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
 
-Deno.test("SurrealDBModule - version", async () => {
-    const version = await SurrealDBModule.version();
-    assert(version.length > 0);
+	const status = await SurrealDBModule.status();
+	assertExists(status);
 });
 
 Deno.test("SurrealDBModule - signin", async () => {
-    const result = await SurrealDBModule.signin({ user: "root", pass: "root" });
-    assertEquals(result, { status: "OK" });
-})
+	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
 
-Deno.test("SurrealDBModule - create namespace", async () => {
-    const result = await SurrealDBModule.create_namespace({ ns: "test" });
-    assertEquals(result.length, 1);
-    assertEquals(result[0].status, "OK");
+	const result = await SurrealDBModule.signin({ username: "root", password: "root" });
+	assertExists(result);
 });
 
-Deno.test("SurrealDBModule - create database", async () => {
-    const result = await SurrealDBModule.create_database({ ns: "test", db: "test" });
-    assertEquals(result.length, 1);
-    assertEquals(result[0].status, "OK");
+Deno.test("SurrealDBModule - create", async () => {
+	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
+
+	const table_query = `
+        DEFINE TABLE IF NOT EXISTS person;
+        DEFINE FIELD IF NOT EXISTS firstName ON TABLE person TYPE string;
+        DEFINE FIELD IF NOT EXISTS lastName ON TABLE person TYPE string;
+        
+        CREATE person SET
+            firstName = "John",
+            lastName = "Doe";
+    `;
+
+	const result = await SurrealDBModule.run_query({
+		query: table_query,
+	});
+
+	assert(result.length > 0);
+
+	const searchResult = await SurrealDBModule.run_query({
+		namespace: "test",
+		database: "test",
+		query: "SELECT * FROM person;",
+	});
+
+	const people = searchResult[0];
+	assert(people.length > 0);
+	assertEquals(people[0].firstName, "John");
+	assertEquals(people[0].lastName, "Doe");
+
 });

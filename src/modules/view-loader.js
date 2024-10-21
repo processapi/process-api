@@ -66,19 +66,19 @@ class ViewLoaderModule {
 	 * @param args {object} arguments for the view loader
 	 * @param args.container {HTMLElement} container to load the view into
 	 * @returns {Promise<void>}
-	 * 
+	 *
 	 * @example
 	 * await ViewLoaderModule.set_container({container: mainElement});
-	 * 
-	 * @example 
+	 *
+	 * @example
 	 * await api.call("view_loader", 'set_container', {container: mainElement});
 	 */
 	static async set_container(args) {
 		validateArgs(args, {
-			container: { type: "HTMLElement", required: true }
+			container: { type: "HTMLElement", required: true },
 		});
 
-		this.mainElement = args.container
+		this.mainElement = args.container;
 	}
 
 	/**
@@ -127,14 +127,14 @@ class ViewLoaderModule {
 
 		args.api.try("messaging", "subscribe", {
 			topic: "routeChanged",
-			callback: this.routeChangedHandler
-		});		
+			callback: this.routeChangedHandler,
+		});
 	}
 
 	static async unlisten(args) {
 		args.api.try("messaging", "unsubscribe", {
 			topic: "routeChanged",
-			callback: this.routeChangedHandler
+			callback: this.routeChangedHandler,
 		});
 
 		this.routeChangedHandler = null;
@@ -144,9 +144,9 @@ class ViewLoaderModule {
 async function routeChanged(event) {
 	const args = {
 		view: event.route[0],
-		data: event.params
+		data: event.params,
 	};
-	
+
 	api.call("view_loader", "load", args);
 }
 

@@ -13,15 +13,15 @@ const sampleRoutes = {
 
 globalThis.history = {
 	pushState: () => {},
-}
+};
 
 let apiCall;
 
 const apiMock = {
 	try(module, method, args) {
 		apiCall = { module, method, args };
-	}
-}
+	},
+};
 
 Deno.test("RouterModule init throws error if routes are not provided", async () => {
 	await assertThrowsAsync(
@@ -127,48 +127,48 @@ Deno.test("RouterModule.get - should handle routes without parameters", async ()
 
 Deno.test("RouterModule.goto throws error when route is not provided", async () => {
 	await assertThrowsAsync(
-	  async () => {
-		await RouterModule.goto({ params: {} });
-	  },
-	  Error,
-	  'RouterModule.goto: Argument "route" is required'
+		async () => {
+			await RouterModule.goto({ params: {} });
+		},
+		Error,
+		'RouterModule.goto: Argument "route" is required',
 	);
-  });
-  
-  Deno.test("RouterModule.goto navigates to the correct route with parameters", async () => {
+});
+
+Deno.test("RouterModule.goto navigates to the correct route with parameters", async () => {
 	RouterModule.routes = {
-	  "home": "/",
-	  "about": "/about",
-	  "person": "/person/:id"
+		"home": "/",
+		"about": "/about",
+		"person": "/person/:id",
 	};
-  
+
 	const mockPushState = (state, title, url) => {
-	  assertEquals(url, "/person/1");
+		assertEquals(url, "/person/1");
 	};
 	globalThis.history.pushState = mockPushState;
-  
+
 	await RouterModule.goto({ route: "person", params: { id: 1 }, api: apiMock });
-  });
-  
-  Deno.test("RouterModule.goto publishes the correct message to the messaging module", async () => {
+});
+
+Deno.test("RouterModule.goto publishes the correct message to the messaging module", async () => {
 	RouterModule.routes = {
-	  "home": "/",
-	  "about": "/about",
-	  "person": "/person/:id"
+		"home": "/",
+		"about": "/about",
+		"person": "/person/:id",
 	};
-  
+
 	const mockPublish = ({ topic, message }) => {
-	  assertEquals(topic, "routeChanged");
-	  assertEquals(message, { route: "person", params: { id: 1 } });
+		assertEquals(topic, "routeChanged");
+		assertEquals(message, { route: "person", params: { id: 1 } });
 	};
-  
+
 	const mockApi = {
-	  try: (module, method, args) => {
-		if (module === "messaging" && method === "publish") {
-		  mockPublish(args);
-		}
-	  }
+		try: (module, method, args) => {
+			if (module === "messaging" && method === "publish") {
+				mockPublish(args);
+			}
+		},
 	};
-  
+
 	await RouterModule.goto({ route: "person", params: { id: 1 }, api: mockApi });
-  });
+});
