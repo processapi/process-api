@@ -47,20 +47,7 @@ export class OllamaModule {
             })
         });
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder("utf-8");
-
-        try {
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                yield decoder.decode(value, {stream: true});
-            }
-        }
-        finally {
-            reader.releaseLock();
-        }
+        yield* streamResponse(response);
     }
 
     static async* chat(args) {
@@ -76,20 +63,7 @@ export class OllamaModule {
             })
         });
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder("utf-8");
-
-        try {
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                yield decoder.decode(value, {stream: true});
-            }
-        }
-        finally {
-            reader.releaseLock();
-        }
+        yield* streamResponse(response);
     }
 
     static async get_installed_models() {
@@ -124,19 +98,22 @@ export class OllamaModule {
             })
         })
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder("utf-8");
+        yield* streamResponse(response);
+    }
+}
 
-        try {
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
+async function* streamResponse(response) {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
 
-                yield decoder.decode(value, {stream: true});
-            }
+    try {
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            yield decoder.decode(value, { stream: true });
         }
-        finally {
-            reader.releaseLock();
-        }
+    } finally {
+        reader.releaseLock();
     }
 }
