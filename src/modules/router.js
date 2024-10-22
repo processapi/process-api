@@ -1,6 +1,6 @@
 // deno-lint-ignore-file require-await
 
-import { validateArgs } from "../validate/validate-args.js";
+import {validateArgs} from "../validate/validate-args.js";
 
 const DEFAULT_ROUTE = "home";
 
@@ -62,8 +62,7 @@ class RouterModule {
 			routes: { type: "object", required: true },
 		}, "RouterModule.init: ");
 
-		const routes = args.routes;
-		this.routes = routes;
+		this.routes = args.routes;
 
 		this.routeUpdateHandler = routeUpdated.bind(args.api);
 

@@ -1,14 +1,13 @@
 import { assert, assertEquals, assertExists } from "jsr:@std/assert";
-import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.ts";
 import { SurrealDBModule } from "../../../src/modules/surrealdb.js";
 
 SurrealDBModule.url = "http://127.0.0.1:8000";
 
-Deno.test("SurrealDBModule - status", async () => {
+Deno.test("SurrealDBModule - info", async () => {
 	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
 
-	const status = await SurrealDBModule.status();
-	assertExists(status);
+	const info = await SurrealDBModule.info();
+	assertExists(info);
 });
 
 Deno.test("SurrealDBModule - signin", async () => {

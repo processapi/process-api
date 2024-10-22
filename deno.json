@@ -6,6 +6,10 @@
 		"useTabs": true
 	},
 	"lint": {
-		"include": ["src/"]
+		"include": ["src/"],
+		"exclude": ["src/modules/surreal/cdn.js"]
+	},
+	"test": {
+		"exclude": ["tests/src/modules/surrealdb.test.js"]
 	}
 }
