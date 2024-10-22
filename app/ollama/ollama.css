@@ -1,0 +1,20 @@
+:host {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: var(--cl-bkg-d);
+}
+
+.container {
+	display: grid;
+	overflow: hidden;
+	padding: var(--padding);
+}
+
+ollama-ui {
+	width: 100%;
+	max-width: 800px;
+	align-self: center;
+	justify-self: center;
+}

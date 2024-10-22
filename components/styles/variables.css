@@ -1,0 +1,10 @@
+:root {
+    --cl-brd: #c5c5c5;
+    --cl-bkg-d: #212121;
+    --cl-bkg-l: #2f2f2f;
+    --cl-bkg-l2: #676767;
+
+    --border: 1px solid var(--cl-brd);
+    --border-radius: 0.5rem;
+    --padding: 0.5rem;
+}
