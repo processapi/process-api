@@ -6,6 +6,7 @@ const DELETE_URL = `${DEFAULT_URL}/api/delete`;
 const INSTALL_URL = `${DEFAULT_URL}/api/pull`;
 
 const GENERATE_OPTIONAL_ARGS = Object.freeze(["suffix", "images", "format", "options", "system", "template", "context", "stream", "raw", "keep_alive"]);
+const CHAT_OPTIONAL_ARGS = Object.freeze(["tools", "role", "content", "images", "tool_calls", "format", "options", "system", "template", "context", "stream", "keep_alive"]);
 
 export const ChatRoles = Object.freeze({
     USER: "user",
@@ -26,7 +27,8 @@ export class OllamaModule {
     static async* generate(args) {
         const body = {
             model: args.model,
-            prompt: args.prompt
+            prompt: args.prompt,
+            stream: args.stream ?? true
         }
 
         for (const key in GENERATE_OPTIONAL_ARGS) {
@@ -40,27 +42,31 @@ export class OllamaModule {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                model: args.model,
-                prompt: args.prompt,
-                stream: args.stream ?? true
-            })
+            body: JSON.stringify(body)
         });
 
         yield* streamResponse(response);
     }
 
     static async* chat(args) {
+        const body = {
+            model: args.model,
+            messages: args.messages,
+            stream: args.stream ?? true
+        }
+
+        for (const key in CHAT_OPTIONAL_ARGS) {
+            if (key in args) {
+                body[key] = args[key];
+            }
+        }
+
         const response = await fetch(CHAT_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                model: args.model,
-                messages: args.messages,
-                stream: args.stream ?? true
-            })
+            body: JSON.stringify(body)
         });
 
         yield* streamResponse(response);
