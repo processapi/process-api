@@ -1,0 +1,6 @@
+@import "./../styles/select.css";
+
+label {
+    display: block;
+    margin-bottom: var(--padding);
+}

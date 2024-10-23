@@ -1,4 +1,5 @@
 import {ComponentModule} from '../../src/modules/component.js';
+import {OllamaSettings} from "./ollama-settings.js";
 
 const TRANSLATION_MAP = {
     "placeholder": "input:placeholder",
@@ -9,6 +10,10 @@ const TRANSLATION_MAP = {
 
 export class OllamaUIComponent extends HTMLElement {
     static name = Object.freeze('ollama-ui');
+
+    #btnAttachClickHandler = this.#btnAttachClick.bind(this);
+    #btnRunClickHandler = this.#btnRunClick.bind(this);
+    #btnSettingsClickHandler = this.#btnSettingsClick.bind(this);
 
     #options = {
         model: "llama3.2",
@@ -22,10 +27,27 @@ export class OllamaUIComponent extends HTMLElement {
 
     async connectedCallback(){
         this.shadowRoot.innerHTML = await ComponentModule.load_html({ url: import.meta.url });
+        manageClickEvents(this.shadowRoot, "addEventListener", this.#btnAttachClickHandler, this.#btnRunClickHandler, this.#btnSettingsClickHandler);
     }
 
     async disconnectedCallback() {
+        manageClickEvents(this.shadowRoot, "removeEventListener", this.#btnAttachClickHandler, this.#btnRunClickHandler, this.#btnSettingsClickHandler);
 
+        this.#btnAttachClickHandler = null;
+        this.#btnRunClickHandler = null;
+        this.#btnSettingsClickHandler = null;
+    }
+
+    #btnAttachClick() {
+        console.log("Attach clicked");
+    }
+
+    #btnRunClick() {
+        console.log("Run clicked");
+    }
+
+    #btnSettingsClick() {
+        OllamaSettings.showDialog();
     }
 
     /**
@@ -46,6 +68,12 @@ export class OllamaUIComponent extends HTMLElement {
             setTranslations(this.shadowRoot, options.translations);
         }
     }
+}
+
+function manageClickEvents(shadowRoot, action, attachHandler, runHandler, settingsHandler) {
+    shadowRoot.querySelector("#btnAttach")[action]("click", attachHandler);
+    shadowRoot.querySelector("#btnRun")[action]("click", runHandler);
+    shadowRoot.querySelector("#btnSettings")[action]("click", settingsHandler);
 }
 
 function setTranslations(shadowRoot, translations) {
