@@ -1,9 +1,10 @@
 const DEFAULT_URL = "http://127.0.0.1:11434";
-const CHAT_URL = `${DEFAULT_URL}/api/chat`;
-const GENERATE_URL = `${DEFAULT_URL}/api/generate`;
-const MODELS_URL = `${DEFAULT_URL}/api/tags`;
-const DELETE_URL = `${DEFAULT_URL}/api/delete`;
-const INSTALL_URL = `${DEFAULT_URL}/api/pull`;
+const CHAT = "chat";
+const GENERATE = "generate";
+const MODELS = "tags";
+const DELETE = "delete";
+const INSTALL = "pull";
+const POST = "post";
 
 const GENERATE_OPTIONAL_ARGS = Object.freeze(["suffix", "images", "format", "options", "system", "template", "context", "stream", "raw", "keep_alive"]);
 const CHAT_OPTIONAL_ARGS = Object.freeze(["tools", "role", "content", "images", "tool_calls", "format", "options", "system", "template", "context", "stream", "keep_alive"]);
@@ -41,16 +42,19 @@ export class OllamaModule {
      * @param args.model {string} - The model to use for generation
      * @param args.prompt {string} - The prompt to use for generation
      * @param args.stream {boolean} - Whether to stream the response or not, defaults to true
+     * @param args.url {string} - The URL to use for the request, defaults to localhost
      * @returns {AsyncGenerator<string, void, unknown>}
      */
     static async* generate(args) {
+        const url = createUrl(args, GENERATE);
+
         const body = decorateBody({
             model: args.model,
             prompt: args.prompt,
-            stream: args.stream ?? true
+            stream: args.stream ?? true,
         }, GENERATE_OPTIONAL_ARGS, args);
 
-        yield* processRequest(GENERATE_URL, "POST", body);
+        yield* processRequest(url, POST, body);
     }
 
     /**
@@ -66,13 +70,15 @@ export class OllamaModule {
      * @returns {AsyncGenerator<string, void, unknown>}
      */
     static async* chat(args) {
+        const url = createUrl(args, CHAT);
+
         const body = decorateBody({
             model: args.model,
             messages: args.messages,
             stream: args.stream ?? true
         }, CHAT_OPTIONAL_ARGS, args);
 
-        yield* processRequest(CHAT_URL, "POST", body);
+        yield* processRequest(url, POST, body);
     }
 
     /**
@@ -83,7 +89,8 @@ export class OllamaModule {
      * @returns {Promise<string[]>}
      */
     static async get_installed_models() {
-        const result = await fetch(MODELS_URL).then(response => response.json());
+        const url = createUrl({}, MODELS);
+        const result = await fetch(url).then(response => response.json());
         return result.models.map(model => model.name.split(":latest")[0]);
     }
 
@@ -95,7 +102,8 @@ export class OllamaModule {
      * @returns {Promise<Response>}
      */
     static async delete_model(args) {
-        return callServer(DELETE_URL, "DELETE", {name: args.name});
+        const url = createUrl(args, DELETE);
+        return callServer(url, DELETE, {name: args.name});
     }
 
     /**
@@ -107,11 +115,25 @@ export class OllamaModule {
      * @returns {AsyncGenerator<string, void, unknown>}
      */
     static async* install_model(args) {
-        yield* processRequest(INSTALL_URL, "POST", {
+        const url = createUrl(args, INSTALL);
+        yield* processRequest(url, POST, {
             name: args.name,
             stream: true
         });
     }
+}
+
+/**
+ * @function createUrl
+ * @description Create the URL for the given path
+ * @param args {Object} - The args that was passed to the calling method that may contain the URL
+ * @param path {string} - The path to append to the URL to create the full URL for example "chat" or "generate"
+ * @returns {string}
+ */
+function createUrl(args, path) {
+    const url = args.url ?? DEFAULT_URL;
+    delete args.url;
+    return `${url}/api/${path}`;
 }
 
 /**
