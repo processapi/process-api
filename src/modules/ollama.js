@@ -91,7 +91,7 @@ export class OllamaModule {
     static async get_installed_models() {
         const url = createUrl({}, MODELS);
         const result = await fetch(url).then(response => response.json());
-        return result.models.map(model => model.name.split(":latest")[0]);
+        return result.models.map(model => model.name);
     }
 
     /**

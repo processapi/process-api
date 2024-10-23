@@ -15,4 +15,49 @@ async function getModels() {
     return models;
 }
 
-console.log(JSON.stringify(await getModels(), null, 2));
+async function getModelDetails(model) {
+    const url = `https://ollama.com/library/${model}`;
+
+    const result = {
+        url,
+        sizes: {}
+    }
+
+    const response = await fetch(url);
+    const text = await response.text();
+
+    result.tools = text.indexOf("Tools</span>") !== -1;
+
+    const dom = new DOMParser().parseFromString(text, "text/html");
+
+    let tags = dom.querySelector("#primary-tags");
+    if (tags == null) {
+        tags = dom.querySelector("#secondary-tags");
+    }
+
+    for (const element of tags.children) {
+        const name = element.children[0].children[0].textContent.trim();
+        const size = element.children[1].textContent.trim();
+
+        result.sizes[name] = size;
+    }
+
+    return result;
+}
+
+async function createModelsData() {
+    const models = await getModels();
+    const result = {};
+
+    for (const model of models) {
+        console.log(`Getting details for model: ${model}`);
+        result[model] = await getModelDetails(model);
+    }
+
+    return result;
+}
+
+const data = await createModelsData();
+const modelsFile = "./components/ollama-ui/models.json";
+await Deno.writeTextFile(modelsFile, JSON.stringify(data, null, 4));
+console.log(JSON.stringify(data, null, 4));
