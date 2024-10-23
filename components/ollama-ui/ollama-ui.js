@@ -10,6 +10,11 @@ const TRANSLATION_MAP = {
 export class OllamaUIComponent extends HTMLElement {
     static name = Object.freeze('ollama-ui');
 
+    #options = {
+        model: "llama3.2",
+        embeddingsModel: "mxbai-embed-large"
+    };
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -31,14 +36,23 @@ export class OllamaUIComponent extends HTMLElement {
      *     "attach-hint"    : "Attach a file",
      *     "settings-hint"  : "Settings"
      * }
-     * @param dictionary
+     * @param options {Object} - Define options for the component such as model to use, translations etc.
+     * @returns {void}
      */
-    setTranslations(dictionary) {
-        for (const key of Object.keys(dictionary)) {
-            if (TRANSLATION_MAP[key]) {
-                const parts = TRANSLATION_MAP[key].split(':');
-                this.shadowRoot.querySelector(`${parts[0]}`).setAttribute(parts[1], dictionary[key]);
-            }
+    setOptions(options) {
+        this.#options = options;
+
+        if (options.translations != null) {
+            setTranslations(this.shadowRoot, options.translations);
+        }
+    }
+}
+
+function setTranslations(shadowRoot, translations) {
+    for (const key of Object.keys(translations)) {
+        if (TRANSLATION_MAP[key]) {
+            const parts = TRANSLATION_MAP[key].split(':');
+            shadowRoot.querySelector(`${parts[0]}`).setAttribute(parts[1], dictionary[key]);
         }
     }
 }
