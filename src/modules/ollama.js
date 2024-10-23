@@ -1,10 +1,10 @@
-const DEFAULT_URL = "http://127.0.0.1:11434";
-const CHAT = "chat";
-const GENERATE = "generate";
-const MODELS = "tags";
-const DELETE = "delete";
-const INSTALL = "pull";
-const POST = "post";
+const DEFAULT_URL   = "http://127.0.0.1:11434";
+const CHAT          = "chat";
+const GENERATE      = "generate";
+const MODELS        = "tags";
+const DELETE        = "delete";
+const INSTALL       = "pull";
+const POST          = "post";
 
 const GENERATE_OPTIONAL_ARGS = Object.freeze(["suffix", "images", "format", "options", "system", "template", "context", "stream", "raw", "keep_alive"]);
 const CHAT_OPTIONAL_ARGS = Object.freeze(["tools", "role", "content", "images", "tool_calls", "format", "options", "system", "template", "context", "stream", "keep_alive"]);

@@ -1,0 +1,10 @@
+{
+	"llama3.2": {
+		"url": "https://ollama.com/library/llama3.2",
+		"tools": true,
+		"sizes": {
+			"1b": "1.3Gig",
+			"3b": "2.0Gig"
+		}
+	}
+}
