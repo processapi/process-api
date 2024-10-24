@@ -1,3 +1,5 @@
+@import "./../styles/input.css";
+
 :host {
     --cl-text: silver;
     --width: 800px;
@@ -52,8 +54,17 @@ ul {
 li {
     padding: var(--padding);
     cursor: pointer;
+    position: relative;
 }
 
-li:hover {
+li:nth-child(odd) {
     background: var(--cl-bkg-l2);
+}
+
+li.installed:after {
+    content: '✔';
+    position: absolute;
+    right: 1rem;
+    color: white;
+    margin-left: var(--padding);
 }

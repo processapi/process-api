@@ -4,6 +4,7 @@ import { OllamaModule } from "../../src/modules/ollama.js";
 export class OllamaModels extends HTMLElement {
     static name = Object.freeze("ollama-models");
     #models;
+    #installed;
 
     constructor() {
         super();
@@ -17,7 +18,12 @@ export class OllamaModels extends HTMLElement {
 
         const url = new URL("./models.json", import.meta.url);
         this.#models = await fetch(url).then(result => result.json());
-        buildListItems(this.shadowRoot.querySelector(".available"), this.#models);
+
+        this.#installed = await OllamaModule
+            .get_installed_models()
+            .then(result => result.map(model => model.split(":")[0]));
+
+        buildListItems(this.shadowRoot.querySelector(".available"), this.#models, this.#installed);
     }
 
     async disconnectedCallback() {
@@ -25,10 +31,15 @@ export class OllamaModels extends HTMLElement {
     }
 }
 
-function buildListItems(parent, models) {
+function buildListItems(parent, models, installed) {
     for (const modelName of Object.keys(models)) {
         const listItem = document.createElement("li");
         listItem.textContent = modelName;
+
+        if (installed.includes(modelName)) {
+            listItem.classList.add("installed");
+        }
+
         parent.appendChild(listItem);
     }
 }
