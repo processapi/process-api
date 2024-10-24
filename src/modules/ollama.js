@@ -1,3 +1,5 @@
+// deno-lint-ignore-file require-await
+
 const DEFAULT_URL   = "http://127.0.0.1:11434";
 const CHAT          = "chat";
 const GENERATE      = "generate";

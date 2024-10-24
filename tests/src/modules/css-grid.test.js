@@ -90,3 +90,31 @@ Deno.test("CssGridModule.to - should throw an error if data is not provided", as
         'CssGridModule.to: Argument "data" is required'
     );
 });
+
+Deno.test("CssGridModule.optimize - should optimize grid values by removing duplicates", async () => {
+    const result = await CssGridModule.optimize({ values: "1fr 1fr 1fr" });
+    assertEquals(result, "repeat(3, 1fr)");
+});
+
+Deno.test("CssGridModule.optimize - should handle mixed values correctly", async () => {
+    const result = await CssGridModule.optimize({ values: "1fr 1fr 2fr 3fr" });
+    assertEquals(result, "repeat(2, 1fr) 2fr 3fr");
+});
+
+Deno.test("CssGridModule.optimize - should return single value without repeat", async () => {
+    const result = await CssGridModule.optimize({ values: "1fr" });
+    assertEquals(result, "1fr");
+});
+
+Deno.test("CssGridModule.optimize - should handle no duplicates correctly", async () => {
+    const result = await CssGridModule.optimize({ values: "1fr 2fr 3fr" });
+    assertEquals(result, "1fr 2fr 3fr");
+});
+
+Deno.test("CssGridModule.optimize - should throw an error if values are not provided", async () => {
+    await assertThrowsAsync(
+        () => CssGridModule.optimize({}),
+        Error,
+        'CssGridModule.optimize: Argument "values" is required'
+    );
+});
