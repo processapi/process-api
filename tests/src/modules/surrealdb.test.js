@@ -4,21 +4,39 @@ import { SurrealDBModule } from "../../../src/modules/surrealdb.js";
 SurrealDBModule.url = "http://127.0.0.1:8000";
 
 Deno.test("SurrealDBModule - info", async () => {
-	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
+	await SurrealDBModule.connect({
+		username: "root",
+		password: "root",
+		namespace: "test",
+		database: "test",
+	});
 
 	const info = await SurrealDBModule.info();
 	assertExists(info);
 });
 
 Deno.test("SurrealDBModule - signin", async () => {
-	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
+	await SurrealDBModule.connect({
+		username: "root",
+		password: "root",
+		namespace: "test",
+		database: "test",
+	});
 
-	const result = await SurrealDBModule.signin({ username: "root", password: "root" });
+	const result = await SurrealDBModule.signin({
+		username: "root",
+		password: "root",
+	});
 	assertExists(result);
 });
 
 Deno.test("SurrealDBModule - create", async () => {
-	await SurrealDBModule.connect({ username: "root", password: "root", namespace: "test", database: "test" });
+	await SurrealDBModule.connect({
+		username: "root",
+		password: "root",
+		namespace: "test",
+		database: "test",
+	});
 
 	const table_query = `
         DEFINE TABLE IF NOT EXISTS person;
@@ -46,5 +64,4 @@ Deno.test("SurrealDBModule - create", async () => {
 	assert(people.length > 0);
 	assertEquals(people[0].firstName, "John");
 	assertEquals(people[0].lastName, "Doe");
-
 });
