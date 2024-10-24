@@ -1,6 +1,6 @@
 // deno-lint-ignore-file require-await
 
-import {validateArgs} from "../validate/validate-args.js";
+import { validateArgs } from "../validate/validate-args.js";
 
 const DEFAULT_ROUTE = "home";
 

@@ -1,1201 +1,1201 @@
 {
-    "llama3.2": {
-        "url": "https://ollama.com/library/llama3.2",
-        "sizes": {
-            "latest": "2.0GB",
-            "1b": "1.3GB",
-            "3b": "2.0GB"
-        },
-        "tools": true
-    },
-    "llama3.1": {
-        "url": "https://ollama.com/library/llama3.1",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB",
-            "405b": "229GB"
-        },
-        "tools": true
-    },
-    "gemma2": {
-        "url": "https://ollama.com/library/gemma2",
-        "sizes": {
-            "latest": "5.4GB",
-            "2b": "1.6GB",
-            "9b": "5.4GB",
-            "27b": "16GB"
-        },
-        "tools": false
-    },
-    "qwen2.5": {
-        "url": "https://ollama.com/library/qwen2.5",
-        "sizes": {
-            "latest": "4.7GB",
-            "0.5b": "398MB",
-            "1.5b": "986MB",
-            "3b": "1.9GB",
-            "7b": "4.7GB",
-            "14b": "9.0GB",
-            "32b": "20GB",
-            "72b": "47GB"
-        },
-        "tools": true
-    },
-    "phi3.5": {
-        "url": "https://ollama.com/library/phi3.5",
-        "sizes": {
-            "latest": "2.2GB",
-            "3.8b": "2.2GB"
-        },
-        "tools": false
-    },
-    "nemotron-mini": {
-        "url": "https://ollama.com/library/nemotron-mini",
-        "sizes": {
-            "latest": "2.7GB",
-            "4b": "2.7GB"
-        },
-        "tools": true
-    },
-    "mistral-small": {
-        "url": "https://ollama.com/library/mistral-small",
-        "sizes": {
-            "latest": "13GB",
-            "22b": "13GB"
-        },
-        "tools": true
-    },
-    "mistral-nemo": {
-        "url": "https://ollama.com/library/mistral-nemo",
-        "sizes": {
-            "latest": "7.1GB",
-            "12b": "7.1GB"
-        },
-        "tools": true
-    },
-    "deepseek-coder-v2": {
-        "url": "https://ollama.com/library/deepseek-coder-v2",
-        "sizes": {
-            "latest": "8.9GB",
-            "16b": "8.9GB",
-            "236b": "133GB"
-        },
-        "tools": false
-    },
-    "mistral": {
-        "url": "https://ollama.com/library/mistral",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": true
-    },
-    "mixtral": {
-        "url": "https://ollama.com/library/mixtral",
-        "sizes": {
-            "latest": "26GB",
-            "8x7b": "26GB",
-            "8x22b": "80GB"
-        },
-        "tools": true
-    },
-    "codegemma": {
-        "url": "https://ollama.com/library/codegemma",
-        "sizes": {
-            "latest": "5.0GB",
-            "2b": "1.6GB",
-            "7b": "5.0GB"
-        },
-        "tools": false
-    },
-    "command-r": {
-        "url": "https://ollama.com/library/command-r",
-        "sizes": {
-            "latest": "19GB",
-            "35b": "19GB"
-        },
-        "tools": true
-    },
-    "command-r-plus": {
-        "url": "https://ollama.com/library/command-r-plus",
-        "sizes": {
-            "latest": "59GB",
-            "104b": "59GB"
-        },
-        "tools": true
-    },
-    "llava": {
-        "url": "https://ollama.com/library/llava",
-        "sizes": {
-            "latest": "4.7GB",
-            "7b": "4.7GB",
-            "13b": "8.0GB",
-            "34b": "20GB"
-        },
-        "tools": false
-    },
-    "llama3": {
-        "url": "https://ollama.com/library/llama3",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB"
-        },
-        "tools": false
-    },
-    "gemma": {
-        "url": "https://ollama.com/library/gemma",
-        "sizes": {
-            "latest": "5.0GB",
-            "2b": "1.7GB",
-            "7b": "5.0GB"
-        },
-        "tools": false
-    },
-    "qwen": {
-        "url": "https://ollama.com/library/qwen",
-        "sizes": {
-            "latest": "2.3GB",
-            "0.5b": "395MB",
-            "1.8b": "1.1GB",
-            "4b": "2.3GB",
-            "7b": "4.5GB",
-            "14b": "8.2GB",
-            "32b": "18GB",
-            "72b": "41GB",
-            "110b": "63GB"
-        },
-        "tools": false
-    },
-    "qwen2": {
-        "url": "https://ollama.com/library/qwen2",
-        "sizes": {
-            "latest": "4.4GB",
-            "0.5b": "352MB",
-            "1.5b": "935MB",
-            "7b": "4.4GB",
-            "72b": "41GB"
-        },
-        "tools": true
-    },
-    "phi3": {
-        "url": "https://ollama.com/library/phi3",
-        "sizes": {
-            "latest": "2.2GB",
-            "3.8b": "2.2GB",
-            "14b": "7.9GB"
-        },
-        "tools": false
-    },
-    "llama2": {
-        "url": "https://ollama.com/library/llama2",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "codellama": {
-        "url": "https://ollama.com/library/codellama",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "34b": "19GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "nomic-embed-text": {
-        "url": "https://ollama.com/library/nomic-embed-text",
-        "sizes": {
-            "latest": "274MB",
-            "v1.5": "274MB"
-        },
-        "tools": false
-    },
-    "mxbai-embed-large": {
-        "url": "https://ollama.com/library/mxbai-embed-large",
-        "sizes": {
-            "latest": "670MB",
-            "335m": "670MB"
-        },
-        "tools": false
-    },
-    "dolphin-mixtral": {
-        "url": "https://ollama.com/library/dolphin-mixtral",
-        "sizes": {
-            "latest": "26GB",
-            "8x7b": "26GB",
-            "8x22b": "80GB"
-        },
-        "tools": false
-    },
-    "starcoder2": {
-        "url": "https://ollama.com/library/starcoder2",
-        "sizes": {
-            "latest": "1.7GB",
-            "3b": "1.7GB",
-            "7b": "4.0GB",
-            "15b": "9.1GB"
-        },
-        "tools": false
-    },
-    "phi": {
-        "url": "https://ollama.com/library/phi",
-        "sizes": {
-            "latest": "1.6GB",
-            "2.7b": "1.6GB"
-        },
-        "tools": false
-    },
-    "deepseek-coder": {
-        "url": "https://ollama.com/library/deepseek-coder",
-        "sizes": {
-            "latest": "776MB",
-            "1.3b": "776MB",
-            "6.7b": "3.8GB",
-            "33b": "19GB"
-        },
-        "tools": false
-    },
-    "llama2-uncensored": {
-        "url": "https://ollama.com/library/llama2-uncensored",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "dolphin-mistral": {
-        "url": "https://ollama.com/library/dolphin-mistral",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "qwen2.5-coder": {
-        "url": "https://ollama.com/library/qwen2.5-coder",
-        "sizes": {
-            "latest": "4.7GB",
-            "1.5b": "986MB",
-            "7b": "4.7GB"
-        },
-        "tools": true
-    },
-    "yi": {
-        "url": "https://ollama.com/library/yi",
-        "sizes": {
-            "latest": "3.5GB",
-            "6b": "3.5GB",
-            "9b": "5.0GB",
-            "34b": "19GB"
-        },
-        "tools": false
-    },
-    "dolphin-llama3": {
-        "url": "https://ollama.com/library/dolphin-llama3",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB"
-        },
-        "tools": false
-    },
-    "orca-mini": {
-        "url": "https://ollama.com/library/orca-mini",
-        "sizes": {
-            "latest": "2.0GB",
-            "3b": "2.0GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "zephyr": {
-        "url": "https://ollama.com/library/zephyr",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB",
-            "141b": "80GB"
-        },
-        "tools": false
-    },
-    "llava-llama3": {
-        "url": "https://ollama.com/library/llava-llama3",
-        "sizes": {
-            "latest": "5.5GB",
-            "8b": "5.5GB"
-        },
-        "tools": false
-    },
-    "snowflake-arctic-embed": {
-        "url": "https://ollama.com/library/snowflake-arctic-embed",
-        "sizes": {
-            "latest": "669MB",
-            "22m": "46MB",
-            "33m": "67MB",
-            "110m": "219MB",
-            "137m": "274MB",
-            "335m": "669MB"
-        },
-        "tools": false
-    },
-    "tinyllama": {
-        "url": "https://ollama.com/library/tinyllama",
-        "sizes": {
-            "latest": "638MB",
-            "1.1b": "638MB"
-        },
-        "tools": false
-    },
-    "mistral-openorca": {
-        "url": "https://ollama.com/library/mistral-openorca",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "starcoder": {
-        "url": "https://ollama.com/library/starcoder",
-        "sizes": {
-            "latest": "1.8GB",
-            "1b": "726MB",
-            "3b": "1.8GB",
-            "7b": "4.3GB",
-            "15b": "9.0GB"
-        },
-        "tools": false
-    },
-    "vicuna": {
-        "url": "https://ollama.com/library/vicuna",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "33b": "18GB"
-        },
-        "tools": false
-    },
-    "codestral": {
-        "url": "https://ollama.com/library/codestral",
-        "sizes": {
-            "latest": "13GB",
-            "22b": "13GB"
-        },
-        "tools": false
-    },
-    "granite-code": {
-        "url": "https://ollama.com/library/granite-code",
-        "sizes": {
-            "latest": "2.0GB",
-            "3b": "2.0GB",
-            "8b": "4.6GB",
-            "20b": "12GB",
-            "34b": "19GB"
-        },
-        "tools": false
-    },
-    "llama2-chinese": {
-        "url": "https://ollama.com/library/llama2-chinese",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "wizard-vicuna-uncensored": {
-        "url": "https://ollama.com/library/wizard-vicuna-uncensored",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "30b": "18GB"
-        },
-        "tools": false
-    },
-    "wizardlm2": {
-        "url": "https://ollama.com/library/wizardlm2",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB",
-            "8x22b": "80GB"
-        },
-        "tools": false
-    },
-    "codegeex4": {
-        "url": "https://ollama.com/library/codegeex4",
-        "sizes": {
-            "latest": "5.5GB",
-            "9b": "5.5GB"
-        },
-        "tools": false
-    },
-    "all-minilm": {
-        "url": "https://ollama.com/library/all-minilm",
-        "sizes": {
-            "latest": "46MB",
-            "22m": "46MB",
-            "33m": "67MB"
-        },
-        "tools": false
-    },
-    "nous-hermes2": {
-        "url": "https://ollama.com/library/nous-hermes2",
-        "sizes": {
-            "latest": "6.1GB",
-            "10.7b": "6.1GB",
-            "34b": "19GB"
-        },
-        "tools": false
-    },
-    "openchat": {
-        "url": "https://ollama.com/library/openchat",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "aya": {
-        "url": "https://ollama.com/library/aya",
-        "sizes": {
-            "latest": "4.8GB",
-            "8b": "4.8GB",
-            "35b": "20GB"
-        },
-        "tools": false
-    },
-    "codeqwen": {
-        "url": "https://ollama.com/library/codeqwen",
-        "sizes": {
-            "latest": "4.2GB",
-            "7b": "4.2GB"
-        },
-        "tools": false
-    },
-    "tinydolphin": {
-        "url": "https://ollama.com/library/tinydolphin",
-        "sizes": {
-            "latest": "637MB",
-            "1.1b": "637MB"
-        },
-        "tools": false
-    },
-    "wizardcoder": {
-        "url": "https://ollama.com/library/wizardcoder",
-        "sizes": {
-            "latest": "3.8GB",
-            "33b": "19GB",
-            "python": "3.8GB"
-        },
-        "tools": false
-    },
-    "stable-code": {
-        "url": "https://ollama.com/library/stable-code",
-        "sizes": {
-            "latest": "1.6GB",
-            "3b": "1.6GB"
-        },
-        "tools": false
-    },
-    "openhermes": {
-        "url": "https://ollama.com/library/openhermes",
-        "sizes": {
-            "latest": "4.1GB",
-            "v2.5": "4.1GB"
-        },
-        "tools": false
-    },
-    "mistral-large": {
-        "url": "https://ollama.com/library/mistral-large",
-        "sizes": {
-            "latest": "69GB",
-            "123b": "69GB"
-        },
-        "tools": true
-    },
-    "qwen2-math": {
-        "url": "https://ollama.com/library/qwen2-math",
-        "sizes": {
-            "latest": "4.4GB",
-            "1.5b": "935MB",
-            "7b": "4.4GB",
-            "72b": "41GB"
-        },
-        "tools": false
-    },
-    "reflection": {
-        "url": "https://ollama.com/library/reflection",
-        "sizes": {
-            "latest": "40GB",
-            "70b": "40GB"
-        },
-        "tools": false
-    },
-    "bakllava": {
-        "url": "https://ollama.com/library/bakllava",
-        "sizes": {
-            "latest": "4.7GB",
-            "7b": "4.7GB"
-        },
-        "tools": false
-    },
-    "stablelm2": {
-        "url": "https://ollama.com/library/stablelm2",
-        "sizes": {
-            "latest": "983MB",
-            "1.6b": "983MB",
-            "12b": "7.0GB"
-        },
-        "tools": false
-    },
-    "llama3-gradient": {
-        "url": "https://ollama.com/library/llama3-gradient",
-        "sizes": {
-            "latest": "4.7GB",
-            "1048k": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB"
-        },
-        "tools": false
-    },
-    "deepseek-llm": {
-        "url": "https://ollama.com/library/deepseek-llm",
-        "sizes": {
-            "latest": "4.0GB",
-            "7b": "4.0GB",
-            "67b": "38GB"
-        },
-        "tools": false
-    },
-    "wizard-math": {
-        "url": "https://ollama.com/library/wizard-math",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB",
-            "13b": "7.4GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "glm4": {
-        "url": "https://ollama.com/library/glm4",
-        "sizes": {
-            "latest": "5.5GB",
-            "9b": "5.5GB"
-        },
-        "tools": false
-    },
-    "neural-chat": {
-        "url": "https://ollama.com/library/neural-chat",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "llama3-chatqa": {
-        "url": "https://ollama.com/library/llama3-chatqa",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB"
-        },
-        "tools": false
-    },
-    "moondream": {
-        "url": "https://ollama.com/library/moondream",
-        "sizes": {
-            "latest": "1.7GB",
-            "1.8b": "1.7GB"
-        },
-        "tools": false
-    },
-    "xwinlm": {
-        "url": "https://ollama.com/library/xwinlm",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "smollm": {
-        "url": "https://ollama.com/library/smollm",
-        "sizes": {
-            "latest": "991MB",
-            "135m": "92MB",
-            "360m": "229MB",
-            "1.7b": "991MB"
-        },
-        "tools": false
-    },
-    "nous-hermes": {
-        "url": "https://ollama.com/library/nous-hermes",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "sqlcoder": {
-        "url": "https://ollama.com/library/sqlcoder",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB",
-            "15b": "9.0GB"
-        },
-        "tools": false
-    },
-    "phind-codellama": {
-        "url": "https://ollama.com/library/phind-codellama",
-        "sizes": {
-            "latest": "19GB",
-            "34b": "19GB"
-        },
-        "tools": false
-    },
-    "yarn-llama2": {
-        "url": "https://ollama.com/library/yarn-llama2",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "dolphincoder": {
-        "url": "https://ollama.com/library/dolphincoder",
-        "sizes": {
-            "latest": "4.2GB",
-            "7b": "4.2GB",
-            "15b": "9.1GB"
-        },
-        "tools": false
-    },
-    "wizardlm": {
-        "url": "https://ollama.com/library/wizardlm",
-        "sizes": {
-            "7b-fp16": "13GB",
-            "7b-q2_K": "2.8GB",
-            "7b-q3_K_S": "2.9GB",
-            "7b-q3_K_M": "3.3GB",
-            "7b-q3_K_L": "3.6GB",
-            "7b-q4_0": "3.8GB",
-            "7b-q4_1": "4.2GB",
-            "7b-q4_K_S": "3.9GB",
-            "7b-q4_K_M": "4.1GB",
-            "7b-q5_0": "4.7GB",
-            "7b-q5_1": "5.1GB",
-            "7b-q5_K_S": "4.7GB",
-            "7b-q5_K_M": "4.8GB",
-            "7b-q6_K": "5.5GB",
-            "7b-q8_0": "7.2GB",
-            "13b-fp16": "26GB",
-            "13b-q2_K": "5.4GB",
-            "13b-q3_K_S": "5.7GB",
-            "13b-q3_K_M": "6.3GB",
-            "13b-q3_K_L": "6.9GB",
-            "13b-q4_0": "7.4GB",
-            "13b-q4_1": "8.2GB",
-            "13b-q4_K_S": "7.4GB",
-            "13b-q4_K_M": "7.9GB",
-            "13b-q5_0": "9.0GB",
-            "13b-q5_1": "9.8GB",
-            "13b-q5_K_S": "9.0GB",
-            "13b-q5_K_M": "9.2GB",
-            "13b-q6_K": "11GB",
-            "13b-q8_0": "14GB",
-            "30b-fp16": "65GB",
-            "30b-q2_K": "14GB",
-            "30b-q3_K_S": "14GB",
-            "30b-q3_K_M": "16GB",
-            "30b-q3_K_L": "17GB",
-            "30b-q4_0": "18GB",
-            "30b-q4_1": "20GB",
-            "30b-q4_K_S": "18GB",
-            "30b-q4_K_M": "20GB",
-            "30b-q5_0": "22GB",
-            "30b-q5_1": "24GB",
-            "30b-q5_K_S": "22GB",
-            "30b-q5_K_M": "23GB",
-            "30b-q6_K": "27GB",
-            "30b-q8_0": "35GB",
-            "13b-llama2-fp16": "26GB",
-            "13b-llama2-q2_K": "5.4GB",
-            "13b-llama2-q3_K_S": "5.7GB",
-            "13b-llama2-q3_K_M": "6.3GB",
-            "13b-llama2-q3_K_L": "6.9GB",
-            "13b-llama2-q4_0": "7.4GB",
-            "13b-llama2-q4_1": "8.2GB",
-            "13b-llama2-q4_K_S": "7.4GB",
-            "13b-llama2-q4_K_M": "7.9GB",
-            "13b-llama2-q5_0": "9.0GB",
-            "13b-llama2-q5_1": "9.8GB",
-            "13b-llama2-q5_K_S": "9.0GB",
-            "13b-llama2-q5_K_M": "9.2GB",
-            "13b-llama2-q6_K": "11GB",
-            "13b-llama2-q8_0": "14GB",
-            "70b-llama2-q2_K": "29GB",
-            "70b-llama2-q3_K_S": "30GB",
-            "70b-llama2-q3_K_M": "33GB",
-            "70b-llama2-q3_K_L": "36GB",
-            "70b-llama2-q4_0": "39GB",
-            "70b-llama2-q4_1": "43GB",
-            "70b-llama2-q4_K_S": "39GB",
-            "70b-llama2-q4_K_M": "41GB",
-            "70b-llama2-q5_0": "47GB",
-            "70b-llama2-q5_K_S": "47GB",
-            "70b-llama2-q5_K_M": "49GB",
-            "70b-llama2-q6_K": "57GB",
-            "70b-llama2-q8_0": "73GB"
-        },
-        "tools": false
-    },
-    "deepseek-v2": {
-        "url": "https://ollama.com/library/deepseek-v2",
-        "sizes": {
-            "latest": "8.9GB",
-            "16b": "8.9GB",
-            "236b": "133GB"
-        },
-        "tools": false
-    },
-    "starling-lm": {
-        "url": "https://ollama.com/library/starling-lm",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "samantha-mistral": {
-        "url": "https://ollama.com/library/samantha-mistral",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "falcon": {
-        "url": "https://ollama.com/library/falcon",
-        "sizes": {
-            "latest": "4.2GB",
-            "7b": "4.2GB",
-            "40b": "24GB",
-            "180b": "101GB"
-        },
-        "tools": false
-    },
-    "solar": {
-        "url": "https://ollama.com/library/solar",
-        "sizes": {
-            "latest": "6.1GB",
-            "10.7b": "6.1GB"
-        },
-        "tools": false
-    },
-    "orca2": {
-        "url": "https://ollama.com/library/orca2",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "stable-beluga": {
-        "url": "https://ollama.com/library/stable-beluga",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "13b": "7.4GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "yi-coder": {
-        "url": "https://ollama.com/library/yi-coder",
-        "sizes": {
-            "latest": "5.0GB",
-            "1.5b": "866MB",
-            "9b": "5.0GB"
-        },
-        "tools": false
-    },
-    "hermes3": {
-        "url": "https://ollama.com/library/hermes3",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB",
-            "405b": "229GB"
-        },
-        "tools": true
-    },
-    "internlm2": {
-        "url": "https://ollama.com/library/internlm2",
-        "sizes": {
-            "latest": "4.5GB",
-            "1m": "4.5GB",
-            "1.8b": "1.1GB",
-            "7b": "4.5GB",
-            "20b": "11GB"
-        },
-        "tools": false
-    },
-    "dolphin-phi": {
-        "url": "https://ollama.com/library/dolphin-phi",
-        "sizes": {
-            "latest": "1.6GB",
-            "2.7b": "1.6GB"
-        },
-        "tools": false
-    },
-    "llava-phi3": {
-        "url": "https://ollama.com/library/llava-phi3",
-        "sizes": {
-            "latest": "2.9GB",
-            "3.8b": "2.9GB"
-        },
-        "tools": false
-    },
-    "wizardlm-uncensored": {
-        "url": "https://ollama.com/library/wizardlm-uncensored",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "yarn-mistral": {
-        "url": "https://ollama.com/library/yarn-mistral",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "llama-pro": {
-        "url": "https://ollama.com/library/llama-pro",
-        "sizes": {
-            "latest": "4.7GB",
-            "instruct": "4.7GB"
-        },
-        "tools": false
-    },
-    "medllama2": {
-        "url": "https://ollama.com/library/medllama2",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB"
-        },
-        "tools": false
-    },
-    "meditron": {
-        "url": "https://ollama.com/library/meditron",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB",
-            "70b": "39GB"
-        },
-        "tools": false
-    },
-    "nexusraven": {
-        "url": "https://ollama.com/library/nexusraven",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "nous-hermes2-mixtral": {
-        "url": "https://ollama.com/library/nous-hermes2-mixtral",
-        "sizes": {
-            "latest": "26GB",
-            "8x7b": "26GB"
-        },
-        "tools": false
-    },
-    "llama3-groq-tool-use": {
-        "url": "https://ollama.com/library/llama3-groq-tool-use",
-        "sizes": {
-            "latest": "4.7GB",
-            "8b": "4.7GB",
-            "70b": "40GB"
-        },
-        "tools": true
-    },
-    "codeup": {
-        "url": "https://ollama.com/library/codeup",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "everythinglm": {
-        "url": "https://ollama.com/library/everythinglm",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "minicpm-v": {
-        "url": "https://ollama.com/library/minicpm-v",
-        "sizes": {
-            "latest": "5.5GB",
-            "8b": "5.5GB"
-        },
-        "tools": false
-    },
-    "magicoder": {
-        "url": "https://ollama.com/library/magicoder",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB"
-        },
-        "tools": false
-    },
-    "stablelm-zephyr": {
-        "url": "https://ollama.com/library/stablelm-zephyr",
-        "sizes": {
-            "latest": "1.6GB",
-            "3b": "1.6GB"
-        },
-        "tools": false
-    },
-    "codebooga": {
-        "url": "https://ollama.com/library/codebooga",
-        "sizes": {
-            "latest": "19GB",
-            "34b": "19GB"
-        },
-        "tools": false
-    },
-    "wizard-vicuna": {
-        "url": "https://ollama.com/library/wizard-vicuna",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "mistrallite": {
-        "url": "https://ollama.com/library/mistrallite",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "falcon2": {
-        "url": "https://ollama.com/library/falcon2",
-        "sizes": {
-            "latest": "6.4GB",
-            "11b": "6.4GB"
-        },
-        "tools": false
-    },
-    "duckdb-nsql": {
-        "url": "https://ollama.com/library/duckdb-nsql",
-        "sizes": {
-            "latest": "3.8GB",
-            "7b": "3.8GB"
-        },
-        "tools": false
-    },
-    "bge-m3": {
-        "url": "https://ollama.com/library/bge-m3",
-        "sizes": {
-            "latest": "1.2GB",
-            "567m": "1.2GB"
-        },
-        "tools": false
-    },
-    "megadolphin": {
-        "url": "https://ollama.com/library/megadolphin",
-        "sizes": {
-            "latest": "68GB",
-            "120b": "68GB"
-        },
-        "tools": false
-    },
-    "notux": {
-        "url": "https://ollama.com/library/notux",
-        "sizes": {
-            "latest": "26GB",
-            "8x7b": "26GB"
-        },
-        "tools": false
-    },
-    "open-orca-platypus2": {
-        "url": "https://ollama.com/library/open-orca-platypus2",
-        "sizes": {
-            "latest": "7.4GB",
-            "13b": "7.4GB"
-        },
-        "tools": false
-    },
-    "goliath": {
-        "url": "https://ollama.com/library/goliath",
-        "sizes": {
-            "latest": "66GB",
-            "120b-q4_0": "66GB"
-        },
-        "tools": false
-    },
-    "notus": {
-        "url": "https://ollama.com/library/notus",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "mathstral": {
-        "url": "https://ollama.com/library/mathstral",
-        "sizes": {
-            "latest": "4.1GB",
-            "7b": "4.1GB"
-        },
-        "tools": false
-    },
-    "solar-pro": {
-        "url": "https://ollama.com/library/solar-pro",
-        "sizes": {
-            "latest": "13GB",
-            "22b": "13GB"
-        },
-        "tools": false
-    },
-    "dbrx": {
-        "url": "https://ollama.com/library/dbrx",
-        "sizes": {
-            "latest": "74GB",
-            "132b": "74GB"
-        },
-        "tools": false
-    },
-    "nemotron": {
-        "url": "https://ollama.com/library/nemotron",
-        "sizes": {
-            "latest": "43GB",
-            "70b": "43GB"
-        },
-        "tools": true
-    },
-    "nuextract": {
-        "url": "https://ollama.com/library/nuextract",
-        "sizes": {
-            "latest": "2.2GB",
-            "3.8b": "2.2GB"
-        },
-        "tools": false
-    },
-    "reader-lm": {
-        "url": "https://ollama.com/library/reader-lm",
-        "sizes": {
-            "latest": "935MB",
-            "0.5b": "352MB",
-            "1.5b": "935MB"
-        },
-        "tools": false
-    },
-    "alfred": {
-        "url": "https://ollama.com/library/alfred",
-        "sizes": {
-            "latest": "24GB",
-            "40b": "24GB"
-        },
-        "tools": false
-    },
-    "firefunction-v2": {
-        "url": "https://ollama.com/library/firefunction-v2",
-        "sizes": {
-            "latest": "40GB",
-            "70b": "40GB"
-        },
-        "tools": true
-    },
-    "bge-large": {
-        "url": "https://ollama.com/library/bge-large",
-        "sizes": {
-            "latest": "671MB",
-            "335m": "671MB"
-        },
-        "tools": false
-    },
-    "deepseek-v2.5": {
-        "url": "https://ollama.com/library/deepseek-v2.5",
-        "sizes": {
-            "latest": "133GB",
-            "236b": "133GB"
-        },
-        "tools": false
-    },
-    "bespoke-minicheck": {
-        "url": "https://ollama.com/library/bespoke-minicheck",
-        "sizes": {
-            "latest": "4.7GB",
-            "7b": "4.7GB"
-        },
-        "tools": false
-    },
-    "paraphrase-multilingual": {
-        "url": "https://ollama.com/library/paraphrase-multilingual",
-        "sizes": {
-            "latest": "563MB",
-            "278m": "563MB"
-        },
-        "tools": false
-    },
-    "granite3-dense": {
-        "url": "https://ollama.com/library/granite3-dense",
-        "sizes": {
-            "latest": "1.6GB",
-            "2b": "1.6GB",
-            "8b": "4.9GB"
-        },
-        "tools": true
-    },
-    "shieldgemma": {
-        "url": "https://ollama.com/library/shieldgemma",
-        "sizes": {
-            "latest": "5.8GB",
-            "2b": "1.7GB",
-            "9b": "5.8GB",
-            "27b": "17GB"
-        },
-        "tools": false
-    },
-    "llama-guard3": {
-        "url": "https://ollama.com/library/llama-guard3",
-        "sizes": {
-            "latest": "4.9GB",
-            "1b": "1.6GB",
-            "8b": "4.9GB"
-        },
-        "tools": false
-    },
-    "granite3-moe": {
-        "url": "https://ollama.com/library/granite3-moe",
-        "sizes": {
-            "latest": "2.1GB",
-            "1b": "822MB",
-            "3b": "2.1GB"
-        },
-        "tools": true
-    }
+	"llama3.2": {
+		"url": "https://ollama.com/library/llama3.2",
+		"sizes": {
+			"latest": "2.0GB",
+			"1b": "1.3GB",
+			"3b": "2.0GB"
+		},
+		"tools": true
+	},
+	"llama3.1": {
+		"url": "https://ollama.com/library/llama3.1",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB",
+			"405b": "229GB"
+		},
+		"tools": true
+	},
+	"gemma2": {
+		"url": "https://ollama.com/library/gemma2",
+		"sizes": {
+			"latest": "5.4GB",
+			"2b": "1.6GB",
+			"9b": "5.4GB",
+			"27b": "16GB"
+		},
+		"tools": false
+	},
+	"qwen2.5": {
+		"url": "https://ollama.com/library/qwen2.5",
+		"sizes": {
+			"latest": "4.7GB",
+			"0.5b": "398MB",
+			"1.5b": "986MB",
+			"3b": "1.9GB",
+			"7b": "4.7GB",
+			"14b": "9.0GB",
+			"32b": "20GB",
+			"72b": "47GB"
+		},
+		"tools": true
+	},
+	"phi3.5": {
+		"url": "https://ollama.com/library/phi3.5",
+		"sizes": {
+			"latest": "2.2GB",
+			"3.8b": "2.2GB"
+		},
+		"tools": false
+	},
+	"nemotron-mini": {
+		"url": "https://ollama.com/library/nemotron-mini",
+		"sizes": {
+			"latest": "2.7GB",
+			"4b": "2.7GB"
+		},
+		"tools": true
+	},
+	"mistral-small": {
+		"url": "https://ollama.com/library/mistral-small",
+		"sizes": {
+			"latest": "13GB",
+			"22b": "13GB"
+		},
+		"tools": true
+	},
+	"mistral-nemo": {
+		"url": "https://ollama.com/library/mistral-nemo",
+		"sizes": {
+			"latest": "7.1GB",
+			"12b": "7.1GB"
+		},
+		"tools": true
+	},
+	"deepseek-coder-v2": {
+		"url": "https://ollama.com/library/deepseek-coder-v2",
+		"sizes": {
+			"latest": "8.9GB",
+			"16b": "8.9GB",
+			"236b": "133GB"
+		},
+		"tools": false
+	},
+	"mistral": {
+		"url": "https://ollama.com/library/mistral",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": true
+	},
+	"mixtral": {
+		"url": "https://ollama.com/library/mixtral",
+		"sizes": {
+			"latest": "26GB",
+			"8x7b": "26GB",
+			"8x22b": "80GB"
+		},
+		"tools": true
+	},
+	"codegemma": {
+		"url": "https://ollama.com/library/codegemma",
+		"sizes": {
+			"latest": "5.0GB",
+			"2b": "1.6GB",
+			"7b": "5.0GB"
+		},
+		"tools": false
+	},
+	"command-r": {
+		"url": "https://ollama.com/library/command-r",
+		"sizes": {
+			"latest": "19GB",
+			"35b": "19GB"
+		},
+		"tools": true
+	},
+	"command-r-plus": {
+		"url": "https://ollama.com/library/command-r-plus",
+		"sizes": {
+			"latest": "59GB",
+			"104b": "59GB"
+		},
+		"tools": true
+	},
+	"llava": {
+		"url": "https://ollama.com/library/llava",
+		"sizes": {
+			"latest": "4.7GB",
+			"7b": "4.7GB",
+			"13b": "8.0GB",
+			"34b": "20GB"
+		},
+		"tools": false
+	},
+	"llama3": {
+		"url": "https://ollama.com/library/llama3",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB"
+		},
+		"tools": false
+	},
+	"gemma": {
+		"url": "https://ollama.com/library/gemma",
+		"sizes": {
+			"latest": "5.0GB",
+			"2b": "1.7GB",
+			"7b": "5.0GB"
+		},
+		"tools": false
+	},
+	"qwen": {
+		"url": "https://ollama.com/library/qwen",
+		"sizes": {
+			"latest": "2.3GB",
+			"0.5b": "395MB",
+			"1.8b": "1.1GB",
+			"4b": "2.3GB",
+			"7b": "4.5GB",
+			"14b": "8.2GB",
+			"32b": "18GB",
+			"72b": "41GB",
+			"110b": "63GB"
+		},
+		"tools": false
+	},
+	"qwen2": {
+		"url": "https://ollama.com/library/qwen2",
+		"sizes": {
+			"latest": "4.4GB",
+			"0.5b": "352MB",
+			"1.5b": "935MB",
+			"7b": "4.4GB",
+			"72b": "41GB"
+		},
+		"tools": true
+	},
+	"phi3": {
+		"url": "https://ollama.com/library/phi3",
+		"sizes": {
+			"latest": "2.2GB",
+			"3.8b": "2.2GB",
+			"14b": "7.9GB"
+		},
+		"tools": false
+	},
+	"llama2": {
+		"url": "https://ollama.com/library/llama2",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"codellama": {
+		"url": "https://ollama.com/library/codellama",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"34b": "19GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"nomic-embed-text": {
+		"url": "https://ollama.com/library/nomic-embed-text",
+		"sizes": {
+			"latest": "274MB",
+			"v1.5": "274MB"
+		},
+		"tools": false
+	},
+	"mxbai-embed-large": {
+		"url": "https://ollama.com/library/mxbai-embed-large",
+		"sizes": {
+			"latest": "670MB",
+			"335m": "670MB"
+		},
+		"tools": false
+	},
+	"dolphin-mixtral": {
+		"url": "https://ollama.com/library/dolphin-mixtral",
+		"sizes": {
+			"latest": "26GB",
+			"8x7b": "26GB",
+			"8x22b": "80GB"
+		},
+		"tools": false
+	},
+	"starcoder2": {
+		"url": "https://ollama.com/library/starcoder2",
+		"sizes": {
+			"latest": "1.7GB",
+			"3b": "1.7GB",
+			"7b": "4.0GB",
+			"15b": "9.1GB"
+		},
+		"tools": false
+	},
+	"phi": {
+		"url": "https://ollama.com/library/phi",
+		"sizes": {
+			"latest": "1.6GB",
+			"2.7b": "1.6GB"
+		},
+		"tools": false
+	},
+	"deepseek-coder": {
+		"url": "https://ollama.com/library/deepseek-coder",
+		"sizes": {
+			"latest": "776MB",
+			"1.3b": "776MB",
+			"6.7b": "3.8GB",
+			"33b": "19GB"
+		},
+		"tools": false
+	},
+	"llama2-uncensored": {
+		"url": "https://ollama.com/library/llama2-uncensored",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"dolphin-mistral": {
+		"url": "https://ollama.com/library/dolphin-mistral",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"qwen2.5-coder": {
+		"url": "https://ollama.com/library/qwen2.5-coder",
+		"sizes": {
+			"latest": "4.7GB",
+			"1.5b": "986MB",
+			"7b": "4.7GB"
+		},
+		"tools": true
+	},
+	"yi": {
+		"url": "https://ollama.com/library/yi",
+		"sizes": {
+			"latest": "3.5GB",
+			"6b": "3.5GB",
+			"9b": "5.0GB",
+			"34b": "19GB"
+		},
+		"tools": false
+	},
+	"dolphin-llama3": {
+		"url": "https://ollama.com/library/dolphin-llama3",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB"
+		},
+		"tools": false
+	},
+	"orca-mini": {
+		"url": "https://ollama.com/library/orca-mini",
+		"sizes": {
+			"latest": "2.0GB",
+			"3b": "2.0GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"zephyr": {
+		"url": "https://ollama.com/library/zephyr",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB",
+			"141b": "80GB"
+		},
+		"tools": false
+	},
+	"llava-llama3": {
+		"url": "https://ollama.com/library/llava-llama3",
+		"sizes": {
+			"latest": "5.5GB",
+			"8b": "5.5GB"
+		},
+		"tools": false
+	},
+	"snowflake-arctic-embed": {
+		"url": "https://ollama.com/library/snowflake-arctic-embed",
+		"sizes": {
+			"latest": "669MB",
+			"22m": "46MB",
+			"33m": "67MB",
+			"110m": "219MB",
+			"137m": "274MB",
+			"335m": "669MB"
+		},
+		"tools": false
+	},
+	"tinyllama": {
+		"url": "https://ollama.com/library/tinyllama",
+		"sizes": {
+			"latest": "638MB",
+			"1.1b": "638MB"
+		},
+		"tools": false
+	},
+	"mistral-openorca": {
+		"url": "https://ollama.com/library/mistral-openorca",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"starcoder": {
+		"url": "https://ollama.com/library/starcoder",
+		"sizes": {
+			"latest": "1.8GB",
+			"1b": "726MB",
+			"3b": "1.8GB",
+			"7b": "4.3GB",
+			"15b": "9.0GB"
+		},
+		"tools": false
+	},
+	"vicuna": {
+		"url": "https://ollama.com/library/vicuna",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"33b": "18GB"
+		},
+		"tools": false
+	},
+	"codestral": {
+		"url": "https://ollama.com/library/codestral",
+		"sizes": {
+			"latest": "13GB",
+			"22b": "13GB"
+		},
+		"tools": false
+	},
+	"granite-code": {
+		"url": "https://ollama.com/library/granite-code",
+		"sizes": {
+			"latest": "2.0GB",
+			"3b": "2.0GB",
+			"8b": "4.6GB",
+			"20b": "12GB",
+			"34b": "19GB"
+		},
+		"tools": false
+	},
+	"llama2-chinese": {
+		"url": "https://ollama.com/library/llama2-chinese",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"wizard-vicuna-uncensored": {
+		"url": "https://ollama.com/library/wizard-vicuna-uncensored",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"30b": "18GB"
+		},
+		"tools": false
+	},
+	"wizardlm2": {
+		"url": "https://ollama.com/library/wizardlm2",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB",
+			"8x22b": "80GB"
+		},
+		"tools": false
+	},
+	"codegeex4": {
+		"url": "https://ollama.com/library/codegeex4",
+		"sizes": {
+			"latest": "5.5GB",
+			"9b": "5.5GB"
+		},
+		"tools": false
+	},
+	"all-minilm": {
+		"url": "https://ollama.com/library/all-minilm",
+		"sizes": {
+			"latest": "46MB",
+			"22m": "46MB",
+			"33m": "67MB"
+		},
+		"tools": false
+	},
+	"nous-hermes2": {
+		"url": "https://ollama.com/library/nous-hermes2",
+		"sizes": {
+			"latest": "6.1GB",
+			"10.7b": "6.1GB",
+			"34b": "19GB"
+		},
+		"tools": false
+	},
+	"openchat": {
+		"url": "https://ollama.com/library/openchat",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"aya": {
+		"url": "https://ollama.com/library/aya",
+		"sizes": {
+			"latest": "4.8GB",
+			"8b": "4.8GB",
+			"35b": "20GB"
+		},
+		"tools": false
+	},
+	"codeqwen": {
+		"url": "https://ollama.com/library/codeqwen",
+		"sizes": {
+			"latest": "4.2GB",
+			"7b": "4.2GB"
+		},
+		"tools": false
+	},
+	"tinydolphin": {
+		"url": "https://ollama.com/library/tinydolphin",
+		"sizes": {
+			"latest": "637MB",
+			"1.1b": "637MB"
+		},
+		"tools": false
+	},
+	"wizardcoder": {
+		"url": "https://ollama.com/library/wizardcoder",
+		"sizes": {
+			"latest": "3.8GB",
+			"33b": "19GB",
+			"python": "3.8GB"
+		},
+		"tools": false
+	},
+	"stable-code": {
+		"url": "https://ollama.com/library/stable-code",
+		"sizes": {
+			"latest": "1.6GB",
+			"3b": "1.6GB"
+		},
+		"tools": false
+	},
+	"openhermes": {
+		"url": "https://ollama.com/library/openhermes",
+		"sizes": {
+			"latest": "4.1GB",
+			"v2.5": "4.1GB"
+		},
+		"tools": false
+	},
+	"mistral-large": {
+		"url": "https://ollama.com/library/mistral-large",
+		"sizes": {
+			"latest": "69GB",
+			"123b": "69GB"
+		},
+		"tools": true
+	},
+	"qwen2-math": {
+		"url": "https://ollama.com/library/qwen2-math",
+		"sizes": {
+			"latest": "4.4GB",
+			"1.5b": "935MB",
+			"7b": "4.4GB",
+			"72b": "41GB"
+		},
+		"tools": false
+	},
+	"reflection": {
+		"url": "https://ollama.com/library/reflection",
+		"sizes": {
+			"latest": "40GB",
+			"70b": "40GB"
+		},
+		"tools": false
+	},
+	"bakllava": {
+		"url": "https://ollama.com/library/bakllava",
+		"sizes": {
+			"latest": "4.7GB",
+			"7b": "4.7GB"
+		},
+		"tools": false
+	},
+	"stablelm2": {
+		"url": "https://ollama.com/library/stablelm2",
+		"sizes": {
+			"latest": "983MB",
+			"1.6b": "983MB",
+			"12b": "7.0GB"
+		},
+		"tools": false
+	},
+	"llama3-gradient": {
+		"url": "https://ollama.com/library/llama3-gradient",
+		"sizes": {
+			"latest": "4.7GB",
+			"1048k": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB"
+		},
+		"tools": false
+	},
+	"deepseek-llm": {
+		"url": "https://ollama.com/library/deepseek-llm",
+		"sizes": {
+			"latest": "4.0GB",
+			"7b": "4.0GB",
+			"67b": "38GB"
+		},
+		"tools": false
+	},
+	"wizard-math": {
+		"url": "https://ollama.com/library/wizard-math",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB",
+			"13b": "7.4GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"glm4": {
+		"url": "https://ollama.com/library/glm4",
+		"sizes": {
+			"latest": "5.5GB",
+			"9b": "5.5GB"
+		},
+		"tools": false
+	},
+	"neural-chat": {
+		"url": "https://ollama.com/library/neural-chat",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"llama3-chatqa": {
+		"url": "https://ollama.com/library/llama3-chatqa",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB"
+		},
+		"tools": false
+	},
+	"moondream": {
+		"url": "https://ollama.com/library/moondream",
+		"sizes": {
+			"latest": "1.7GB",
+			"1.8b": "1.7GB"
+		},
+		"tools": false
+	},
+	"xwinlm": {
+		"url": "https://ollama.com/library/xwinlm",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"smollm": {
+		"url": "https://ollama.com/library/smollm",
+		"sizes": {
+			"latest": "991MB",
+			"135m": "92MB",
+			"360m": "229MB",
+			"1.7b": "991MB"
+		},
+		"tools": false
+	},
+	"nous-hermes": {
+		"url": "https://ollama.com/library/nous-hermes",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"sqlcoder": {
+		"url": "https://ollama.com/library/sqlcoder",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB",
+			"15b": "9.0GB"
+		},
+		"tools": false
+	},
+	"phind-codellama": {
+		"url": "https://ollama.com/library/phind-codellama",
+		"sizes": {
+			"latest": "19GB",
+			"34b": "19GB"
+		},
+		"tools": false
+	},
+	"yarn-llama2": {
+		"url": "https://ollama.com/library/yarn-llama2",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"dolphincoder": {
+		"url": "https://ollama.com/library/dolphincoder",
+		"sizes": {
+			"latest": "4.2GB",
+			"7b": "4.2GB",
+			"15b": "9.1GB"
+		},
+		"tools": false
+	},
+	"wizardlm": {
+		"url": "https://ollama.com/library/wizardlm",
+		"sizes": {
+			"7b-fp16": "13GB",
+			"7b-q2_K": "2.8GB",
+			"7b-q3_K_S": "2.9GB",
+			"7b-q3_K_M": "3.3GB",
+			"7b-q3_K_L": "3.6GB",
+			"7b-q4_0": "3.8GB",
+			"7b-q4_1": "4.2GB",
+			"7b-q4_K_S": "3.9GB",
+			"7b-q4_K_M": "4.1GB",
+			"7b-q5_0": "4.7GB",
+			"7b-q5_1": "5.1GB",
+			"7b-q5_K_S": "4.7GB",
+			"7b-q5_K_M": "4.8GB",
+			"7b-q6_K": "5.5GB",
+			"7b-q8_0": "7.2GB",
+			"13b-fp16": "26GB",
+			"13b-q2_K": "5.4GB",
+			"13b-q3_K_S": "5.7GB",
+			"13b-q3_K_M": "6.3GB",
+			"13b-q3_K_L": "6.9GB",
+			"13b-q4_0": "7.4GB",
+			"13b-q4_1": "8.2GB",
+			"13b-q4_K_S": "7.4GB",
+			"13b-q4_K_M": "7.9GB",
+			"13b-q5_0": "9.0GB",
+			"13b-q5_1": "9.8GB",
+			"13b-q5_K_S": "9.0GB",
+			"13b-q5_K_M": "9.2GB",
+			"13b-q6_K": "11GB",
+			"13b-q8_0": "14GB",
+			"30b-fp16": "65GB",
+			"30b-q2_K": "14GB",
+			"30b-q3_K_S": "14GB",
+			"30b-q3_K_M": "16GB",
+			"30b-q3_K_L": "17GB",
+			"30b-q4_0": "18GB",
+			"30b-q4_1": "20GB",
+			"30b-q4_K_S": "18GB",
+			"30b-q4_K_M": "20GB",
+			"30b-q5_0": "22GB",
+			"30b-q5_1": "24GB",
+			"30b-q5_K_S": "22GB",
+			"30b-q5_K_M": "23GB",
+			"30b-q6_K": "27GB",
+			"30b-q8_0": "35GB",
+			"13b-llama2-fp16": "26GB",
+			"13b-llama2-q2_K": "5.4GB",
+			"13b-llama2-q3_K_S": "5.7GB",
+			"13b-llama2-q3_K_M": "6.3GB",
+			"13b-llama2-q3_K_L": "6.9GB",
+			"13b-llama2-q4_0": "7.4GB",
+			"13b-llama2-q4_1": "8.2GB",
+			"13b-llama2-q4_K_S": "7.4GB",
+			"13b-llama2-q4_K_M": "7.9GB",
+			"13b-llama2-q5_0": "9.0GB",
+			"13b-llama2-q5_1": "9.8GB",
+			"13b-llama2-q5_K_S": "9.0GB",
+			"13b-llama2-q5_K_M": "9.2GB",
+			"13b-llama2-q6_K": "11GB",
+			"13b-llama2-q8_0": "14GB",
+			"70b-llama2-q2_K": "29GB",
+			"70b-llama2-q3_K_S": "30GB",
+			"70b-llama2-q3_K_M": "33GB",
+			"70b-llama2-q3_K_L": "36GB",
+			"70b-llama2-q4_0": "39GB",
+			"70b-llama2-q4_1": "43GB",
+			"70b-llama2-q4_K_S": "39GB",
+			"70b-llama2-q4_K_M": "41GB",
+			"70b-llama2-q5_0": "47GB",
+			"70b-llama2-q5_K_S": "47GB",
+			"70b-llama2-q5_K_M": "49GB",
+			"70b-llama2-q6_K": "57GB",
+			"70b-llama2-q8_0": "73GB"
+		},
+		"tools": false
+	},
+	"deepseek-v2": {
+		"url": "https://ollama.com/library/deepseek-v2",
+		"sizes": {
+			"latest": "8.9GB",
+			"16b": "8.9GB",
+			"236b": "133GB"
+		},
+		"tools": false
+	},
+	"starling-lm": {
+		"url": "https://ollama.com/library/starling-lm",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"samantha-mistral": {
+		"url": "https://ollama.com/library/samantha-mistral",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"falcon": {
+		"url": "https://ollama.com/library/falcon",
+		"sizes": {
+			"latest": "4.2GB",
+			"7b": "4.2GB",
+			"40b": "24GB",
+			"180b": "101GB"
+		},
+		"tools": false
+	},
+	"solar": {
+		"url": "https://ollama.com/library/solar",
+		"sizes": {
+			"latest": "6.1GB",
+			"10.7b": "6.1GB"
+		},
+		"tools": false
+	},
+	"orca2": {
+		"url": "https://ollama.com/library/orca2",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"stable-beluga": {
+		"url": "https://ollama.com/library/stable-beluga",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"13b": "7.4GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"yi-coder": {
+		"url": "https://ollama.com/library/yi-coder",
+		"sizes": {
+			"latest": "5.0GB",
+			"1.5b": "866MB",
+			"9b": "5.0GB"
+		},
+		"tools": false
+	},
+	"hermes3": {
+		"url": "https://ollama.com/library/hermes3",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB",
+			"405b": "229GB"
+		},
+		"tools": true
+	},
+	"internlm2": {
+		"url": "https://ollama.com/library/internlm2",
+		"sizes": {
+			"latest": "4.5GB",
+			"1m": "4.5GB",
+			"1.8b": "1.1GB",
+			"7b": "4.5GB",
+			"20b": "11GB"
+		},
+		"tools": false
+	},
+	"dolphin-phi": {
+		"url": "https://ollama.com/library/dolphin-phi",
+		"sizes": {
+			"latest": "1.6GB",
+			"2.7b": "1.6GB"
+		},
+		"tools": false
+	},
+	"llava-phi3": {
+		"url": "https://ollama.com/library/llava-phi3",
+		"sizes": {
+			"latest": "2.9GB",
+			"3.8b": "2.9GB"
+		},
+		"tools": false
+	},
+	"wizardlm-uncensored": {
+		"url": "https://ollama.com/library/wizardlm-uncensored",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"yarn-mistral": {
+		"url": "https://ollama.com/library/yarn-mistral",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"llama-pro": {
+		"url": "https://ollama.com/library/llama-pro",
+		"sizes": {
+			"latest": "4.7GB",
+			"instruct": "4.7GB"
+		},
+		"tools": false
+	},
+	"medllama2": {
+		"url": "https://ollama.com/library/medllama2",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB"
+		},
+		"tools": false
+	},
+	"meditron": {
+		"url": "https://ollama.com/library/meditron",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB",
+			"70b": "39GB"
+		},
+		"tools": false
+	},
+	"nexusraven": {
+		"url": "https://ollama.com/library/nexusraven",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"nous-hermes2-mixtral": {
+		"url": "https://ollama.com/library/nous-hermes2-mixtral",
+		"sizes": {
+			"latest": "26GB",
+			"8x7b": "26GB"
+		},
+		"tools": false
+	},
+	"llama3-groq-tool-use": {
+		"url": "https://ollama.com/library/llama3-groq-tool-use",
+		"sizes": {
+			"latest": "4.7GB",
+			"8b": "4.7GB",
+			"70b": "40GB"
+		},
+		"tools": true
+	},
+	"codeup": {
+		"url": "https://ollama.com/library/codeup",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"everythinglm": {
+		"url": "https://ollama.com/library/everythinglm",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"minicpm-v": {
+		"url": "https://ollama.com/library/minicpm-v",
+		"sizes": {
+			"latest": "5.5GB",
+			"8b": "5.5GB"
+		},
+		"tools": false
+	},
+	"magicoder": {
+		"url": "https://ollama.com/library/magicoder",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB"
+		},
+		"tools": false
+	},
+	"stablelm-zephyr": {
+		"url": "https://ollama.com/library/stablelm-zephyr",
+		"sizes": {
+			"latest": "1.6GB",
+			"3b": "1.6GB"
+		},
+		"tools": false
+	},
+	"codebooga": {
+		"url": "https://ollama.com/library/codebooga",
+		"sizes": {
+			"latest": "19GB",
+			"34b": "19GB"
+		},
+		"tools": false
+	},
+	"wizard-vicuna": {
+		"url": "https://ollama.com/library/wizard-vicuna",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"mistrallite": {
+		"url": "https://ollama.com/library/mistrallite",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"falcon2": {
+		"url": "https://ollama.com/library/falcon2",
+		"sizes": {
+			"latest": "6.4GB",
+			"11b": "6.4GB"
+		},
+		"tools": false
+	},
+	"duckdb-nsql": {
+		"url": "https://ollama.com/library/duckdb-nsql",
+		"sizes": {
+			"latest": "3.8GB",
+			"7b": "3.8GB"
+		},
+		"tools": false
+	},
+	"bge-m3": {
+		"url": "https://ollama.com/library/bge-m3",
+		"sizes": {
+			"latest": "1.2GB",
+			"567m": "1.2GB"
+		},
+		"tools": false
+	},
+	"megadolphin": {
+		"url": "https://ollama.com/library/megadolphin",
+		"sizes": {
+			"latest": "68GB",
+			"120b": "68GB"
+		},
+		"tools": false
+	},
+	"notux": {
+		"url": "https://ollama.com/library/notux",
+		"sizes": {
+			"latest": "26GB",
+			"8x7b": "26GB"
+		},
+		"tools": false
+	},
+	"open-orca-platypus2": {
+		"url": "https://ollama.com/library/open-orca-platypus2",
+		"sizes": {
+			"latest": "7.4GB",
+			"13b": "7.4GB"
+		},
+		"tools": false
+	},
+	"goliath": {
+		"url": "https://ollama.com/library/goliath",
+		"sizes": {
+			"latest": "66GB",
+			"120b-q4_0": "66GB"
+		},
+		"tools": false
+	},
+	"notus": {
+		"url": "https://ollama.com/library/notus",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"mathstral": {
+		"url": "https://ollama.com/library/mathstral",
+		"sizes": {
+			"latest": "4.1GB",
+			"7b": "4.1GB"
+		},
+		"tools": false
+	},
+	"solar-pro": {
+		"url": "https://ollama.com/library/solar-pro",
+		"sizes": {
+			"latest": "13GB",
+			"22b": "13GB"
+		},
+		"tools": false
+	},
+	"dbrx": {
+		"url": "https://ollama.com/library/dbrx",
+		"sizes": {
+			"latest": "74GB",
+			"132b": "74GB"
+		},
+		"tools": false
+	},
+	"nemotron": {
+		"url": "https://ollama.com/library/nemotron",
+		"sizes": {
+			"latest": "43GB",
+			"70b": "43GB"
+		},
+		"tools": true
+	},
+	"nuextract": {
+		"url": "https://ollama.com/library/nuextract",
+		"sizes": {
+			"latest": "2.2GB",
+			"3.8b": "2.2GB"
+		},
+		"tools": false
+	},
+	"reader-lm": {
+		"url": "https://ollama.com/library/reader-lm",
+		"sizes": {
+			"latest": "935MB",
+			"0.5b": "352MB",
+			"1.5b": "935MB"
+		},
+		"tools": false
+	},
+	"alfred": {
+		"url": "https://ollama.com/library/alfred",
+		"sizes": {
+			"latest": "24GB",
+			"40b": "24GB"
+		},
+		"tools": false
+	},
+	"firefunction-v2": {
+		"url": "https://ollama.com/library/firefunction-v2",
+		"sizes": {
+			"latest": "40GB",
+			"70b": "40GB"
+		},
+		"tools": true
+	},
+	"bge-large": {
+		"url": "https://ollama.com/library/bge-large",
+		"sizes": {
+			"latest": "671MB",
+			"335m": "671MB"
+		},
+		"tools": false
+	},
+	"deepseek-v2.5": {
+		"url": "https://ollama.com/library/deepseek-v2.5",
+		"sizes": {
+			"latest": "133GB",
+			"236b": "133GB"
+		},
+		"tools": false
+	},
+	"bespoke-minicheck": {
+		"url": "https://ollama.com/library/bespoke-minicheck",
+		"sizes": {
+			"latest": "4.7GB",
+			"7b": "4.7GB"
+		},
+		"tools": false
+	},
+	"paraphrase-multilingual": {
+		"url": "https://ollama.com/library/paraphrase-multilingual",
+		"sizes": {
+			"latest": "563MB",
+			"278m": "563MB"
+		},
+		"tools": false
+	},
+	"granite3-dense": {
+		"url": "https://ollama.com/library/granite3-dense",
+		"sizes": {
+			"latest": "1.6GB",
+			"2b": "1.6GB",
+			"8b": "4.9GB"
+		},
+		"tools": true
+	},
+	"shieldgemma": {
+		"url": "https://ollama.com/library/shieldgemma",
+		"sizes": {
+			"latest": "5.8GB",
+			"2b": "1.7GB",
+			"9b": "5.8GB",
+			"27b": "17GB"
+		},
+		"tools": false
+	},
+	"llama-guard3": {
+		"url": "https://ollama.com/library/llama-guard3",
+		"sizes": {
+			"latest": "4.9GB",
+			"1b": "1.6GB",
+			"8b": "4.9GB"
+		},
+		"tools": false
+	},
+	"granite3-moe": {
+		"url": "https://ollama.com/library/granite3-moe",
+		"sizes": {
+			"latest": "2.1GB",
+			"1b": "822MB",
+			"3b": "2.1GB"
+		},
+		"tools": true
+	}
 }

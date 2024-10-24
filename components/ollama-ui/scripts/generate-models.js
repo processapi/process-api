@@ -5,56 +5,56 @@
 import { DOMParser, Element } from "jsr:@b-fuze/deno-dom";
 
 async function getModels() {
-    const url = "https://ollama.com/library";
-    const response = await fetch(url);
-    const text = await response.text();
-    const dom = new DOMParser().parseFromString(text, "text/html");
-    const models = Array.from(dom.querySelectorAll(".truncate span"))
-        .map(span => span.textContent.trim());
+	const url = "https://ollama.com/library";
+	const response = await fetch(url);
+	const text = await response.text();
+	const dom = new DOMParser().parseFromString(text, "text/html");
+	const models = Array.from(dom.querySelectorAll(".truncate span"))
+		.map((span) => span.textContent.trim());
 
-    return models;
+	return models;
 }
 
 async function getModelDetails(model) {
-    const url = `https://ollama.com/library/${model}`;
+	const url = `https://ollama.com/library/${model}`;
 
-    const result = {
-        url,
-        sizes: {}
-    }
+	const result = {
+		url,
+		sizes: {},
+	};
 
-    const response = await fetch(url);
-    const text = await response.text();
+	const response = await fetch(url);
+	const text = await response.text();
 
-    result.tools = text.indexOf("Tools</span>") !== -1;
+	result.tools = text.indexOf("Tools</span>") !== -1;
 
-    const dom = new DOMParser().parseFromString(text, "text/html");
+	const dom = new DOMParser().parseFromString(text, "text/html");
 
-    let tags = dom.querySelector("#primary-tags");
-    if (tags == null) {
-        tags = dom.querySelector("#secondary-tags");
-    }
+	let tags = dom.querySelector("#primary-tags");
+	if (tags == null) {
+		tags = dom.querySelector("#secondary-tags");
+	}
 
-    for (const element of tags.children) {
-        const name = element.children[0].children[0].textContent.trim();
-        const size = element.children[1].textContent.trim();
+	for (const element of tags.children) {
+		const name = element.children[0].children[0].textContent.trim();
+		const size = element.children[1].textContent.trim();
 
-        result.sizes[name] = size;
-    }
+		result.sizes[name] = size;
+	}
 
-    return result;
+	return result;
 }
 
 async function createModelsData() {
-    const models = await getModels();
-    const result = {};
+	const models = await getModels();
+	const result = {};
 
-    for (const model of models) {
-        console.log(`Getting details for model: ${model}`);
-        result[model] = await getModelDetails(model);
-    }
+	for (const model of models) {
+		console.log(`Getting details for model: ${model}`);
+		result[model] = await getModelDetails(model);
+	}
 
-    return result;
+	return result;
 }
 
 const data = await createModelsData();

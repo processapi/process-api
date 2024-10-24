@@ -31,11 +31,11 @@ class SurrealDBModule {
 	 */
 	static async connect(args) {
 		validateArgs(args, {
-			username  : { type: "string", required: true },
-			password  : { type: "string", required: true },
-			url		  : { type: "string", required: false, default: DEFAULT_SERVER },
-			namespace : { type: "string", required: false },
-			database  : { type: "string", required: false },
+			username: { type: "string", required: true },
+			password: { type: "string", required: true },
+			url: { type: "string", required: false, default: DEFAULT_SERVER },
+			namespace: { type: "string", required: false },
+			database: { type: "string", required: false },
 		}, "SurrealDBModule.connect: ");
 
 		if (this.db != null) {
@@ -46,7 +46,7 @@ class SurrealDBModule {
 
 		const { username, password, url, namespace, database } = args;
 
-		await this.db.connect( url );
+		await this.db.connect(url);
 		await this.db.signin({ username, password });
 		await this.create_namespace({ namespace });
 		await this.create_database({ namespace, database });
@@ -74,11 +74,13 @@ class SurrealDBModule {
 	 */
 	static async create_namespace(args) {
 		if (this.db == null) {
-			throw new Error("SurrealDBModule.create_namespace: Database not connected");
+			throw new Error(
+				"SurrealDBModule.create_namespace: Database not connected",
+			);
 		}
 
 		validateArgs(args, {
-			namespace : { type: "string", required: true },
+			namespace: { type: "string", required: true },
 		}, "SurrealDBModule.create_namespace: ");
 
 		await this.db.query(`
@@ -96,12 +98,14 @@ class SurrealDBModule {
 	 */
 	static async create_database(args) {
 		if (this.db == null) {
-			throw new Error("SurrealDBModule.create_database: Database not connected");
+			throw new Error(
+				"SurrealDBModule.create_database: Database not connected",
+			);
 		}
 
 		validateArgs(args, {
-			namespace : { type: "string", required: true },
-			database : { type: "string", required: true },
+			namespace: { type: "string", required: true },
+			database: { type: "string", required: true },
 		}, "SurrealDBModule.create_database: ");
 
 		await this.db.query(`
@@ -155,11 +159,11 @@ class SurrealDBModule {
 		}
 
 		validateArgs(args, {
-			username  : { type: "string", required: true },
-			password  : { type: "string", required: true },
+			username: { type: "string", required: true },
+			password: { type: "string", required: true },
 		}, "SurrealDBModule.signin: ");
 
-		return await this.db.signin( args );
+		return await this.db.signin(args);
 	}
 }
 
