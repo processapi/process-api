@@ -1,5 +1,5 @@
 import { ComponentModule } from "../../src/modules/component.js";
-import { OllamaSettings } from "./ollama-settings.js";
+import "./ollama-models.js";
 
 const TRANSLATION_MAP = {
 	"placeholder": "input:placeholder",
@@ -61,7 +61,7 @@ export class OllamaUIComponent extends HTMLElement {
 	}
 
 	#btnSettingsClick() {
-		OllamaSettings.showDialog();
+		document.body.appendChild(document.createElement("ollama-models"));
 	}
 
 	/**
