@@ -295,16 +295,10 @@ function resetAdjacentRegions(regions, sourceRow, sourceColumn, row, column, cel
 	addCell(regions, row, Math.max(column + 1, maxColumn), cellCode, investigateCells);
 
 	// add below right cell
-	addCell(regions, Math.max(row + 1, maxRows), Math.max(column + 1, maxColumn), cellCode, investigateCells);
+	addCell(regions, Math.min(row + 1, maxRows), Math.max(column + 1, maxColumn), cellCode, investigateCells);
 
 	// add below cell
-	addCell(regions, Math.max(row + 1, maxRows), column, cellCode, investigateCells);
-
-	// add below left cell
-	addCell(regions, Math.max(row + 1, maxRows), Math.min(column - 1, 0), cellCode, investigateCells);
-
-	// add left cell
-	addCell(regions, row, Math.min(column - 1, 0), cellCode, investigateCells);
+	addCell(regions, Math.min(row + 1, maxRows), column, cellCode, investigateCells);
 
 	// update value on cells to change
 	// this happens recursively until all cells are updated that need to be updated

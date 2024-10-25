@@ -303,3 +303,25 @@ Deno.test("CssGridModule.reset_region - should handle resetting the origin cell"
 		["A2", "B2", "C2"],
 	]);
 });
+
+Deno.test("CssGridModule.reset_region - center removal", async () => {
+	const regions = [
+		["A0", "B0", "B0", "B0"],
+		["A1", "B0", "B0", "B0"],
+		["A2", "B0", "B0", "B0"],
+		["A3", "B3", "C3", "D3"],
+		["A4", "B4", "C4", "D4"],
+	];
+	const result = await CssGridModule.reset_region({
+		regions,
+		row: 1,
+		column: 3,
+	});
+	assertEquals(result, [
+		["A0", "B0", "B0", "D0"],
+		["A1", "B0", "B0", "D1"],
+		["A2", "B0", "B0", "D2"],
+		["A3", "B3", "C3", "D3"],
+		["A4", "B4", "C4", "D4"],
+	]);
+});
