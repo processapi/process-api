@@ -123,3 +123,129 @@ Deno.test("CssGridModule.optimize - should throw an error if values are not prov
 		'CssGridModule.optimize: Argument "values" is required',
 	);
 });
+
+Deno.test("CssGridModule.to_regions - should convert grid data to regions", async () => {
+	const data = { columns: ["1fr", "1fr", "1fr"], rows: ["1fr", "1fr", "1fr"] };
+	const result = await CssGridModule.to_regions({ data });
+	assertEquals(result, [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	]);
+});
+
+Deno.test("CssGridModule.to_regions - should handle single row and column", async () => {
+	const data = { columns: ["1fr"], rows: ["1fr"] };
+	const result = await CssGridModule.to_regions({ data });
+	assertEquals(result, [["A0"]]);
+});
+
+Deno.test("CssGridModule.to_regions - should handle multiple rows and single column", async () => {
+	const data = { columns: ["1fr"], rows: ["1fr", "1fr"] };
+	const result = await CssGridModule.to_regions({ data });
+	assertEquals(result, [["A0"], ["A1"]]);
+});
+
+Deno.test("CssGridModule.to_regions - should handle single row and multiple columns", async () => {
+	const data = { columns: ["1fr", "1fr"], rows: ["1fr"] };
+	const result = await CssGridModule.to_regions({ data });
+	assertEquals(result, [["A0", "B0"]]);
+});
+
+Deno.test("CssGridModule.to_regions - should throw an error if data is not provided", async () => {
+	await assertThrowsAsync(
+		() => CssGridModule.to_regions({}),
+		Error,
+		'CssGridModule.to_regions: Argument "data" is required',
+	);
+});
+
+// ------------------------------------
+
+Deno.test("CssGridModule.copyRegion - should copy a single cell region", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.copyRegion({
+		regions,
+		start: { row: 0, column: 0 },
+		end: { row: 0, column: 0 },
+	});
+	assertEquals(result, [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	]);
+});
+
+Deno.test("CssGridModule.copyRegion - should copy a region to a larger area", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.copyRegion({
+		regions,
+		start: { row: 0, column: 0 },
+		end: { row: 1, column: 1 },
+	});
+	assertEquals(result, [
+		["A0", "A0", "C0"],
+		["A0", "A0", "C1"],
+		["A2", "B2", "C2"],
+	]);
+});
+
+Deno.test("CssGridModule.copyRegion - should throw an error if start point is out of bounds", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	await assertThrowsAsync(
+		() => CssGridModule.copyRegion({
+			regions,
+			start: { row: -1, column: 0 },
+			end: { row: 1, column: 1 },
+		}),
+		Error,
+		"CssGridModule.copyRegion: Start point is out of bounds",
+	);
+});
+
+Deno.test("CssGridModule.copyRegion - should throw an error if end point is out of bounds", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	await assertThrowsAsync(
+		() => CssGridModule.copyRegion({
+			regions,
+			start: { row: 0, column: 0 },
+			end: { row: 3, column: 1 },
+		}),
+		Error,
+		"CssGridModule.copyRegion: End point is out of bounds",
+	);
+});
+
+Deno.test("CssGridModule.copyRegion - should copy a region to a non-square area", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.copyRegion({
+		regions,
+		start: { row: 0, column: 1 },
+		end: { row: 2, column: 2 },
+	});
+	assertEquals(result, [
+		["A0", "B0", "B0"],
+		["A1", "B0", "B0"],
+		["A2", "B0", "B0"],
+	]);
+});
