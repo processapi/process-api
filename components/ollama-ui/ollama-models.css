@@ -1,7 +1,6 @@
 @import "./../styles/input.css";
 
 :host {
-    --cl-text: silver;
     --width: 800px;
     --height: 600px;
 

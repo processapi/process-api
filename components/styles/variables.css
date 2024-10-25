@@ -1,12 +1,25 @@
 :root {
-	--cl-brd: #c5c5c5;
-	--cl-bkg-d: #212121;
-	--cl-bkg-l: #2f2f2f;
-	--cl-bkg-l2: #676767;
+	--cl-brd: #333333;
+	--cl-bkg-d: #f0f0f0;
+	--cl-bkg-l: #ffffff;
+	--cl-bkg-l2: #e0e0e0;
+	--cl-text: #000000;
+	--cl-border: #c3c3c3;
+	--cl-icon: grey;
 
-	--border: 1px solid var(--cl-brd);
+	--border: 1px solid var(--cl-border);
 	--border-radius: 0.5rem;
 	--padding: 0.5rem;
 
 	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25))
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	--cl-brd: #c5c5c5;
+	--cl-bkg-d: #212121;
+	--cl-bkg-l: #2f2f2f;
+	--cl-bkg-l2: #676767;
+	--cl-text: silver;
+	--cl-icon: silver;
 }

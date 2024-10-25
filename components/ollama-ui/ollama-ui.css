@@ -4,9 +4,6 @@
 	--outline: 0;
 	--button-border: none;
 
-	--cl-icon: silver;
-	--cl-text: silver;
-
 	--run-radius: 50% 0 0 50%;
 	--cl-run-bkg: var(--cl-bkg-l2);
 
@@ -46,6 +43,7 @@ input:focus {
 	grid-template-columns: auto 1fr auto auto;
 	background: var(--cl-bkg-l);
 	border-radius: 26px;
+	border: var(--border);
 }
 
 #btnRun {
