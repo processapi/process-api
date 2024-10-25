@@ -1,0 +1,19 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 20px;
+
+    grid-template-areas: "A0 B0 C0"
+                         "A0 B1 C1"
+                         "A2 B2 C2";
+
+    border: var(--border);
+    width: 600px;
+    height: 600px;
+}
+
+.grid-item {
+    grid-area: A0;
+    background: red;
+}

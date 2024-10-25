@@ -195,9 +195,9 @@ export class CssGridModule {
 	 * 		["A0", "A0", "C1"],
 	 * 		["A2", "B2", "C2"]
 	 * 	]
-	 * @returns {Promise<void>}
+	 * 	@return {Promise<*>}
 	 */
-	static async copyRegion(args) {
+	static async copy_region(args) {
 		validateArgs(args, {
 			"regions": { type: "Array", required: true },
 			"start": { type: "object", required: true },
@@ -223,8 +223,114 @@ export class CssGridModule {
 
 		return regions;
 	}
+
+	/**
+	 * @method resetRegion
+	 * @description - Reset a region to the default value and reshape the regions so that it is square.
+	 * For example if I have the following regions:
+	 * [A0][A0][C0]
+	 * [A0][A0][C1]
+	 * [A2][B2][C2]
+	 * and I reset row 1 column 1, the result would be:
+	 * [A0][B0][C0]
+	 * [A0][B1][C0]
+	 * [A2][B2][C2]
+	 * if I reset row 0 column 1, the result would also be the same.
+	 * In other words the region result must be square.
+	 *
+	 * @param args
+	 * @param {object} args.regions - The regions grid that was created using the to_regions method
+	 * @param {string} args.row - The row to reset
+	 * @param {string} args.column - The column to reset
+	 * @return {Promise<*>}
+	 */
+	static async reset_region(args) {
+		validateArgs(args, {
+			"regions": { type: "Array", required: true },
+			"row": { type: "number", required: true },
+			"column": { type: "number", required: true },
+		}, "CssGridModule.copyRegion: ");
+
+		const {regions, row, column} = args;
+
+		const cellCode = regions[row][column];
+		const originalLocation = decode(cellCode);
+
+		resetAdjacentRegions(regions, originalLocation.row, originalLocation.column, row, column, cellCode);
+		return regions;
+	}
+}
+
+function resetAdjacentRegions(regions, sourceRow, sourceColumn, row, column, cellCode) {
+	// if the reset point is the origin and the value is the origin, return the regions
+	// basically do nothing
+	if (sourceRow === row && sourceColumn === column) {
+		return regions;
+	}
+
+	if (sourceColumn === column) {
+		return regions;
+	}
+
+	regions[row][column] = `${String.fromCharCode(65 + column)}${row}`;
+
+	/**
+	 * [x][x][0][0]
+	 * [x][-][0][0]
+	 * [0][0][0][0]
+	 * */
+
+	const maxColumn = regions[0].length - 1;
+	const maxRows = regions.length - 1;
+
+	const investigateCells = [];
+
+	// add above cell
+	addCell(regions, Math.max(row - 1, 0), column, cellCode, investigateCells);
+
+	// add above right cell
+	addCell(regions, Math.max(row - 1, 0), Math.max(column + 1, maxColumn), cellCode, investigateCells);
+
+	// add right cell
+	addCell(regions, row, Math.max(column + 1, maxColumn), cellCode, investigateCells);
+
+	// add below right cell
+	addCell(regions, Math.max(row + 1, maxRows), Math.max(column + 1, maxColumn), cellCode, investigateCells);
+
+	// add below cell
+	addCell(regions, Math.max(row + 1, maxRows), column, cellCode, investigateCells);
+
+	// add below left cell
+	addCell(regions, Math.max(row + 1, maxRows), Math.min(column - 1, 0), cellCode, investigateCells);
+
+	// add left cell
+	addCell(regions, row, Math.min(column - 1, 0), cellCode, investigateCells);
+
+	// update value on cells to change
+	// this happens recursively until all cells are updated that need to be updated
+	for (const point of investigateCells) {
+		resetAdjacentRegions(regions, sourceRow, sourceColumn, point.row, point.column, cellCode);
+	}
+}
+
+function addCell(regions, row, column, cellCode, investigateCells) {
+	if (regions[row][column] === cellCode) {
+		investigateCells.push({ row, column });
+	}
 }
 
 function letterToNumber(letter) {
 	return letter.toUpperCase().charCodeAt(0) - 65; // 65 is the ASCII code for 'A'
+}
+
+/**
+ * @function decode
+ * @description - Decode a cell code to a row and column number
+ * For example: "A0" would be row 0 and column 0 and "B1" would be row 1 and column 1
+ * @param cellCode
+ */
+function decode(cellCode) {
+	const column = letterToNumber(cellCode[0]);
+	const row = parseInt(cellCode.substring(1));
+	return { row, column };
 }

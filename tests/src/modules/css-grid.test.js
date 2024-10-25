@@ -160,15 +160,13 @@ Deno.test("CssGridModule.to_regions - should throw an error if data is not provi
 	);
 });
 
-// ------------------------------------
-
 Deno.test("CssGridModule.copyRegion - should copy a single cell region", async () => {
 	const regions = [
 		["A0", "B0", "C0"],
 		["A1", "B1", "C1"],
 		["A2", "B2", "C2"],
 	];
-	const result = await CssGridModule.copyRegion({
+	const result = await CssGridModule.copy_region({
 		regions,
 		start: { row: 0, column: 0 },
 		end: { row: 0, column: 0 },
@@ -186,7 +184,7 @@ Deno.test("CssGridModule.copyRegion - should copy a region to a larger area", as
 		["A1", "B1", "C1"],
 		["A2", "B2", "C2"],
 	];
-	const result = await CssGridModule.copyRegion({
+	const result = await CssGridModule.copy_region({
 		regions,
 		start: { row: 0, column: 0 },
 		end: { row: 1, column: 1 },
@@ -205,7 +203,7 @@ Deno.test("CssGridModule.copyRegion - should throw an error if start point is ou
 		["A2", "B2", "C2"],
 	];
 	await assertThrowsAsync(
-		() => CssGridModule.copyRegion({
+		() => CssGridModule.copy_region({
 			regions,
 			start: { row: -1, column: 0 },
 			end: { row: 1, column: 1 },
@@ -222,7 +220,7 @@ Deno.test("CssGridModule.copyRegion - should throw an error if end point is out 
 		["A2", "B2", "C2"],
 	];
 	await assertThrowsAsync(
-		() => CssGridModule.copyRegion({
+		() => CssGridModule.copy_region({
 			regions,
 			start: { row: 0, column: 0 },
 			end: { row: 3, column: 1 },
@@ -238,7 +236,7 @@ Deno.test("CssGridModule.copyRegion - should copy a region to a non-square area"
 		["A1", "B1", "C1"],
 		["A2", "B2", "C2"],
 	];
-	const result = await CssGridModule.copyRegion({
+	const result = await CssGridModule.copy_region({
 		regions,
 		start: { row: 0, column: 1 },
 		end: { row: 2, column: 2 },
@@ -247,5 +245,61 @@ Deno.test("CssGridModule.copyRegion - should copy a region to a non-square area"
 		["A0", "B0", "B0"],
 		["A1", "B0", "B0"],
 		["A2", "B0", "B0"],
+	]);
+});
+
+// -------------------------------------
+
+Deno.test("CssGridModule.reset_region - should reset a single cell region", async () => {
+	const regions = [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.reset_region({
+		regions,
+		row: 1,
+		column: 1,
+	});
+	assertEquals(result, [
+		["A0", "B0", "C0"],
+		["A1", "B1", "C1"],
+		["A2", "B2", "C2"],
+	]);
+});
+
+Deno.test("CssGridModule.reset_region - should reset a region to default value", async () => {
+	const regions = [
+		["A0", "A0", "C0"],
+		["A0", "A0", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.reset_region({
+		regions,
+		row: 1,
+		column: 1,
+	});
+	assertEquals(result, [
+		["A0", "B0", "C0"],
+		["A0", "B1", "C1"],
+		["A2", "B2", "C2"],
+	]);
+});
+
+Deno.test("CssGridModule.reset_region - should handle resetting the origin cell", async () => {
+	const regions = [
+		["A0", "A0", "C0"],
+		["A0", "A0", "C1"],
+		["A2", "B2", "C2"],
+	];
+	const result = await CssGridModule.reset_region({
+		regions,
+		row: 0,
+		column: 0,
+	});
+	assertEquals(result, [
+		["A0", "A0", "C0"],
+		["A0", "A0", "C1"],
+		["A2", "B2", "C2"],
 	]);
 });
