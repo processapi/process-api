@@ -1,3 +1,10 @@
+<template id="sizes-template">
+    <li class="size">
+        <div class="size-name"></div>
+        <div class="size-value"></div>
+        <button>Download</button>
+    </li>
+</template>
 <div class="container">
     <div class="models">
         <h3>Models</h3>
@@ -10,14 +17,14 @@
     <div class="model">
         <h3>Details</h3>
         <div>
-            <span>Model</span>
-            <span class="model-name">__model__</span>
-            <span>Tools</span>
+            <div>Model</div>
+            <div class="model-name">__model__</div>
+            <div class="tools">Tools</div>
         </div>
-        <ul class="versions"></ul>
+        <a href="" class="url" target=”_blank”></a>
+        <ul class="sizes"></ul>
 
         <div class="toolbar">
-            <button id="btnInstall">Install</button>
             <button id="btnDelete">Delete</button>
         </div>
     </div>
