@@ -43,7 +43,7 @@ export class OllamaModels extends HTMLElement {
 
     async #selected(event) {
         const target = event.composedPath()[0];
-        const modelName = target.textContent.trim();
+        const modelName = target.querySelector(".model-name").textContent.trim();
         const model = structuredClone(this.#models[modelName]);
         model.name = modelName;
         const parentElement = this.shadowRoot.querySelector(".model");
@@ -52,14 +52,17 @@ export class OllamaModels extends HTMLElement {
 }
 
 function buildListItems(shadowRoot, models, installed) {
+    const template = shadowRoot.querySelector("#models-template");
     const parentElement = shadowRoot.querySelector(".available");
 
     for (const modelName of Object.keys(models)) {
-        const listItem = document.createElement("li");
-        listItem.textContent = modelName;
+        const listItem = template.content.cloneNode(true);
+        listItem.querySelector(".model-name").textContent = modelName;
+        listItem.querySelector(".model-size").textContent = models[modelName].sizes["latest"];
 
+        const installedElement = listItem.querySelector(".installed");
         if (installed.includes(modelName)) {
-            listItem.classList.add("installed");
+            installedElement.classList.add("installed");
         }
 
         parentElement.appendChild(listItem);
