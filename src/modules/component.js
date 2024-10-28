@@ -45,6 +45,34 @@ class ComponentModule {
 
 		return html;
 	}
+
+	/**
+	 * @method filter_ul
+	 * @description Filter a list of items in an unordered list.
+	 * Given a text, look at the text content or given attribute to check if a list item should be visible.
+	 * The list items that should be visible, the hidden attribute is absent.
+	 * When the list item should NOT be visible, the hidden attribute is present.
+	 * Set the hidden attribute on the stylesheet to be display: none.
+	 * @param args {Object} - Arguments object
+	 * @param args.text {string} - Text to filter by
+	 * @param args.attribute {string | null} - Attribute to filter - if attribute should be checked with the text to filter by.
+	 * @returns {Promise<void>}
+	 */
+	static async filter_ul(args) {
+		const { text, attribute, listElement } = args;
+		const items = listElement.querySelectorAll("li");
+
+		items.forEach((item) => {
+			const content = item.textContent;
+			const attr = item.getAttribute(attribute);
+
+			if (content.includes(text) || (attr?.includes(text))) {
+				item.removeAttribute("hidden");
+			} else {
+				item.setAttribute("hidden", "hidden");
+			}
+		});
+	}
 }
 
 export { ComponentModule };

@@ -112,3 +112,13 @@ li:nth-child(odd) {
     width: 2rem;
     height: 2rem;
 }
+
+[hidden] {
+    display: none;
+}
+
+a {
+    color: var(--cl-text);
+    text-decoration: none;
+    cursor: pointer;
+}

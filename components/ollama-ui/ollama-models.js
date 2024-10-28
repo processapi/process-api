@@ -6,6 +6,8 @@ export class OllamaModels extends HTMLElement {
     #models;
     #installed;
     #selectedHandler = this.#selected.bind(this);
+    #filterChangeHandler = this.#filterChanged.bind(this);
+    #modelsList;
 
     constructor() {
         super();
@@ -17,6 +19,8 @@ export class OllamaModels extends HTMLElement {
             url: import.meta.url,
         });
 
+        this.#modelsList = this.shadowRoot.querySelector(".available");
+
         const url = new URL("./models.json", import.meta.url);
         this.#models = await fetch(url).then(result => result.json());
 
@@ -27,18 +31,27 @@ export class OllamaModels extends HTMLElement {
         buildListItems(this.shadowRoot, this.#models, this.#installed);
 
         this.#selectFirstModel();
+
+        this.shadowRoot.querySelector(".available").addEventListener("click", this.#selectedHandler);
+        this.shadowRoot.querySelector("[type='search']").addEventListener("input", this.#filterChangeHandler);
     }
 
     async disconnectedCallback() {
         this.shadowRoot.querySelector(".available").removeEventListener("click", this.#selectedHandler);
+        this.shadowRoot.querySelector("[type='search']").addEventListener("input", this.#filterChangeHandler);
         this.#selectedHandler = null;
+        this.#filterChangeHandler = null;
+        this.#modelsList = null;
         this.#models = null;
     }
 
     #selectFirstModel() {
-        this.shadowRoot.querySelector(".available").addEventListener("click", this.#selectedHandler);
         const parentElement = this.shadowRoot.querySelector(".model");
-        updateSelected(this.shadowRoot, parentElement, this.#models[Object.keys(this.#models)[0]]);
+        const firstModelName = Object.keys(this.#models)[0];
+        const model = structuredClone(this.#models[firstModelName]);
+        model.name = firstModelName;
+
+        updateSelected(this.shadowRoot, parentElement, model);
     }
 
     async #selected(event) {
@@ -47,7 +60,14 @@ export class OllamaModels extends HTMLElement {
         const model = structuredClone(this.#models[modelName]);
         model.name = modelName;
         const parentElement = this.shadowRoot.querySelector(".model");
+
         updateSelected(this.shadowRoot, parentElement, model);
+    }
+
+    async #filterChanged(event) {
+        const target = event.composedPath()[0];
+        const text = target.value.trim().toLowerCase();
+        await ComponentModule.filter_ul({ text, listElement: this.#modelsList });
     }
 }
 
