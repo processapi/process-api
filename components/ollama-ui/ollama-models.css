@@ -43,6 +43,18 @@ h3 {
     grid-gap: var(--padding);
 }
 
+.model {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-gap: var(--padding);
+}
+
+.model .model-name {
+    padding: var(--padding) 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 ul {
     overflow: auto;
     margin: 0;
@@ -60,12 +72,15 @@ li:nth-child(odd) {
     background: var(--cl-bkg-l2);
 }
 
-li.installed:after {
+[data-installed="true"]:after {
     content: '✔';
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     right: 1rem;
-    color: white;
     margin-left: var(--padding);
+    margin-top: 0.2rem;
 }
 
 .size {

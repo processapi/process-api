@@ -62,7 +62,7 @@ function buildListItems(shadowRoot, models, installed) {
 
         const installedElement = listItem.querySelector(".installed");
         if (installed.includes(modelName)) {
-            installedElement.classList.add("installed");
+            installedElement.dataset.installed = true;
         }
 
         parentElement.appendChild(listItem);
