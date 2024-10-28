@@ -45,6 +45,37 @@ export class CssGridModule {
 	}
 
 	/**
+	 * @method apply
+	 * @description - Apply the grid data to a CSS grid element
+	 * This includes the css properties for grid-template-columns and grid-template-rows
+	 * but also updates the child count.
+	 * If the new cell count is greater than the current child count, more children are added.
+	 * If the new cell count is less than the current child count, children are removed.
+	 * Each cell will also have a data-cell attribute set to the cell code.
+	 * @param args
+	 * @param {object} args.data - The grid data to apply created using the create method
+	 * @returns {Promise<void>}
+	 */
+	static async apply(args) {
+		validateArgs(args, {
+			"data": { type: "object", required: true },
+			"element": { type: "HTMLElement", required: true },
+		}, "CssGridModule.to: ");
+
+
+		const {data, element} = args;
+		const css = await CssGridModule.to({ data });
+
+		//JHR: use css optimized values
+
+		element.style.display = "grid";
+		element.style.gridTemplateColumns = css.columns;
+		element.style.gridTemplateRows = css.rows;
+
+		await syncGridChildren(element, data);
+	}
+
+	/**
 	 * @method create
 	 * @description - Create a Object for columns and rows based on the columnCount and rowCount
 	 * All columns and rows are set to 1fr by default
@@ -327,4 +358,45 @@ function decode(cellCode) {
 	const column = letterToNumber(cellCode[0]);
 	const row = parseInt(cellCode.substring(1));
 	return { row, column };
+}
+
+/**
+ * @function syncGridChildren
+ * @description - Sync the children of a grid element with the grid data
+ * Find out what the last child code is and figure out if we need to add or remove children
+ * @param element
+ * @param data
+ */
+async function syncGridChildren(element, data) {
+	if (element.children.length === 0) {
+		return await fillGrid(element, data);
+	}
+
+	const lastCode = element.lastElementChild.dataset.code;
+}
+
+/**
+ * @function fillGrid
+ * @description - Fill a grid element with cells based on the grid data
+ * @param element {HTMLElement} - The grid element to fill
+ * @param data {object} - The grid data to use
+ */
+async function fillGrid(element, data) {
+	const div = document.createElement("div");
+
+	for (let i = 0; i < data.rows.length; i++) {
+		for (let j = 0; j < data.columns.length; j++) {
+			const cell = div.cloneNode();
+			cell.dataset.code = `${String.fromCharCode(65 + j)}${i}`;
+			cell.style.gridArea = cell.dataset.code;
+			element.appendChild(cell);
+		}
+	}
+
+	const areas = await CssGridModule.to_regions({ data });
+	element.style.gridTemplateAreas = areasToString(areas);
+}
+
+function areasToString(areas) {
+	return areas.map(row => `"${row.join(" ")}"`).join(" ");
 }

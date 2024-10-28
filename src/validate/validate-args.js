@@ -39,7 +39,7 @@ export function validateArgs(args, def, prefix = "") {
 				? value.constructor.name.toLowerCase()
 				: typeof value;
 
-			if (actualType !== expectedType) {
+			if (actualType !== expectedType && !(value instanceof globalThis[arg.type])) {
 				throw new Error(
 					`${prefix}Argument "${key}" should be of type "${arg.type}"`.trim(),
 				);
