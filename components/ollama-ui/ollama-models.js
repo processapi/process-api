@@ -40,15 +40,15 @@ export class OllamaModels extends HTMLElement {
         this.#models = await fetch(url).then(result => result.json());
 
         this.#installed = await OllamaModule
-            .get_installed_models()
-            .then(result => result.map(model => model.split(":")[0]));
+            .get_installed_models();
+            //.then(result => result.map(model => model.split(":")[0]));
 
         buildListItems(this.shadowRoot, this.#models, this.#installed);
 
         this.#selectFirstModel();
 
-        this.shadowRoot.querySelector(".available").addEventListener("click", this.#selectedHandler);
-        this.shadowRoot.querySelector("[type='search']").addEventListener("input", this.#filterChangeHandler);
+        this.addEventListener("click", this.#selectedHandler);
+        this.addEventListener("input", this.#filterChangeHandler);
     }
 
     /**
@@ -57,8 +57,8 @@ export class OllamaModels extends HTMLElement {
      * @returns {Promise<void>}
      */
     async disconnectedCallback() {
-        this.shadowRoot.querySelector(".available").removeEventListener("click", this.#selectedHandler);
-        this.shadowRoot.querySelector("[type='search']").addEventListener("input", this.#filterChangeHandler);
+        this.removeEventListener("click", this.#selectedHandler);
+        this.addEventListener("input", this.#filterChangeHandler);
         this.#selectedHandler = null;
         this.#filterChangeHandler = null;
         this.#modelsList = null;
@@ -77,7 +77,7 @@ export class OllamaModels extends HTMLElement {
         const model = structuredClone(this.#models[firstModelName]);
         model.name = firstModelName;
 
-        updateSelected(this.shadowRoot, parentElement, model);
+        updateSelected(this.shadowRoot, parentElement, model, this.#installed);
     }
 
     /**
@@ -89,12 +89,29 @@ export class OllamaModels extends HTMLElement {
      */
     async #selected(event) {
         const target = event.composedPath()[0];
-        const modelName = target.querySelector(".model-name").textContent.trim();
-        const model = structuredClone(this.#models[modelName]);
-        model.name = modelName;
-        const parentElement = this.shadowRoot.querySelector(".model");
 
-        updateSelected(this.shadowRoot, parentElement, model);
+        if (target instanceof HTMLLIElement) {
+            const modelName = target.querySelector(".model-name").textContent.trim();
+            const model = structuredClone(this.#models[modelName]);
+            model.name = modelName;
+            const parentElement = this.shadowRoot.querySelector(".model");
+
+            updateSelected(this.shadowRoot, parentElement, model, this.#installed);
+            return;
+        }
+
+        if (target instanceof HTMLButtonElement && target.dataset.action != null) {
+            const model = target.dataset.model;
+            this[target.dataset.action](model);
+        }
+    }
+
+    delete(model) {
+        console.log(`Delete model: ${model}`);
+    }
+
+    download(model) {
+        console.log(`Install model: ${model}`);
     }
 
     /**
@@ -129,7 +146,11 @@ function buildListItems(shadowRoot, models, installed) {
         listItem.querySelector(".model-size").textContent = models[modelName].sizes["latest"];
 
         const installedElement = listItem.querySelector(".installed");
-        if (installed.includes(modelName)) {
+
+        // filter the installed models to find a model that starts with the model name followed by ":"
+        const installedModel = installed.find(model => model.startsWith(`${modelName}:`));
+
+        if (installedModel != null) {
             installedElement.dataset.installed = true;
         }
 
@@ -144,8 +165,9 @@ function buildListItems(shadowRoot, models, installed) {
  * @param shadowRoot - Shadow root of the custom element
  * @param parentElement - Parent element to display the model details
  * @param item - Model details to display
+ * @param installed - Currently installed models
  */
-function updateSelected(shadowRoot, parentElement, item) {
+function updateSelected(shadowRoot, parentElement, item, installed) {
     parentElement.querySelector(".model-name").textContent = item.name;
 
     const urlElement = parentElement.querySelector(".url");
@@ -153,11 +175,11 @@ function updateSelected(shadowRoot, parentElement, item) {
     urlElement.textContent = item.url;
 
     const toolsElement = parentElement.querySelector(".tools");
-    toolsElement.textContent = `Tools: ${item.tools}`;
+    toolsElement.textContent = `Supports Tools: ${item.tools}`;
     toolsElement.dataset.tools = item.tools;
 
     const sizesElement = parentElement.querySelector(".sizes");
-    createSizes(sizesElement, shadowRoot, item.sizes);
+    createSizes(sizesElement, shadowRoot, item.sizes, item.name, installed);
 }
 
 /**
@@ -167,8 +189,10 @@ function updateSelected(shadowRoot, parentElement, item) {
  * @param parentElement - Parent element to display the sizes
  * @param shadowRoot - Shadow root of the custom element
  * @param sizes - Sizes to display
+ * @param modelName - Name of the model
+ * @param installed - Currently installed models
  */
-function createSizes(parentElement, shadowRoot, sizes) {
+function createSizes(parentElement, shadowRoot, sizes, modelName, installed) {
     const template = shadowRoot.querySelector("#sizes-template");
     parentElement.innerHTML = "";
 
@@ -176,6 +200,17 @@ function createSizes(parentElement, shadowRoot, sizes) {
         const clone = template.content.cloneNode(true);
         clone.querySelector(".size-name").textContent = size;
         clone.querySelector(".size-value").textContent = sizes[size];
+
+        const compareName = `${modelName}:${size}`;
+
+        const button = clone.querySelector("button");
+        button.dataset.model = compareName;
+
+        if (installed.includes(compareName)) {
+            button.textContent = "Delete";
+            button.dataset.action = "delete";
+        }
+
         parentElement.appendChild(clone);
     }
 }

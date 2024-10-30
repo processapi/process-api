@@ -6,6 +6,8 @@
 	--cl-text: #000000;
 	--cl-border: #c3c3c3;
 	--cl-icon: grey;
+	--cl-danger: #ff0000;
+	--cl-progress: #007bff;
 
 	--border: 1px solid var(--cl-border);
 	--border-radius: 0.5rem;

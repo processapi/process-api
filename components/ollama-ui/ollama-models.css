@@ -122,3 +122,21 @@ a {
     text-decoration: none;
     cursor: pointer;
 }
+
+button[data-action] {
+    width: 4.5rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+button[data-action="delete"] {
+    background: var(--cl-danger);
+    color: whitesmoke;
+}
+
+button[data-action="download"] {
+    background: var(--cl-progress);
+    color: whitesmoke;
+}
