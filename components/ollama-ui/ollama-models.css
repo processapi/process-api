@@ -43,7 +43,7 @@ h3 {
     grid-gap: var(--padding);
 }
 
-.model {
+.model-details {
     display: grid;
     grid-template-rows: auto auto auto 1fr auto;
     grid-gap: var(--padding);
@@ -139,4 +139,31 @@ button[data-action="delete"] {
 button[data-action="download"] {
     background: var(--cl-progress);
     color: whitesmoke;
+}
+
+div#download {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 300px;
+    height: 200px;
+    background: var(--cl-bkg-l);
+    color: var(--cl-text);
+    padding: var(--padding);
+    filter: var(--drop-shadow);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div#download h3 {
+    margin: 1rem;
+}
+
+.progress {
+    margin: 1rem;
+    font-size: 1.5rem;
 }

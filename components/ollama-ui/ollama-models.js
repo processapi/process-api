@@ -102,16 +102,45 @@ export class OllamaModels extends HTMLElement {
 
         if (target instanceof HTMLButtonElement && target.dataset.action != null) {
             const model = target.dataset.model;
-            this[target.dataset.action](model);
+            await this[target.dataset.action](model, target);
         }
     }
 
-    delete(model) {
-        console.log(`Delete model: ${model}`);
+    async delete(model, button) {
+        await OllamaModule.delete_model({ name: model });
+        button.dataset.action = "download";
+        button.textContent = "Download";
     }
 
-    download(model) {
-        console.log(`Install model: ${model}`);
+    async download(model, button) {
+        const downloadElement = this.shadowRoot.querySelector("#download");
+        downloadElement.style.visibility = "visible";
+        downloadElement.querySelector(".model-name").textContent = model;
+        const statusElement = downloadElement.querySelector(".status");
+        const completedElement = downloadElement.querySelector(".completed");
+        const totalElement = downloadElement.querySelector(".total");
+
+        const response = OllamaModule.install_model({ name: model });
+
+        for await (const chunk of response) {
+            try {
+                const json = JSON.parse(chunk);
+                const status = json.status;
+                const total = json.total ?? 0;
+                const completed = json.completed ?? 0;
+
+                requestAnimationFrame(() => {
+                    statusElement.textContent = status;
+                    completedElement.textContent = (Number(completed) / (1024 ** 3)).toFixed(2);
+                    totalElement.textContent = (Number(total) / (1024 ** 3)).toFixed(2);
+                })
+            }
+            catch {}
+        }
+
+        downloadElement.style.visibility = "hidden";
+        button.dataset.action = "delete";
+        button.textContent = "Delete";
     }
 
     /**
