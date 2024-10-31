@@ -45,7 +45,7 @@ h3 {
 
 .model-details {
     display: grid;
-    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto;
     grid-gap: var(--padding);
 }
 
@@ -170,4 +170,53 @@ div#download h3 {
 
 ul.sizes {
     margin-top: 1rem;
+}
+
+#btnClose {
+    display: none;
+    fill: var(--cl-text);
+    border-radius: 50%;
+    right: var(--padding);
+    top: var(--padding);    
+}
+
+@media (max-width: 800px) {
+    :host {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        translate: 0 0;
+        display: block;
+        border-radius: 0;
+    }
+
+    .models, .model {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        will-change: transform;
+        transition: all 0.25s ease-out;
+    }
+
+    .model {
+        translate: 100% 0;
+        background: var(--cl-bkg-l);
+        color: var(--cl-text);    
+    }
+
+    #btnClose * {
+        pointer-events: none;
+    }
+
+    #btnClose {
+        display: block;
+        position: absolute;
+        top: var(--padding);
+        right: var(--padding);
+        width: 2rem;
+        height: 2rem;
+    }
 }

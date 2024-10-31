@@ -1,5 +1,6 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { OllamaModule } from "../../src/modules/ollama.js";
+import { SystemModule } from "../../src/modules/system.js";
 
 /**
  * @class OllamaModels
@@ -95,6 +96,21 @@ export class OllamaModels extends HTMLElement {
         
         const target = event.composedPath()[0];
 
+        if (SystemModule.is_mobile()) {        
+            const modelElement = this.shadowRoot.querySelector(".model");
+            const modelsElement = this.shadowRoot.querySelector(".models");
+
+            if (target.dataset.action === "close") {
+                modelElement.style.translate = "100% 0";
+                modelsElement.style.translate = "0 0";  
+                return;  
+            }
+            else {
+                modelElement.style.translate = "0 0";
+                modelsElement.style.translate = "-100% 0";    
+            }
+        }
+
         if (target instanceof HTMLLIElement) {
             const modelName = target.querySelector(".model-name").textContent.trim();
             const model = structuredClone(this.#models[modelName]);
@@ -105,7 +121,7 @@ export class OllamaModels extends HTMLElement {
             return;
         }
 
-        if (target instanceof HTMLButtonElement && target.dataset.action != null) {
+        if (target.dataset.action != null) {
             const model = target.dataset.model;
             await this[target.dataset.action](model, target);
         }
@@ -148,6 +164,13 @@ export class OllamaModels extends HTMLElement {
         button.dataset.action = "delete";
         button.textContent = "Delete";
         this.#downloading = false;
+    }
+
+    async close() {
+        const modelElement = this.shadowRoot.querySelector(".model");
+        const modelsElement = this.shadowRoot.querySelector(".models");
+        modelElement.style.translate = "0 0";
+        modelsElement.style.translate = "-100% 0";
     }
 
     /**
