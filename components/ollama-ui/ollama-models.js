@@ -18,6 +18,7 @@ export class OllamaModels extends HTMLElement {
     #selectedHandler = this.#selected.bind(this);
     #filterChangeHandler = this.#filterChanged.bind(this);
     #modelsList;
+    #downloading = false;
 
     constructor() {
         super();
@@ -88,6 +89,10 @@ export class OllamaModels extends HTMLElement {
      * @returns {Promise<void>}
      */
     async #selected(event) {
+        if (this.#downloading) {
+            return;
+        }
+        
         const target = event.composedPath()[0];
 
         if (target instanceof HTMLLIElement) {
@@ -113,6 +118,7 @@ export class OllamaModels extends HTMLElement {
     }
 
     async download(model, button) {
+        this.#downloading = true;
         const downloadElement = this.shadowRoot.querySelector("#download");
         downloadElement.style.visibility = "visible";
         downloadElement.querySelector(".model-name").textContent = model;
@@ -141,6 +147,7 @@ export class OllamaModels extends HTMLElement {
         downloadElement.style.visibility = "hidden";
         button.dataset.action = "delete";
         button.textContent = "Delete";
+        this.#downloading = false;
     }
 
     /**

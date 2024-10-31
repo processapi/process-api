@@ -167,3 +167,7 @@ div#download h3 {
     margin: 1rem;
     font-size: 1.5rem;
 }
+
+ul.sizes {
+    margin-top: 1rem;
+}
