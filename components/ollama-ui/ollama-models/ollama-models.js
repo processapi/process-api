@@ -102,12 +102,12 @@ export class OllamaModels extends HTMLElement {
 
             if (target.dataset.action === "close") {
                 modelElement.style.translate = "100% 0";
-                modelsElement.style.translate = "0 0";  
+                modelsElement.style.translate = "0 0";
                 return;  
             }
             else {
                 modelElement.style.translate = "0 0";
-                modelsElement.style.translate = "-100% 0";    
+                modelsElement.style.translate = "-100% 0";
             }
         }
 
