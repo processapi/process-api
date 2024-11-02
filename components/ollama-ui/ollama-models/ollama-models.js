@@ -1,6 +1,6 @@
-import { ComponentModule } from "../../src/modules/component.js";
-import { OllamaModule } from "../../src/modules/ollama.js";
-import { SystemModule } from "../../src/modules/system.js";
+import { ComponentModule } from "../../../src/modules/component.js";
+import { OllamaModule } from "../../../src/modules/ollama.js";
+import { SystemModule } from "../../../src/modules/system.js";
 
 /**
  * @class OllamaModels
@@ -38,7 +38,7 @@ export class OllamaModels extends HTMLElement {
 
         this.#modelsList = this.shadowRoot.querySelector(".available");
 
-        const url = new URL("./models.json", import.meta.url);
+        const url = new URL("./../models.json", import.meta.url);
         this.#models = await fetch(url).then(result => result.json());
 
         this.#installed = await OllamaModule
@@ -50,7 +50,7 @@ export class OllamaModels extends HTMLElement {
         this.#selectFirstModel();
 
         this.addEventListener("click", this.#selectedHandler);
-        this.addEventListener("input", this.#filterChangeHandler);
+        this.addEventListener("input", this.#filterChangeHandler);        
     }
 
     /**
@@ -166,11 +166,15 @@ export class OllamaModels extends HTMLElement {
         this.#downloading = false;
     }
 
-    async close() {
+    async closeDetails() {
         const modelElement = this.shadowRoot.querySelector(".model");
         const modelsElement = this.shadowRoot.querySelector(".models");
         modelElement.style.translate = "0 0";
         modelsElement.style.translate = "-100% 0";
+    }
+
+    async closeDialog() {
+        this.remove();
     }
 
     /**
@@ -186,7 +190,7 @@ export class OllamaModels extends HTMLElement {
     }
 }
 
-/**
+/**+
  * @function buildListItems
  * @description Build the list items for the models.
  * Display the model name and the size of the model.

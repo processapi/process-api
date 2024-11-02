@@ -1,8 +1,51 @@
-@import "./../styles/select.css";
+@import "../../styles/select.css";
+@import "../../styles/buttons.css";
 
 :host {
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	grid-template-columns: 1fr;
+	--width: 400px;
+	--height: auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: var(--width);
+	height: var(--height);
+	translate: -50% -50%;
+	background: var(--cl-bkg-l);
+	color: var(--cl-text);
+	padding: var(--padding);
+	filter: var(--drop-shadow);
+	border-radius: var(--border-radius);
 }
 
+* {
+	box-sizing: border-box;
+}
+
+.toolbar {
+	margin-top: var(--padding);
+	padding: var(--padding);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--padding);
+}
+
+label {
+	display: block;
+	margin-bottom: var(--padding);
+}
+
+#btnClose {
+	position: absolute;
+	top: var(--padding);
+	right: var(--padding);
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+	fill: var(--cl-text);
+}
+
+svg * {
+	pointer-events: none;
+}
