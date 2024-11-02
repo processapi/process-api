@@ -41,9 +41,7 @@ export class OllamaModels extends HTMLElement {
         const url = new URL("./../models.json", import.meta.url);
         this.#models = await fetch(url).then(result => result.json());
 
-        this.#installed = await OllamaModule
-            .get_installed_models();
-            //.then(result => result.map(model => model.split(":")[0]));
+        this.#installed = await OllamaModule.get_installed_models();
 
         buildListItems(this.shadowRoot, this.#models, this.#installed);
 
