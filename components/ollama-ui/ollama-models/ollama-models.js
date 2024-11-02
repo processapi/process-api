@@ -20,6 +20,7 @@ export class OllamaModels extends HTMLElement {
     #filterChangeHandler = this.#filterChanged.bind(this);
     #modelsList;
     #downloading = false;
+    #selectedElement;
 
     constructor() {
         super();
@@ -63,6 +64,8 @@ export class OllamaModels extends HTMLElement {
         this.#filterChangeHandler = null;
         this.#modelsList = null;
         this.#models = null;
+        this.#installed = null;
+        this.#selectedElement = null;
     }
 
     /**
@@ -110,6 +113,7 @@ export class OllamaModels extends HTMLElement {
         }
 
         if (target instanceof HTMLLIElement) {
+            this.#selectedElement = target;
             const modelName = target.querySelector(".model-name").textContent.trim();
             const model = structuredClone(this.#models[modelName]);
             model.name = modelName;
@@ -129,6 +133,7 @@ export class OllamaModels extends HTMLElement {
         await OllamaModule.delete_model({ name: model });
         button.dataset.action = "download";
         button.textContent = "Download";
+        dispatchEvent(new CustomEvent("models-changed", { detail: { model } }));
     }
 
     async download(model, button) {
@@ -162,6 +167,9 @@ export class OllamaModels extends HTMLElement {
         button.dataset.action = "delete";
         button.textContent = "Delete";
         this.#downloading = false;
+        dispatchEvent(new CustomEvent("models-changed", { detail: { model } }));
+
+        this.#selectedElement.querySelector(".installed").dataset.installed = "true";
     }
 
     async closeDetails() {
