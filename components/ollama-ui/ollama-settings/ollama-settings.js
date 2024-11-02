@@ -2,10 +2,17 @@ import { ComponentModule } from "../../../src/modules/component.js";
 import "./../ollama-models/ollama-models.js";
 import {OllamaModule} from "../../../src/modules/ollama.js";
 
+const LocalStorageKeys = Object.freeze({
+	CHAT_MODEL: "chatModel",
+	GENERATE_MODEL: "generateModel",
+	EMBEDDING_MODEL: "embeddingModel",
+});
+
 export class OllamaSettings extends HTMLElement {
 	static name = Object.freeze("ollama-settings");
 
 	#clickHandler = this.#click.bind(this);
+	#changeHandler = this.#change.bind(this);
 
 	constructor() {
 		super();
@@ -17,17 +24,28 @@ export class OllamaSettings extends HTMLElement {
 			url: import.meta.url,
 		});
 
-		this.addEventListener("click", this.#clickHandler);
+		this.shadowRoot.addEventListener("click", this.#clickHandler);
+		this.shadowRoot.addEventListener("change", this.#changeHandler);
+
 		const installedModels = await OllamaModule.get_installed_models();
 		const listItemElements = createListItemElements(installedModels);
 
-		this.shadowRoot.querySelector("#cbChat").appendChild(listItemElements.cloneNode(true));
-		this.shadowRoot.querySelector("#cbGenerate").appendChild(listItemElements.cloneNode(true));
-		this.shadowRoot.querySelector("#cbEmbedding").appendChild(listItemElements.cloneNode(true));
+		const cbChat = this.shadowRoot.querySelector("#cbChat");
+		cbChat.appendChild(listItemElements.cloneNode(true));
+		cbChat.value = localStorage.getItem(LocalStorageKeys.CHAT_MODEL) ?? "none";
+
+		const cbGenerate = this.shadowRoot.querySelector("#cbGenerate");
+		cbGenerate.appendChild(listItemElements.cloneNode(true));
+		cbGenerate.value = localStorage.getItem(LocalStorageKeys.GENERATE_MODEL) ?? "none";
+
+		const cbEmbedding = this.shadowRoot.querySelector("#cbEmbedding");
+		cbEmbedding.appendChild(listItemElements.cloneNode(true));
+		cbEmbedding.value = localStorage.getItem(LocalStorageKeys.EMBEDDING_MODEL) ?? "none";
 	}
 
 	async disconnectedCallback() {
-		this.removeEventListener("click", this.#clickHandler);
+		this.shadowRoot.removeEventListener("click", this.#clickHandler);
+		this.shadowRoot.removeEventListener("change", this.#changeHandler);
 	}
 
 	#click(event) {
@@ -36,6 +54,13 @@ export class OllamaSettings extends HTMLElement {
 		if (target.dataset.action != null) {
 			this[target.dataset.action](event);
 		}
+	}
+
+	#change(event) {
+		const target = event.composedPath()[0];
+		const store = target.dataset.store;
+		const value = target.value;
+		localStorage.setItem(store, value);
 	}
 
 	closeDialog() {
