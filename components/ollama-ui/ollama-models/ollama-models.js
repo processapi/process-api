@@ -133,6 +133,10 @@ export class OllamaModels extends HTMLElement {
         await OllamaModule.delete_model({ name: model });
         button.dataset.action = "download";
         button.textContent = "Download";
+
+        const hasInstalled = this.shadowRoot.querySelectorAll(".size > [data-action='delete']").length > 0;
+        this.#selectedElement.querySelector(".installed").dataset.installed = String(hasInstalled);
+
         dispatchEvent(new CustomEvent("models-changed", { detail: { model } }));
     }
 
