@@ -1,0 +1,30 @@
+:host {
+    --width: 600px;
+    --height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    translate: -50% -50%;
+    background: var(--cl-bkg-l);
+    color: var(--cl-text);
+    padding: var(--padding);
+    filter: var(--drop-shadow);
+    border-radius: var(--border-radius);
+}
+
+h2 {
+    color: var(--cl-danger);
+}
+
+a {
+    color: var(--cl-progress);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.margin-bottom {
+    display: block;
+    margin-bottom: 1rem;
+}

@@ -1,4 +1,5 @@
 import { ComponentModule } from "../../src/modules/component.js";
+import { OllamaModule } from "../../src/modules/ollama.js";
 import "./ollama-settings/ollama-settings.js";
 
 const TRANSLATION_MAP = {
@@ -29,6 +30,11 @@ export class OllamaUIComponent extends HTMLElement {
 		this.shadowRoot.innerHTML = await ComponentModule.load_html({
 			url: import.meta.url,
 		});
+
+		if (!await OllamaModule.is_active()) {
+			return showOllamaNotActive();
+		}
+
 		manageClickEvents(
 			this.shadowRoot,
 			"addEventListener",
@@ -106,6 +112,13 @@ function setTranslations(shadowRoot, translations) {
 			);
 		}
 	}
+}
+
+function showOllamaNotActive() {
+	import ("./ollama-active/ollama-active.js").then(() => {
+		const instance = document.createElement("ollama-active");
+		document.body.appendChild(instance);
+	});
 }
 
 customElements.define(OllamaUIComponent.name, OllamaUIComponent);

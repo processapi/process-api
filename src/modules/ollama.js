@@ -59,6 +59,15 @@ export class OllamaModule {
 		};
 	}
 
+	static async is_active() {
+		try {
+			return await fetch(DEFAULT_URL);
+		}
+		catch {
+			return false;
+		}
+	}
+
 	/**
 	 * @method generate
 	 * @description Tell llama to generate text based on the given prompt

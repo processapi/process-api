@@ -36,6 +36,10 @@ label {
 	margin-bottom: var(--padding);
 }
 
+label div {
+	margin-bottom: 0.5rem;
+}
+
 #btnClose {
 	position: absolute;
 	top: var(--padding);
