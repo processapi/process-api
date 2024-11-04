@@ -1,6 +1,6 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { OllamaModule } from "../../src/modules/ollama.js";
-import "./ollama-settings/ollama-settings.js";
+import { LocalStorageKeys } from "./ollama-settings/ollama-settings.js";
 
 const TRANSLATION_MAP = {
 	"placeholder": "input:placeholder",
@@ -15,6 +15,10 @@ export class OllamaUIComponent extends HTMLElement {
 	#btnAttachClickHandler = this.#btnAttachClick.bind(this);
 	#btnRunClickHandler = this.#btnRunClick.bind(this);
 	#btnSettingsClickHandler = this.#btnSettingsClick.bind(this);
+	#enterHandler = this.#enter.bind(this);
+	#resultElement;
+	#wasStrong = false;
+	#messages = [];
 
 	#options = {
 		model: "llama3.2",
@@ -31,6 +35,8 @@ export class OllamaUIComponent extends HTMLElement {
 			url: import.meta.url,
 		});
 
+		this.#resultElement = this.shadowRoot.querySelector(".result");
+
 		if (!await OllamaModule.is_active()) {
 			return showOllamaNotActive();
 		}
@@ -42,6 +48,8 @@ export class OllamaUIComponent extends HTMLElement {
 			this.#btnRunClickHandler,
 			this.#btnSettingsClickHandler,
 		);
+
+		this.shadowRoot.querySelector(".input-text").addEventListener("keydown", this.#enterHandler);
 	}
 
 	async disconnectedCallback() {
@@ -53,21 +61,58 @@ export class OllamaUIComponent extends HTMLElement {
 			this.#btnSettingsClickHandler,
 		);
 
+		this.shadowRoot.querySelector(".input-text").removeEventListener("keydown", this.#enterHandler);
+
 		this.#btnAttachClickHandler = null;
 		this.#btnRunClickHandler = null;
 		this.#btnSettingsClickHandler = null;
+		this.#resultElement = null;
 	}
 
 	#btnAttachClick() {
 		console.log("Attach clicked");
 	}
 
-	#btnRunClick() {
-		console.log("Run clicked");
+	async #btnRunClick() {
+		const action = localStorage.getItem(LocalStorageKeys.INTERACT_TYPE) === "true" ? "chat" : "generate";
+		const inputElement = this.shadowRoot.querySelector(".input-text");
+		const text = inputElement.value;
+		inputElement.value = "";
+
+		await this[action](text);
 	}
 
 	#btnSettingsClick() {
 		document.body.appendChild(document.createElement("ollama-settings"));
+	}
+
+	async #enter(event) {
+		if (event.key === "Enter") {
+			await this.#btnRunClick();
+		}
+	}
+
+	#sanitize(text) {
+		// 1. replace \n with <br>
+		// 2. replace \t with &nbsp;&nbsp;&nbsp;&nbsp;
+		// 3. replace \s with &nbsp;
+		let newText = text
+			.replace(/\n/g, "<br>")
+			.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+			.replace(/\s/g, "&nbsp;");
+
+		if (newText.includes("**")) {
+			if (this.#wasStrong) {
+				newText = newText.replace("**", "</strong>");
+			}
+			else {
+				newText = newText.replace("**", "<strong>");
+			}
+
+			this.#wasStrong = !this.#wasStrong;
+		}
+
+		return newText;
 	}
 
 	/**
@@ -87,6 +132,39 @@ export class OllamaUIComponent extends HTMLElement {
 		if (options.translations != null) {
 			setTranslations(this.shadowRoot, options.translations);
 		}
+	}
+
+	async chat(text) {
+		const model = localStorage.getItem(LocalStorageKeys.CHAT_MODEL);
+		this.#messages.push({ role: "user", content: text });
+
+		const result = OllamaModule.chat({
+			model,
+			messages: this.#messages,
+			stream: true
+		})
+
+		const resultElement = document.createElement("p");
+		this.#resultElement.appendChild(resultElement);
+
+		const response = [];
+
+		for await (const message of result) {
+			requestAnimationFrame(() => {
+				const json = JSON.parse(message);
+				const text = this.#sanitize(json.message.content);
+				resultElement.innerHTML += text;
+				response.push(json.message.content);
+				this.#resultElement.scrollTop = this.#resultElement.scrollHeight;
+			})
+		}
+
+		this.#messages.push({ role: "assistant", content: response.join(" ") });
+	}
+
+	async generate(text) {
+		const model = localStorage.getItem(LocalStorageKeys.GENERATE_MODEL);
+
 	}
 }
 

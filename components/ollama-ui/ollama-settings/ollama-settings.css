@@ -1,5 +1,6 @@
 @import "../../styles/select.css";
 @import "../../styles/buttons.css";
+@import "../../styles/switch.css";
 
 :host {
 	--width: 400px;
@@ -52,4 +53,15 @@ label div {
 
 svg * {
 	pointer-events: none;
+}
+
+.chat-options {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+}
+
+.chat-options label {
+	margin-bottom: 0;
 }

@@ -2,10 +2,11 @@ import { ComponentModule } from "../../../src/modules/component.js";
 import "./../ollama-models/ollama-models.js";
 import {OllamaModule} from "../../../src/modules/ollama.js";
 
-const LocalStorageKeys = Object.freeze({
+export const LocalStorageKeys = Object.freeze({
 	CHAT_MODEL: "chatModel",
 	GENERATE_MODEL: "generateModel",
 	EMBEDDING_MODEL: "embeddingModel",
+	INTERACT_TYPE: "interactType",
 });
 
 export class OllamaSettings extends HTMLElement {
@@ -41,6 +42,9 @@ export class OllamaSettings extends HTMLElement {
 		const cbEmbedding = this.shadowRoot.querySelector("#cbEmbedding");
 		cbEmbedding.appendChild(listItemElements.cloneNode(true));
 		cbEmbedding.value = localStorage.getItem(LocalStorageKeys.EMBEDDING_MODEL) ?? "none";
+
+		const chbInteractType = this.shadowRoot.querySelector("#chbInteractType");
+		chbInteractType.checked = localStorage.getItem(LocalStorageKeys.INTERACT_TYPE) === "true";
 	}
 
 	async disconnectedCallback() {
@@ -59,7 +63,7 @@ export class OllamaSettings extends HTMLElement {
 	#change(event) {
 		const target = event.composedPath()[0];
 		const store = target.dataset.store;
-		const value = target.value;
+		const value = target.type === "checkbox" ? target.checked : target.value;
 		localStorage.setItem(store, value);
 	}
 
@@ -74,12 +78,14 @@ export class OllamaSettings extends HTMLElement {
 
 function createListItemElements(models) {
 	const fragment = document.createDocumentFragment();
+
 	for (const model of models) {
 		const optionElement = document.createElement("option");
 		optionElement.textContent = model;
 		optionElement.value = model;
 		fragment.appendChild(optionElement);
 	}
+
 	return fragment;
 }
 
