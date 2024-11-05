@@ -45,3 +45,12 @@ Deno.test("OllamaModule - generate", async () => {
 
 	assert(messages.length > 0);
 });
+
+Deno.test("Ollama - embed", async () => {
+	const response = await OllamaModule.embed({
+		model: "all-minilm",
+		input: "hello world",
+	});
+
+	assert(response.embeddings.length > 0);
+})

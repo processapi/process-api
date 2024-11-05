@@ -7,6 +7,7 @@ const MODELS = "tags";
 const DELETE = "delete";
 const INSTALL = "pull";
 const POST = "post";
+const EMBED = "embed";
 
 const GENERATE_OPTIONAL_ARGS = Object.freeze([
 	"suffix",
@@ -122,6 +123,21 @@ export class OllamaModule {
 		);
 
 		yield* processRequest(url, POST, body);
+	}
+
+	static async embed(args) {
+		const url = createUrl(args, EMBED);
+
+		return await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				model: args.model,
+				input: args.input
+			}),
+		}).then(result => result.json());
 	}
 
 	/**
