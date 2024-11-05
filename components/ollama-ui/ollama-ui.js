@@ -17,8 +17,8 @@ export class OllamaUIComponent extends HTMLElement {
 	#btnSettingsClickHandler = this.#btnSettingsClick.bind(this);
 	#enterHandler = this.#enter.bind(this);
 	#resultElement;
-	#wasStrong = false;
 	#messages = [];
+	#sanitizeHandler = this.#sanitize.bind(this);
 
 	#options = {
 		model: "llama3.2",
@@ -67,6 +67,7 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#btnRunClickHandler = null;
 		this.#btnSettingsClickHandler = null;
 		this.#resultElement = null;
+		this.#sanitizeHandler = null;
 	}
 
 	#btnAttachClick() {
@@ -96,23 +97,10 @@ export class OllamaUIComponent extends HTMLElement {
 		// 1. replace \n with <br>
 		// 2. replace \t with &nbsp;&nbsp;&nbsp;&nbsp;
 		// 3. replace \s with &nbsp;
-		let newText = text
+		return text
 			.replace(/\n/g, "<br>")
 			.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
-			.replace(/\s/g, "&nbsp;");
-
-		if (newText.includes("**")) {
-			if (this.#wasStrong) {
-				newText = newText.replace("**", "</strong>");
-			}
-			else {
-				newText = newText.replace("**", "<strong>");
-			}
-
-			this.#wasStrong = !this.#wasStrong;
-		}
-
-		return newText;
+			.replace(/\s/g, "&nbsp;")
 	}
 
 	/**
@@ -148,23 +136,42 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#resultElement.appendChild(resultElement);
 
 		const response = [];
-
-		for await (const message of result) {
-			requestAnimationFrame(() => {
-				const json = JSON.parse(message);
-				const text = this.#sanitize(json.message.content);
-				resultElement.innerHTML += text;
-				response.push(json.message.content);
-				this.#resultElement.scrollTop = this.#resultElement.scrollHeight;
-			})
-		}
-
+		await streamResult(result, resultElement, this.#sanitizeHandler, response);
 		this.#messages.push({ role: "assistant", content: response.join(" ") });
 	}
 
 	async generate(text) {
 		const model = localStorage.getItem(LocalStorageKeys.GENERATE_MODEL);
 
+		const result = await OllamaModule.generate({
+			model,
+			prompt: text,
+			stream: true,
+		});
+
+		const resultElement = document.createElement("p");
+		this.#resultElement.appendChild(resultElement);
+		await streamResult(result, resultElement, this.#sanitizeHandler);
+	}
+}
+
+async function streamResult(result, resultElement, sanitize, responseCollection) {
+	for await (const message of result) {
+		const json = JSON.parse(message.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, ""));
+
+		if (json.error != null) {
+			resultElement.innerHTML += `<error>ERROR: ${json.error}</error>`;
+			return;
+		}
+
+		const text = sanitize(json.message?.content ?? json.response);
+		resultElement.innerHTML += text;
+
+		if (responseCollection != null) {
+			responseCollection?.push(json.message.content);
+		}
+
+		resultElement.scrollTop = resultElement.scrollHeight;
 	}
 }
 

@@ -28,6 +28,7 @@ strong {
 .result {
 	color: var(--cl-text);
 	overflow: auto;
+	word-break: break-word;
 }
 
 button {
@@ -61,4 +62,8 @@ input:focus {
 #btnRun {
 	background: var(--cl-run-bkg);
 	border-radius: var(--run-radius);
+}
+
+error {
+	color: var(--cl-danger);
 }
