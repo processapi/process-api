@@ -136,7 +136,7 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#resultElement.appendChild(resultElement);
 
 		const response = [];
-		await streamResult(result, resultElement, this.#sanitizeHandler, response);
+		await streamResult(result, this.#resultElement, this.#sanitizeHandler, response);
 		this.#messages.push({ role: "assistant", content: response.join(" ") });
 	}
 
@@ -151,7 +151,7 @@ export class OllamaUIComponent extends HTMLElement {
 
 		const resultElement = document.createElement("p");
 		this.#resultElement.appendChild(resultElement);
-		await streamResult(result, resultElement, this.#sanitizeHandler);
+		await streamResult(result, this.#resultElement, this.#sanitizeHandler);
 	}
 }
 
@@ -165,14 +165,18 @@ async function streamResult(result, resultElement, sanitize, responseCollection)
 		}
 
 		const text = sanitize(json.message?.content ?? json.response);
-		resultElement.innerHTML += text;
 
 		if (responseCollection != null) {
 			responseCollection?.push(json.message.content);
 		}
 
-		resultElement.scrollTop = resultElement.scrollHeight;
+		requestAnimationFrame(() => {
+			resultElement.innerHTML += text;
+			resultElement.scrollTop = resultElement.scrollHeight;
+		})
 	}
+
+	resultElement.scrollTop = resultElement.scrollHeight;
 }
 
 function manageClickEvents(

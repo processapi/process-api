@@ -1,3 +1,5 @@
+@import "../styles/scrollbars.css";
+
 :host {
 	--results-border: var(--border);
 	--font: 16px "Arial", sans-serif;

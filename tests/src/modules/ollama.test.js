@@ -40,7 +40,6 @@ Deno.test("OllamaModule - generate", async () => {
 	const messages = [];
 	for await (const chunk of response) {
 		const messageObj = JSON.parse(chunk);
-		messages.push(messageObj.response);
 	}
 
 	assert(messages.length > 0);
@@ -48,7 +47,7 @@ Deno.test("OllamaModule - generate", async () => {
 
 Deno.test("Ollama - embed", async () => {
 	const response = await OllamaModule.embed({
-		model: "all-minilm",
+		model: "llama3.1",
 		input: "hello world",
 	});
 
