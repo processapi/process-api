@@ -45,6 +45,9 @@ export class OllamaSettings extends HTMLElement {
 
 		const chbInteractType = this.shadowRoot.querySelector("#chbInteractType");
 		chbInteractType.checked = localStorage.getItem(LocalStorageKeys.INTERACT_TYPE) === "true";
+
+		const txtSystemPrompt = this.shadowRoot.querySelector("#txtSystemPrompt");
+		txtSystemPrompt.value = localStorage.getItem("systemPrompt") ?? "You are a cheerful but professional assistant.";
 	}
 
 	async disconnectedCallback() {

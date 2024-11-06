@@ -123,6 +123,12 @@ export class OllamaUIComponent extends HTMLElement {
 	}
 
 	async chat(text) {
+		const systemPrompt = localStorage.getItem("systemPrompt") ?? "You are a cheerful but professional assistant.";
+
+		if (this.#messages.length === 0) {
+			this.#messages.push({ role: "system", content: systemPrompt });
+		}
+
 		const model = localStorage.getItem(LocalStorageKeys.CHAT_MODEL);
 		this.#messages.push({ role: "user", content: text });
 

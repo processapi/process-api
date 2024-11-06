@@ -28,13 +28,13 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: flex-end;
-	gap: var(--padding);
+	justify-content: space-between;
 }
 
 label {
 	display: block;
 	margin-bottom: var(--padding);
+	width: 100%;
 }
 
 label div {
@@ -59,9 +59,16 @@ svg * {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 1rem;
+	gap: 0.5rem;
 }
 
 .chat-options label {
 	margin-bottom: 0;
+}
+
+textarea {
+	display: block;
+	width: 100%;
+	height: 5rem;
+	resize: none;
 }

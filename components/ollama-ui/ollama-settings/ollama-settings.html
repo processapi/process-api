@@ -21,17 +21,21 @@
     </select>
 </label>
 
-<div class="chat-options">
-    <div>Generate</div>
-    <label class="switch">
-        <input id="chbInteractType" type="checkbox" checked="true" data-store="interactType">
-        <span class="slider"></span>
-    </label>
-    <div>Chat</div>
-</div>
-
+<label>
+    <div>System Prompt</div>
+    <textarea id="txtSystemPrompt" data-store="systemPrompt"></textarea>
+</label>
 
 <div class="toolbar">
+    <div class="chat-options">
+        <div>Generate</div>
+        <label class="switch">
+            <input id="chbInteractType" type="checkbox" checked="true" data-store="interactType">
+            <span class="slider"></span>
+        </label>
+        <div>Chat</div>
+    </div>
+
     <button id="btnModels" data-action="models">Models</button>
 </div>
 
