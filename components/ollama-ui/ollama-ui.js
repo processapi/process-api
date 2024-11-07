@@ -1,5 +1,6 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { OllamaModule } from "../../src/modules/ollama.js";
+import { FilesModule } from "../../src/modules/files.js";
 import { LocalStorageKeys } from "./ollama-settings/ollama-settings.js";
 
 const TRANSLATION_MAP = {
@@ -19,6 +20,7 @@ export class OllamaUIComponent extends HTMLElement {
 	#resultElement;
 	#messages = [];
 	#sanitizeHandler = this.#sanitize.bind(this);
+	#embeddings;
 
 	#options = {
 		model: "llama3.2",
@@ -70,8 +72,22 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#sanitizeHandler = null;
 	}
 
-	#btnAttachClick() {
-		console.log("Attach clicked");
+	async #btnAttachClick() {
+		const files = await FilesModule.load_files({ ext: ".txt" });
+		const file = files[0];
+		const text = await file.text();
+
+		const embedModel =
+			localStorage.getItem(LocalStorageKeys.EMBEDDING_MODEL) ||
+			localStorage.getItem(LocalStorageKeys.CHAT_MODEL) ||
+			localStorage.getItem(LocalStorageKeys.GENERATE_MODEL);
+
+		const embeddingsResult = await OllamaModule.embed({
+			model: embedModel,
+			input: text,
+		});
+
+		this.#embeddings = embeddingsResult.embeddings;
 	}
 
 	async #btnRunClick() {
@@ -149,10 +165,15 @@ export class OllamaUIComponent extends HTMLElement {
 	async generate(text) {
 		const model = localStorage.getItem(LocalStorageKeys.GENERATE_MODEL);
 
+		if (this.#embeddings != null) {
+			text = `Using this data: {${this.#embeddings}}. Respond to this prompt: {${text}}`;
+		}
+
 		const result = await OllamaModule.generate({
 			model,
 			prompt: text,
 			stream: true,
+			system: localStorage.getItem("systemPrompt") ?? "",
 		});
 
 		const resultElement = document.createElement("p");

@@ -78,6 +78,7 @@ export class OllamaModule {
 	 * @param args.model {string} - The model to use for generation
 	 * @param args.prompt {string} - The prompt to use for generation
 	 * @param args.stream {boolean} - Whether to stream the response or not, defaults to true
+	 * @param args.system {string} - The system prompt to use for generation, defaults to ""
 	 * @param args.url {string} - The URL to use for the request, defaults to localhost
 	 * @returns {AsyncGenerator<string, void, unknown>}
 	 */
@@ -89,6 +90,7 @@ export class OllamaModule {
 				model: args.model,
 				prompt: args.prompt,
 				stream: args.stream ?? true,
+				system: args.system ?? "",
 			},
 			GENERATE_OPTIONAL_ARGS,
 			args,

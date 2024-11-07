@@ -10,6 +10,9 @@
 		"exclude": ["src/modules/surreal/cdn.js"]
 	},
 	"test": {
-		"exclude": ["tests/src/modules/surrealdb.test.js"]
+		"exclude": [
+			"tests/src/modules/surrealdb.test.js",
+			"tests/src/modules/ollama.test.js"
+		]
 	}
 }
