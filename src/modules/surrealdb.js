@@ -27,6 +27,7 @@ class SurrealDBModule {
 	 * @param args.url {string} - The url to use for the connection
 	 * @param args.namespace {string} - The namespace to use for the connection
 	 * @param args.database {string} - The database to use for the connection
+	 * @param args.engine {any} - The engine to use for the connection
 	 * @returns {Promise<void>}
 	 */
 	static async connect(args) {
@@ -42,12 +43,23 @@ class SurrealDBModule {
 			await this.disconnect();
 		}
 
-		this.db = new Surreal();
+		if (args.engine == null) {
+			this.db = new Surreal();
+		}
+		else {
+			this.db = new Surreal({
+				engines: args.engine
+			})
+		}
 
 		const { username, password, url, namespace, database } = args;
 
 		await this.db.connect(url);
-		await this.db.signin({ username, password });
+
+		if (args.engine == null) {
+			await this.db.signin({ username, password });
+		}
+
 		await this.create_namespace({ namespace });
 		await this.create_database({ namespace, database });
 		await this.db.use({ namespace, database });
