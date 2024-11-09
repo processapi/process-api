@@ -16,9 +16,23 @@ export class SchemaManager {
     }
 
     dispose() {
+        for (const providerKey of Object.keys(this.#providers)) {
+            const provider = this.#providers[providerKey];
+            provider.parser = null;
+            this.#providers[providerKey] = null;
+        }
+
         this.#providers = null;
     }
 
+    /**
+     * @method #parseAttributes
+     * @description This method is responsible for parsing the attributes of the schema item.
+     * The template string is used to replace the __attributes__ placeholder with the attributes.
+     * @param template {String} The template string.
+     * @param schemaItem {Object} The schema item.
+     * @returns {Promise<*>}
+     */
     async #parseAttributes(template, schemaItem) {
         if (schemaItem.attributes == null) {
             return template.replace("__attributes__", "");
@@ -34,6 +48,13 @@ export class SchemaManager {
         return template.replace("__attributes__", attributes.join(" "));
     }
 
+    /**
+     * @method #parseStyles
+     * @description This method is responsible for parsing the styles of the schema item.
+     * @param template {String} The template string.
+     * @param schemaItem {Object} The schema item.
+     * @returns {Promise<*>}
+     */
     async #parseStyles(template, schemaItem) {
         // 1. no styles to manage
         if (schemaItem.styles == null) {
@@ -57,6 +78,15 @@ export class SchemaManager {
         return template.replace("__styles__", `style="${styles.join(" ")}"`);
     }
 
+    /**
+     * @method #parseContent
+     * @description This method is responsible for parsing the content of the schema item.
+     * If the schema item has content, it will replace the __content__ placeholder with the content.
+     * If the schema item has child elements, it will parse the children and replace the __content__ placeholder with the children.
+     * @param template
+     * @param schemaItem
+     * @returns {Promise<*|{type: string}>}
+     */
     async #parseContent(template, schemaItem) {
         if (schemaItem.content != null) {
             return template.replace("__content__", schemaItem.content);
@@ -65,6 +95,13 @@ export class SchemaManager {
         return await this.#parseChildren(template, schemaItem);
     }
 
+    /**
+     * @method #parseChildren
+     * @description This method is responsible for parsing the children of the schema item.
+     * @param template {String} The template string.
+     * @param schemaItem {Object} The schema item.
+     * @returns {Promise<*|{type: string}|string>}
+     */
     async #parseChildren(template, schemaItem) {
         if (schemaItem.elements == null) {
             return template.replace("__content__", "");
@@ -86,8 +123,14 @@ export class SchemaManager {
         return template.replace("__content__", childContent).trim();
     }
 
+    /**
+     * @method registerProvider
+     * @description This method is responsible for registering a provider with the HTMLGenerator.
+     * @param provider
+     */
     registerProvider(provider) {
         this.#providers[provider.key] = provider;
+        provider.parser = this;
     }
 
     /**
@@ -115,6 +158,13 @@ export class SchemaManager {
         return ValidationResult.success(result, "/");
     }
 
+    /**
+     * @method parseItem
+     * @description This method is responsible for parsing the schema item and generating HTML code.
+     * @param schemaItem
+     * @param path
+     * @returns {Promise<{type: string}|*>}
+     */
     async parseItem(schemaItem, path) {
         const providerKey = schemaItem.element;
         const provider = this.#providers[providerKey] ?? this.#providers["raw"];

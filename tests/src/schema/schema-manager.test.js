@@ -27,6 +27,36 @@ Deno.test("SchemaManager.parse should generate HTML code from schema", async () 
     const result = await schemaManager.parse(schemaJson);
     assert(ValidationResult.isSuccess(result));
         assertEquals(result.message, "<div><h1>Hello World</h1></div>");
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.parse input scenario", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    elements: [
+                        {
+                            "element": "input",
+                            "field": "model.firstName",
+                            "title": "First Name",
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+
+    const result = await schemaManager.parse(schemaJson);
+    assert(ValidationResult.isSuccess(result));
+
+    assert(result.message.indexOf("<input type=\"text\" value.bind=\"model.firstName\" />")) > -1;
+    schemaManager.dispose();
 });
 
 Deno.test("SchemaManager.validate should validate the entire schema", () => {
@@ -34,6 +64,7 @@ Deno.test("SchemaManager.validate should validate the entire schema", () => {
     const schemaJson = { /* your schema JSON here */ };
     const result = schemaManager.validate(schemaJson);
     assertEquals(result, ValidationResult.success("success"));
+    schemaManager.dispose();
 });
 
 Deno.test("SchemaManager.validate should validate a part of the schema", () => {
@@ -42,6 +73,7 @@ Deno.test("SchemaManager.validate should validate a part of the schema", () => {
     const path = "some.path";
     const result = schemaManager.validate(schemaJson, path);
     assertEquals(result, ValidationResult.success("success"));
+    schemaManager.dispose();
 });
 
 Deno.test("SchemaManager.create should create a new element in the schema", () => {
@@ -51,6 +83,7 @@ Deno.test("SchemaManager.create should create a new element in the schema", () =
     const element = { /* your element here */ };
     const result = schemaManager.create(schemaJson, path, element);
     assertEquals(result, ValidationResult.success("success"));
+    schemaManager.dispose();
 });
 
 Deno.test("SchemaManager.update should update an existing element in the schema", () => {
@@ -60,6 +93,7 @@ Deno.test("SchemaManager.update should update an existing element in the schema"
     const element = { /* your element here */ };
     const result = schemaManager.update(schemaJson, path, element);
     assertEquals(result, ValidationResult.success("success"));
+    schemaManager.dispose();
 });
 
 Deno.test("SchemaManager.delete should delete an existing element in the schema", () => {
@@ -68,4 +102,5 @@ Deno.test("SchemaManager.delete should delete an existing element in the schema"
     const path = "some.path";
     const result = schemaManager.delete(schemaJson, path);
     assertEquals(result, ValidationResult.success("success"));
+    schemaManager.dispose();
 });

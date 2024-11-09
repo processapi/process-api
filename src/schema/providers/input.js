@@ -1,13 +1,14 @@
 import { ValidationResult } from "./../validation-result.js";
+import { BaseProvider } from "./base-provider.js";
 
 const TEMPLATE = `
 <label data-field="__field__">
     <div>__title__</div>
-    <input type="__type__" value="__value__" />
+    <input type="__type__" value.bind="__field__" />
 </label>
 `
 
-export class InputProvider {
+export class InputProvider extends BaseProvider {
     static key = Object.freeze("input");
 
     /**
@@ -24,13 +25,9 @@ export class InputProvider {
             return validation;
         }
 
-        const result = TEMPLATE
-            .replace("__field__", schemaItem.field)
-            .replace("__title__", schemaItem.title)
-            .replace("__type__",  schemaItem.type)
-            .replace("__value__", schemaItem.value);
+        schemaItem.type ||= "text";
 
-        return ValidationResult.success(result, path);
+        return super.parse(TEMPLATE, schemaItem, path);
     }
 
     /**
