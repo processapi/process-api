@@ -10,6 +10,10 @@ const TRANSLATION_MAP = {
 	"settings-hint": "#btnSettings:title",
 };
 
+/**
+ * @class OllamaUIComponent
+ * @description A web component that provides a user interface for interacting with the Ollama API
+ */
 export class OllamaUIComponent extends HTMLElement {
 	static name = Object.freeze("ollama-ui");
 
@@ -32,6 +36,11 @@ export class OllamaUIComponent extends HTMLElement {
 		this.attachShadow({ mode: "open" });
 	}
 
+	/**
+	 * @method connectedCallback
+	 * @description Called when the component is connected to the DOM
+	 * @returns {Promise<void>}
+	 */
 	async connectedCallback() {
 		this.shadowRoot.innerHTML = await ComponentModule.load_html({
 			url: import.meta.url,
@@ -54,6 +63,11 @@ export class OllamaUIComponent extends HTMLElement {
 		this.shadowRoot.querySelector(".input-text").addEventListener("keydown", this.#enterHandler);
 	}
 
+	/**
+	 * @method disconnectedCallback
+	 * @description Called when the component is disconnected from the DOM
+	 * @returns {Promise<void>}
+	 */
 	async disconnectedCallback() {
 		manageClickEvents(
 			this.shadowRoot,
@@ -72,6 +86,11 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#sanitizeHandler = null;
 	}
 
+	/**
+	 * @method #btnAttachClick
+	 * @description Event handler for the attach button click event
+	 * @returns {Promise<void>}
+	 */
 	async #btnAttachClick() {
 		const files = await FilesModule.load_files({ ext: ".txt" });
 		const file = files[0];
@@ -90,6 +109,11 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#embeddings = embeddingsResult.embeddings;
 	}
 
+	/**
+	 * @method #btnRunClick
+	 * @description Event handler for the run button click event
+	 * @returns {Promise<void>}
+	 */
 	async #btnRunClick() {
 		const action = localStorage.getItem(LocalStorageKeys.INTERACT_TYPE) === "true" ? "chat" : "generate";
 		const inputElement = this.shadowRoot.querySelector(".input-text");
@@ -99,16 +123,31 @@ export class OllamaUIComponent extends HTMLElement {
 		await this[action](text);
 	}
 
+	/**
+	 * @method #btnSettingsClick
+	 * @description Event handler for the settings button click event
+	 */
 	#btnSettingsClick() {
 		document.body.appendChild(document.createElement("ollama-settings"));
 	}
 
+	/**
+	 * @method #enter
+	 * @description Event handler for the enter key press event
+	 * @param event
+	 * @returns {Promise<void>}
+	 */
 	async #enter(event) {
 		if (event.key === "Enter") {
 			await this.#btnRunClick();
 		}
 	}
 
+	/**
+	 * @method #sanitize
+	 * @param text
+	 * @returns {*}
+	 */
 	#sanitize(text) {
 		// 1. replace \n with <br>
 		// 2. replace \t with &nbsp;&nbsp;&nbsp;&nbsp;
@@ -138,6 +177,12 @@ export class OllamaUIComponent extends HTMLElement {
 		}
 	}
 
+	/**
+	 * @method chat
+	 * @description Chat with the assistant
+	 * @param text
+	 * @returns {Promise<void>}
+	 */
 	async chat(text) {
 		const systemPrompt = localStorage.getItem("systemPrompt") ?? "You are a cheerful but professional assistant.";
 
@@ -162,6 +207,12 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#messages.push({ role: "assistant", content: response.join(" ") });
 	}
 
+	/**
+	 * @method generate
+	 * @description Generate a response to the given text
+	 * @param text
+	 * @returns {Promise<void>}
+	 */
 	async generate(text) {
 		const model = localStorage.getItem(LocalStorageKeys.GENERATE_MODEL);
 
@@ -182,6 +233,15 @@ export class OllamaUIComponent extends HTMLElement {
 	}
 }
 
+/**
+ * @function streamResult
+ * @description Stream the result of a request to the result
+ * @param result - The result of the request
+ * @param resultElement - The element to append the result to
+ * @param sanitize - The function to sanitize the result
+ * @param responseCollection - The collection to store the responses in
+ * @returns {Promise<void>}
+ */
 async function streamResult(result, resultElement, sanitize, responseCollection) {
 	for await (const message of result) {
 		const json = JSON.parse(message.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, ""));
