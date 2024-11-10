@@ -1,5 +1,6 @@
 import { ValidationResult } from "./../validation-result.js";
 import { BaseProvider } from "./base-provider.js";
+import { validate } from "../validation.js";
 
 const TEMPLATE = `
 <label data-field="__field__">
@@ -19,14 +20,7 @@ export class InputProvider extends BaseProvider {
      * @returns {String} The HTML code generated from the schema.
      */
     static async parse(schemaItem, path) {
-        const validation = this.validate(schemaItem, path);
-
-        if (ValidationResult.isError(validation)) {
-            return validation;
-        }
-
         schemaItem.type ||= "text";
-
         return super.parse(TEMPLATE, schemaItem, path);
     }
 
@@ -38,7 +32,11 @@ export class InputProvider extends BaseProvider {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async validate(schemaItem, path) {
-        return ValidationResult.success("success", path);
+        return validate(schemaItem, {
+            field: { type: "string", critical: true },
+            title: { type: "string", critical: true },
+            placeholder: { type: "string" }
+        }, path);
     }
 
     /**

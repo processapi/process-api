@@ -10,7 +10,8 @@ Deno.test("InputProvider:parse", async () => {
 Deno.test("InputProvider:validate - valid", async () => {
     const result = await InputProvider.validate({
         field: "firstName",
-        title: "First Name"
+        title: "First Name",
+        placeholder: "Enter your first name"
     }, "path");
 
     assert(ValidationResult.isSuccess(result));
