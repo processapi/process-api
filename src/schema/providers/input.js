@@ -4,7 +4,7 @@ import { BaseProvider } from "./base-provider.js";
 const TEMPLATE = `
 <label data-field="__field__">
     <div>__title__</div>
-    <input type="__type__" value.bind="__field__" />
+    <input type="__type__" placeholder="__placeholder__"/>
 </label>
 `
 
