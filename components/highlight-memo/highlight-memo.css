@@ -1,0 +1,42 @@
+:host {
+    --cl-keyword: #f92672;
+    --cl-constant: #ae81ff;
+    --cl-string: #e6db74;
+    --cl-comment: #75715e;
+    --cl-strong: #f8f8f2;
+
+    display: block;
+    overflow: auto;
+}
+
+strong {
+    color: var(--cl-strong);
+}
+
+.keyword {
+    color: var(--cl-keyword);
+}
+
+.constant {
+    color: var(--cl-constant);
+}
+
+.string {
+    color: var(--cl-string);
+}
+
+.comment {
+    color: var(--cl-comment);
+}
+
+ul {
+    list-style-type: decimal;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: var(--padding) 0;
+}
+
+

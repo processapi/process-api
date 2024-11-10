@@ -1,3 +1,4 @@
+import "./../../components/highlight-memo/highlight-memo.js";
 import "./../../components/ollama-ui/ollama-ui.js";
 
 export default class OllamaView extends HTMLElement {

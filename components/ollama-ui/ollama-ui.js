@@ -23,7 +23,6 @@ export class OllamaUIComponent extends HTMLElement {
 	#enterHandler = this.#enter.bind(this);
 	#resultElement;
 	#messages = [];
-	#sanitizeHandler = this.#sanitize.bind(this);
 	#embeddings;
 
 	#options = {
@@ -83,7 +82,6 @@ export class OllamaUIComponent extends HTMLElement {
 		this.#btnRunClickHandler = null;
 		this.#btnSettingsClickHandler = null;
 		this.#resultElement = null;
-		this.#sanitizeHandler = null;
 	}
 
 	/**
@@ -144,21 +142,6 @@ export class OllamaUIComponent extends HTMLElement {
 	}
 
 	/**
-	 * @method #sanitize
-	 * @param text
-	 * @returns {*}
-	 */
-	#sanitize(text) {
-		// 1. replace \n with <br>
-		// 2. replace \t with &nbsp;&nbsp;&nbsp;&nbsp;
-		// 3. replace \s with &nbsp;
-		return text
-			.replace(/\n/g, "<br>")
-			.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
-			.replace(/\s/g, "&nbsp;")
-	}
-
-	/**
 	 * Sets the translations for the component
 	 * {
 	 *     "placeholder"    : "Enter your text here",
@@ -199,11 +182,8 @@ export class OllamaUIComponent extends HTMLElement {
 			stream: true
 		})
 
-		const resultElement = document.createElement("p");
-		this.#resultElement.appendChild(resultElement);
-
 		const response = [];
-		await streamResult(result, this.#resultElement, this.#sanitizeHandler, response);
+		await streamResult(result, this.#resultElement, response);
 		this.#messages.push({ role: "assistant", content: response.join(" ") });
 	}
 
@@ -228,8 +208,7 @@ export class OllamaUIComponent extends HTMLElement {
 		});
 
 		const resultElement = document.createElement("p");
-		this.#resultElement.appendChild(resultElement);
-		await streamResult(result, this.#resultElement, this.#sanitizeHandler);
+		await streamResult(result, this.#resultElement);
 	}
 }
 
@@ -238,11 +217,10 @@ export class OllamaUIComponent extends HTMLElement {
  * @description Stream the result of a request to the result
  * @param result - The result of the request
  * @param resultElement - The element to append the result to
- * @param sanitize - The function to sanitize the result
  * @param responseCollection - The collection to store the responses in
  * @returns {Promise<void>}
  */
-async function streamResult(result, resultElement, sanitize, responseCollection) {
+async function streamResult(result, resultElement, responseCollection = null) {
 	for await (const message of result) {
 		const json = JSON.parse(message.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, ""));
 
@@ -251,19 +229,14 @@ async function streamResult(result, resultElement, sanitize, responseCollection)
 			return;
 		}
 
-		const text = sanitize(json.message?.content ?? json.response);
+		const text = json.message?.content ?? json.response;
+
+		resultElement.push(text);
 
 		if (responseCollection != null) {
 			responseCollection?.push(json.message.content);
 		}
-
-		requestAnimationFrame(() => {
-			resultElement.innerHTML += text;
-			resultElement.scrollTop = resultElement.scrollHeight;
-		})
 	}
-
-	resultElement.scrollTop = resultElement.scrollHeight;
 }
 
 function manageClickEvents(
