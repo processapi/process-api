@@ -219,8 +219,6 @@ Deno.test("SchemaManager.deleteStyleProperty should delete a style property from
     schemaManager.dispose();
 });
 
-// ---------------------------
-
 Deno.test("SchemaManager.create should create a new element in the schema", async () => {
     const schemaManager = new SchemaManager();
     schemaManager.registerProvider(InputProvider);
@@ -260,6 +258,55 @@ Deno.test("SchemaManager.create should return an error if the schema item is inv
     };
 
     const result = await schemaManager.create(schemaJson, path, schemaItem);
+    assertEquals(ValidationResult.isError(result), true);
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.update should update an existing element in the schema", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "input",
+                    field: "firstName",
+                    title: "First Name"
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const updatedSchemaItem = {
+        element: "input",
+        title: "Updated First Name"
+    };
+
+    const result = await schemaManager.update(schemaJson, path, updatedSchemaItem);
+    assertEquals(result, ValidationResult.success("success", path));
+    assertEquals(schemaJson.body.elements[0].title, "Updated First Name");
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.update should return an error if the element does not exist", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: []
+        }
+    };
+    const path = "/0";
+    const updatedSchemaItem = {
+        element: "input",
+        title: "Updated First Name"
+    };
+
+    const result = await schemaManager.update(schemaJson, path, updatedSchemaItem);
     assertEquals(ValidationResult.isError(result), true);
 
     schemaManager.dispose();
