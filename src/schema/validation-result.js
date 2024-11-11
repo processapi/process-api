@@ -1,5 +1,6 @@
 const SUCCESS = "success";
 const ERROR = "error";
+const WARNING = "warning";
 
 /**
  * @class ValidationResult
@@ -7,15 +8,15 @@ const ERROR = "error";
  */
 export class ValidationResult {
     static isError(validation) {
-        return validation.type === "error";
+        return validation.type === ERROR;
     }
 
     static isSuccess(validation) {
-        return validation.type === "success";
+        return validation.type === SUCCESS;
     }
 
     static isWarning(validation) {
-        return validation.type === "warning";
+        return validation.type === WARNING;
     }
 
     /**
@@ -26,7 +27,7 @@ export class ValidationResult {
      * @returns {{type: string, message}}
      */
     static error(message, path = "") {
-        return Object.freeze({ type: "error", message, path });
+        return Object.freeze({ type: ERROR, message, path });
     }
 
     /**
@@ -37,7 +38,7 @@ export class ValidationResult {
      * @returns {Readonly<{path: string, type: string, message}>}
      */
     static warning(message, path = "") {
-        return Object.freeze({ type: "warning", message, path });
+        return Object.freeze({ type: WARNING, message, path });
     }
 
     /**
@@ -48,6 +49,6 @@ export class ValidationResult {
      * @returns {{type: string}}
      */
     static success(message, path = "") {
-        return Object.freeze({ type: "success", message, path });
+        return Object.freeze({ type: SUCCESS, message, path });
     }
 }
