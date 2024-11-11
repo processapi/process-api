@@ -48,9 +48,14 @@ export class InputProvider extends BaseProvider {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async create(schema, path, schemaItem) {
-        // 1. create the element in the schema
-        // 2. validate the schema item
+        schemaItem.element = this.key;
+        const validationResult = await this.validate(schemaItem, path);
 
+        if (ValidationResult.isError(validationResult)) {
+            return validationResult;
+        }
+
+        super.create(schema, path, schemaItem);
         return ValidationResult.success("success", path);
     }
 
@@ -60,13 +65,11 @@ export class InputProvider extends BaseProvider {
      * @param schema {Object} The schema
      * @param path {String} The path of the schema part
      * @param schemaItem {Object} The json object to create on the schema at the given path     * @returns {ValidationResult} True if the schema is valid, false otherwise.
+     * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async update(schema, path, schemaItem) {
-        // 1. update the element in the schema
-        // 2. validate the schema item
-        // 3. validate affected managers also e.g. if you add a grid column, make sure the datasource has the same column
-
-        return ValidationResult.success("success", path);
+        const result = await super.update(schema, path, schemaItem);
+        return this.validate(result, path);
     }
 
     /**
@@ -78,11 +81,7 @@ export class InputProvider extends BaseProvider {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async delete(schema, path) {
-        // 1. can I clean this up?
-        // 2. if not, return an error
-        // 3. if yes, remove the element from the schema and do clean up
-        // 4. validate affected manager changes
-
+        await super.delete(schema, path);
         return ValidationResult.success("success", path);
     }
 }

@@ -26,33 +26,51 @@ Deno.test("InputProvider:validate - invalid", async () => {
 });
 
 Deno.test("InputProvider:create", async () => {
-    // const schema = {
-    //     body: {
-    //         elements: []
-    //     }
-    // }
-    //
-    // const divResult = await InputProvider.create({}, "/", {
-    //     element: "div"
-    // })
-    //
-    // assert(ValidationResult.isSuccess(divResult));
-    // assertExists(schema.body.elements[0])
-    // assertEquals(schema.body.elements[0].element, "div");
-    //
-    // const h1Result = await InputProvider.create({}, "/0/", {
-    //     element: "h1",
-    //     content: "Hello World"
-    // })
-    //
-    // assert(ValidationResult.isSuccess(h1Result));
-    // assertExists(schema.body.elements[0].elements[0])
-    // assertEquals(schema.body.elements[0].elements[0].element, "h1");
-    // assertEquals(schema.body.elements[0].elements[0].content, "Hello World");
+    const schema = {
+        body: {
+            elements: []
+        }
+    }
+
+    const result = await InputProvider.create(schema, "/", {
+        field: "firstName",
+        title: "First Name",
+        placeholder: "Enter your first name"
+    })
+
+    assert(ValidationResult.isSuccess(result));
+    assertExists(schema.body.elements[0])
+    assertEquals(schema.body.elements[0].element, "input");
+    assertEquals(schema.body.elements[0].field, "firstName");
+    assertEquals(schema.body.elements[0].title, "First Name");
 });
 
 Deno.test("InputProvider:update", async () => {
+    const schema = {
+        body: {
+            elements: [
+                {
+                    element: "input",
+                    field: "firstName",
+                    title: "First Name",
+                    placeholder: "Enter your first name"
+                }
+            ]
+        }
+    }
 
+    const result = await InputProvider.update(schema, "/0", {
+        field: "lastName",
+        title: "Last Name",
+        placeholder: "Enter your last name"
+    })
+
+    assert(ValidationResult.isSuccess(result));
+    assertExists(schema.body.elements[0])
+    assertEquals(schema.body.elements[0].element, "input");
+    assertEquals(schema.body.elements[0].field, "lastName");
+    assertEquals(schema.body.elements[0].title, "Last Name");
+    assertEquals(schema.body.elements[0].placeholder, "Enter your last name");
 });
 
 Deno.test("InputProvider:delete", async () => {

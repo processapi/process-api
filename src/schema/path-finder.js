@@ -19,6 +19,10 @@ export function schemaItemAt(schema, path) {
         return null;
     }
 
+    if (path === "/") {
+        return schema.body;
+    }
+
     // 1. remove "/" from the start and end of the as we don't need them for the split
     path = path.replace(/^\/|\/$/g, '');
 
