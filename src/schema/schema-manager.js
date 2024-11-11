@@ -249,4 +249,36 @@ export class SchemaManager {
     delete(schemaJson, path) {
         return ValidationResult.success("success")
     }
+
+    createAttribute(schemaJson, path, attributeName, attributeValue) {
+
+    }
+
+    updateAttribute(schemaJson, path, attributeName, attributeValue) {
+
+    }
+
+    deleteAttribute(schemaJson, path, attributeName) {
+
+    }
+
+    createStyle(schemaJson, path, className) {
+
+    }
+
+    deleteStyle(schemaJson, path, className) {
+
+    }
+
+    createStyleProperty(schemaJson, path, propertyName, propertyValue) {
+
+    }
+
+    updateStyleProperty(schemaJson, path, propertyName, propertyValue) {
+
+    }
+
+    deleteStyleProperty(schemaJson, path, propertyName) {
+
+    }
 }
