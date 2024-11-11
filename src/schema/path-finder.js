@@ -35,7 +35,7 @@ export function schemaItemAt(schema, path) {
     for (const part of pathParts) {
         // does the part start with a "#"? then it is an id of a child
         if (part.startsWith("#")) {
-            currentObj = findChildById(currentObj, part.slice(1));
+            currentObj = findChildById(currentObj, part.slice(1)); // strip out the # at the front
         }
         // if the part is a number, then it is an index of a child
         else if (!isNaN(part)) {
@@ -90,7 +90,7 @@ function findChildByProperty(obj, property) {
     }
 
     if (Array.isArray(obj)) {
-        return obj.find(element => element[property]);
+        return obj.find(element => element.hasOwnProperty(property));
     }
 
     return obj[property];

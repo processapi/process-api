@@ -29,6 +29,7 @@ Deno.test("InputProvider:validate - invalid", async () => {
     }, "path");
 
     assert(ValidationResult.isError(result));
+    assertEquals(result.message, `"title" is required`);
 });
 
 Deno.test("InputProvider:create - valid", async () => {
@@ -67,7 +68,7 @@ Deno.test("InputProvider:create - invalid", async () => {
     assertExists(schema.body.elements.length, 0);
 });
 
-Deno.test("InputProvider:update", async () => {
+Deno.test("InputProvider:update - valid", async () => {
     const schema = {
         body: {
             elements: [
@@ -87,6 +88,8 @@ Deno.test("InputProvider:update", async () => {
         placeholder: "Enter your last name"
     })
 
+    assert(ValidationResult.isSuccess(result));
+
     assertExists(schema.body.elements[0])
     assertEquals(schema.body.elements[0].element, "input");
     assertEquals(schema.body.elements[0].field, "lastName");
@@ -94,7 +97,7 @@ Deno.test("InputProvider:update", async () => {
     assertEquals(schema.body.elements[0].placeholder, "Enter your last name");
 });
 
-Deno.test("InputProvider:update", async () => {
+Deno.test("InputProvider:update - invalid", async () => {
     const schema = {
         body: {
             elements: [

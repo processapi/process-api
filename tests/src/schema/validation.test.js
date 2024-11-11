@@ -1,6 +1,6 @@
 import {validate} from "../../../src/schema/validation.js";
 import {ValidationResult} from "../../../src/schema/validation-result.js";
-import { assertEquals, assert } from "https://deno.land/std/testing/asserts.ts";
+import { assert } from "https://deno.land/std/testing/asserts.ts";
 
 
 Deno.test("validate - success", async () => {

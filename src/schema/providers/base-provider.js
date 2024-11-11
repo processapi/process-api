@@ -46,11 +46,12 @@ export class BaseProvider {
      * @param schema {Object} The schema
      * @param path {String} The path of the schema part
      * @param schemaItem {Object} The element to create
+     * @param propertyName {String} The name of the property in the schema to add the element to add the schema item too.
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async create(schema, path, schemaItem) {
+    static async create(schema, path, schemaItem, propertyName = "elements") {
         const parent = schemaItemAt(schema, path);
-        parent.elements ||= [];
+        parent[propertyName] ||= [];
         parent.elements.push(schemaItem);
     }
 
@@ -70,9 +71,10 @@ export class BaseProvider {
             return ValidationResult.error("Element not found", path);
         }
 
+        // First make changes to a copy of the object
+        // Only if the changes validate successfully, apply them to the original object
         const copy = structuredClone(obj);
         Object.assign(copy, schemaItem);
-
         const validationResult = await validateCallback(copy, path);
 
         if (ValidationResult.isError(validationResult)) {
@@ -80,7 +82,6 @@ export class BaseProvider {
         }
 
         Object.assign(obj, schemaItem);
-
         return ValidationResult.success("success", path);
     }
 
@@ -90,14 +91,22 @@ export class BaseProvider {
      * It also checks for dependencies and removes them if necessary
      * @param schema {Object} The schema
      * @param path {String} The path of the schema part
+     * @param propertyName {String} The name of the property in the schema to add the element to add the schema
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async delete(schema, path) {
+    static async delete(schema, path, propertyName = "elements") {
         const object = schemaItemAt(schema, path);
+
+        if (object == null) {
+            return ValidationResult.error("Element not found", path);
+        }
+
         const parentPath = path.substring(0, path.lastIndexOf("/"));
         const parent = schemaItemAt(schema, parentPath);
 
-        const index = parent.elements.indexOf(object);
-        parent.elements.splice(index, 1);
+        const index = parent[propertyName].indexOf(object);
+        parent[propertyName].splice(index, 1);
+
+        return ValidationResult.success("success", path);
     }
 }

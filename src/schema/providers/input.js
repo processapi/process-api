@@ -80,7 +80,6 @@ export class InputProvider extends BaseProvider {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async delete(schema, path) {
-        await super.delete(schema, path);
-        return ValidationResult.success("success", path);
+        return super.delete(schema, path);
     }
 }

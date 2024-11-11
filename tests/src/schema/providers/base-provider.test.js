@@ -81,7 +81,7 @@ Deno.test("BaseProvider:delete", async () => {
         }
     }
 
-    const result = await BaseProvider.delete(schema, "/0");
+    await BaseProvider.delete(schema, "/0");
 
     assertEquals(schema.body.elements.length, 0);
 });
