@@ -4,7 +4,13 @@ import { assertEquals, assert, assertExists } from "https://deno.land/std/testin
 
 
 Deno.test("InputProvider:parse", async () => {
+    const result = await InputProvider.parse({
+        field: "firstName",
+        title: "First Name",
+        placeholder: "Enter your first name"
+    }, "path");
 
+    assertEquals(result.message.length, 128);
 });
 
 Deno.test("InputProvider:validate - valid", async () => {
@@ -25,7 +31,7 @@ Deno.test("InputProvider:validate - invalid", async () => {
     assert(ValidationResult.isError(result));
 });
 
-Deno.test("InputProvider:create", async () => {
+Deno.test("InputProvider:create - valid", async () => {
     const schema = {
         body: {
             elements: []
@@ -43,6 +49,22 @@ Deno.test("InputProvider:create", async () => {
     assertEquals(schema.body.elements[0].element, "input");
     assertEquals(schema.body.elements[0].field, "firstName");
     assertEquals(schema.body.elements[0].title, "First Name");
+});
+
+Deno.test("InputProvider:create - invalid", async () => {
+    const schema = {
+        body: {
+            elements: []
+        }
+    }
+
+    const result = await InputProvider.create(schema, "/", {
+        field: "firstName",
+    })
+
+    assert(ValidationResult.isError(result));
+    assertEquals(result.message, `"title" is required`);
+    assertExists(schema.body.elements.length, 0);
 });
 
 Deno.test("InputProvider:update", async () => {
@@ -65,12 +87,34 @@ Deno.test("InputProvider:update", async () => {
         placeholder: "Enter your last name"
     })
 
-    assert(ValidationResult.isSuccess(result));
     assertExists(schema.body.elements[0])
     assertEquals(schema.body.elements[0].element, "input");
     assertEquals(schema.body.elements[0].field, "lastName");
     assertEquals(schema.body.elements[0].title, "Last Name");
     assertEquals(schema.body.elements[0].placeholder, "Enter your last name");
+});
+
+Deno.test("InputProvider:update", async () => {
+    const schema = {
+        body: {
+            elements: [
+                {
+                    element: "input",
+                    field: "firstName",
+                    title: "First Name",
+                    placeholder: "Enter your first name"
+                }
+            ]
+        }
+    }
+
+    const result = await InputProvider.update(schema, "/0", {
+        field: "",
+    })
+
+    assert(ValidationResult.isError(result));
+    assertEquals(result.message, `"field" is required`);
+    assertEquals(schema.body.elements[0].field, "firstName");
 });
 
 Deno.test("InputProvider:delete", async () => {

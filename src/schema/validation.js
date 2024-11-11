@@ -12,6 +12,12 @@ export function validate(schemaItem, def, path) {
         if (isCritical === false && !hasValue) {
             return ValidationResult.warning(`"${key}" is required`, path);
         }
+
+        const expectedType = def[key].type ?? "string";
+        const actualType = typeof schemaItem[key];
+        if (expectedType !== actualType) {
+            return ValidationResult.error(`"${key}" is of type "${actualType}" but should be of type "${expectedType}"`, path);
+        }
     }
 
     return ValidationResult.success("valid", path);

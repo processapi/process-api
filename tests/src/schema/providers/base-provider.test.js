@@ -60,7 +60,7 @@ Deno.test("BaseProvider:update", async () => {
         placeholder: "Enter your last name"
     };
 
-    await BaseProvider.update(schema, "/0", schemaItem);
+    await BaseProvider.update(schema, "/0", schemaItem, () => ValidationResult.success("success", "path"));
 
     assertExists(schema.body.elements[0]);
     assertEquals(schema.body.elements[0].field, "lastName");

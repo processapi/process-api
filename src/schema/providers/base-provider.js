@@ -1,6 +1,13 @@
 import {ValidationResult} from "../validation-result.js";
 import {schemaItemAt} from "../path-finder.js";
 
+/**
+ * @class BaseProvider
+ * @description This class is the base class for all providers.
+ * It contains the basic methods for parsing, validating, creating, updating and deleting elements in the schema.
+ * All providers should extend this class if they want to implement the methods.
+ * The base provider does not do validation on CRUD operations as it is up to the provider to implement it.
+ */
 export class BaseProvider {
     /**
      * @method parse
@@ -53,17 +60,28 @@ export class BaseProvider {
      * @param schema {Object} The schema
      * @param path {String} The path of the schema part
      * @param schemaItem {Object} The element to update
+     * @param validateCallback
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async update(schema, path, schemaItem) {
+    static async update(schema, path, schemaItem, validateCallback) {
         const obj = schemaItemAt(schema, path);
 
         if (obj == null) {
             return ValidationResult.error("Element not found", path);
         }
 
+        const copy = structuredClone(obj);
+        Object.assign(copy, schemaItem);
+
+        const validationResult = await validateCallback(copy, path);
+
+        if (ValidationResult.isError(validationResult)) {
+            return validationResult;
+        }
+
         Object.assign(obj, schemaItem);
-        return schemaItem;
+
+        return ValidationResult.success("success", path);
     }
 
     /**

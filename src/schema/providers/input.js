@@ -68,8 +68,7 @@ export class InputProvider extends BaseProvider {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     static async update(schema, path, schemaItem) {
-        const result = await super.update(schema, path, schemaItem);
-        return this.validate(result, path);
+        return super.update(schema, path, schemaItem, this.validate);
     }
 
     /**
