@@ -203,11 +203,12 @@ export class SchemaManager {
      * @description This method is responsible for creating a new element in the schema for a given path.
      * @param schemaJson {Object} The schema JSON object.
      * @param path {String} The path of the schema part
-     * @param element {Object} The element to create.
+     * @param schemaItem {Object} The schemaItem to add to the schema.
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    create(schemaJson, path, element) {
-        return ValidationResult.success("success")
+    create(schemaJson, path, schemaItem) {
+        const provider = this.#providers[schemaItem.element];
+        return provider.create(schemaJson, path, schemaItem);
     }
 
     /**
@@ -215,7 +216,7 @@ export class SchemaManager {
      * @description This method is responsible for updating an existing element in the schema for a given path.
      * @param schemaJson {Object} The schema JSON object.
      * @param path {String} The path of the schema part
-     * @param element {Object} The element to update.
+     * @param assignment {Object} The element to update.
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      *
      * @example
@@ -236,8 +237,9 @@ export class SchemaManager {
      * const schemaManager = new SchemaManager();
      * const result = schemaManager.update(schema, "/edtFirstName", { "title": "First Name Updated" });
      */
-    update(schemaJson, path, element) {
-        return ValidationResult.success("success")
+    update(schemaJson, path, assignment) {
+        const provider = this.#providers[assignment.element];
+        return provider.update(schemaJson, path, assignment);
     }
 
     /**
@@ -248,7 +250,14 @@ export class SchemaManager {
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
     delete(schemaJson, path) {
-        return ValidationResult.success("success")
+        const schemaItem = schemaItemAt(schemaJson, path);
+
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        const provider = this.#providers[schemaItem.element];
+        return provider.delete(schemaJson, path);
     }
 
     /**

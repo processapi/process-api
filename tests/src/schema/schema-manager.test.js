@@ -76,37 +76,6 @@ Deno.test("SchemaManager.validate should validate a part of the schema", () => {
     schemaManager.dispose();
 });
 
-Deno.test("SchemaManager.create should create a new element in the schema", () => {
-    const schemaManager = new SchemaManager();
-    const schemaJson = { /* your schema JSON here */ };
-    const path = "some.path";
-    const element = { /* your element here */ };
-    const result = schemaManager.create(schemaJson, path, element);
-    assertEquals(result, ValidationResult.success("success"));
-    schemaManager.dispose();
-});
-
-Deno.test("SchemaManager.update should update an existing element in the schema", () => {
-    const schemaManager = new SchemaManager();
-    const schemaJson = { /* your schema JSON here */ };
-    const path = "some.path";
-    const element = { /* your element here */ };
-    const result = schemaManager.update(schemaJson, path, element);
-    assertEquals(result, ValidationResult.success("success"));
-    schemaManager.dispose();
-});
-
-Deno.test("SchemaManager.delete should delete an existing element in the schema", () => {
-    const schemaManager = new SchemaManager();
-    const schemaJson = { /* your schema JSON here */ };
-    const path = "some.path";
-    const result = schemaManager.delete(schemaJson, path);
-    assertEquals(result, ValidationResult.success("success"));
-    schemaManager.dispose();
-});
-
-// -------------------------------------------------------------------------
-
 Deno.test("SchemaManager.setAttribute should set an attribute in the schema", () => {
     const schemaManager = new SchemaManager();
     const schemaJson = {
@@ -246,6 +215,52 @@ Deno.test("SchemaManager.deleteStyleProperty should delete a style property from
     const result = schemaManager.deleteStyleProperty(schemaJson, path, propertyName);
     assertEquals(result, ValidationResult.success("success"));
     assertEquals(schemaJson.body.elements[0].styleProperties.color, undefined);
+
+    schemaManager.dispose();
+});
+
+// ---------------------------
+
+Deno.test("SchemaManager.create should create a new element in the schema", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: []
+        }
+    };
+    const path = "/";
+    const schemaItem = {
+        element: "input",
+        field: "firstName",
+        title: "First Name"
+    };
+
+    const result = await schemaManager.create(schemaJson, path, schemaItem);
+    assertEquals(result, ValidationResult.success("success", path));
+    assertEquals(schemaJson.body.elements[0], schemaItem);
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.create should return an error if the schema item is invalid", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: []
+        }
+    };
+    const path = "/";
+    const schemaItem = {
+        element: "input",
+        // Missing required fields
+    };
+
+    const result = await schemaManager.create(schemaJson, path, schemaItem);
+    assertEquals(ValidationResult.isError(result), true);
 
     schemaManager.dispose();
 });

@@ -15,7 +15,8 @@ export function validate(schemaItem, def, path) {
 
         const expectedType = def[key].type ?? "string";
         const actualType = typeof schemaItem[key];
-        if (expectedType !== actualType) {
+        if (expectedType !== actualType && schemaItem[key] != null) {
+
             return ValidationResult.error(`"${key}" is of type "${actualType}" but should be of type "${expectedType}"`, path);
         }
     }
