@@ -74,6 +74,22 @@ Deno.test("InputProvider:update", async () => {
 });
 
 Deno.test("InputProvider:delete", async () => {
+    const schema = {
+        body: {
+            elements: [
+                {
+                    element: "input",
+                    field: "firstName",
+                    title: "First Name",
+                    placeholder: "Enter your first name"
+                }
+            ]
+        }
+    }
 
+    const result = await InputProvider.delete(schema, "/0");
+
+    assert(ValidationResult.isSuccess(result));
+    assertEquals(schema.body.elements.length, 0);
 });
 

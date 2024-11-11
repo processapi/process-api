@@ -19,7 +19,7 @@ export function schemaItemAt(schema, path) {
         return null;
     }
 
-    if (path === "/") {
+    if (path.length === 0 || path === "/") {
         return schema.body;
     }
 
