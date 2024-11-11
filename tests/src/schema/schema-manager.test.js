@@ -311,3 +311,44 @@ Deno.test("SchemaManager.update should return an error if the element does not e
 
     schemaManager.dispose();
 });
+
+Deno.test("SchemaManager.delete should delete an existing element in the schema", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "input",
+                    field: "firstName",
+                    title: "First Name"
+                }
+            ]
+        }
+    };
+    const path = "/0";
+
+    const result = await schemaManager.delete(schemaJson, path);
+    assert(ValidationResult.success("success"));
+    assertEquals(schemaJson.body.elements.length, 0);
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.delete should return an error if the element does not exist", async () => {
+    const schemaManager = new SchemaManager();
+    schemaManager.registerProvider(InputProvider);
+
+    const schemaJson = {
+        body: {
+            elements: []
+        }
+    };
+    const path = "/0";
+
+    const result = await schemaManager.delete(schemaJson, path);
+    assert(ValidationResult.isError(result));
+
+    schemaManager.dispose();
+});
