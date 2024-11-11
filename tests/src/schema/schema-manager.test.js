@@ -104,3 +104,148 @@ Deno.test("SchemaManager.delete should delete an existing element in the schema"
     assertEquals(result, ValidationResult.success("success"));
     schemaManager.dispose();
 });
+
+// -------------------------------------------------------------------------
+
+Deno.test("SchemaManager.setAttribute should set an attribute in the schema", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv"
+                }
+            ]
+        }
+    };
+
+    const path = "/0";
+    const attributeName = "data-test";
+    const attributeValue = "test-value";
+
+    const result = schemaManager.setAttribute(schemaJson, path, attributeName, attributeValue);
+    assertEquals(result, ValidationResult.success("success"));
+
+    assertEquals(schemaJson.body.elements[0].attributes["data-test"], "test-value");
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.deleteAttribute should delete an attribute in the schema", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv",
+                    attributes: {
+                        "data-test": "test-value"
+                    }
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const attributeName = "data-test";
+
+    const result = schemaManager.deleteAttribute(schemaJson, path, attributeName);
+    assertEquals(result, ValidationResult.success("success"));
+    assertEquals(schemaJson.body.elements[0].attributes["data-test"], undefined);
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.addStyle should add a style class to the schema item", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv"
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const className = "test-class";
+
+    const result = schemaManager.addStyle(schemaJson, path, className);
+    assertEquals(result, ValidationResult.success("success"));
+    assert(schemaJson.body.elements[0].styles.includes("test-class"));
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.deleteStyle should delete a style class from the schema item", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv",
+                    styles: ["test-class"]
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const className = "test-class";
+
+    const result = schemaManager.deleteStyle(schemaJson, path, className);
+    assertEquals(result, ValidationResult.success("success"));
+    assert(schemaJson.body.elements[0].styles.length === 0);
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.setStyleProperty should set a style property in the schema item", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv"
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const propertyName = "color";
+    const propertyValue = "red";
+
+    const result = schemaManager.setStyleProperty(schemaJson, path, propertyName, propertyValue);
+    assertEquals(result, ValidationResult.success("success"));
+    assertEquals(schemaJson.body.elements[0].styleProperties.color, "red");
+
+    schemaManager.dispose();
+});
+
+Deno.test("SchemaManager.deleteStyleProperty should delete a style property from the schema item", () => {
+    const schemaManager = new SchemaManager();
+    const schemaJson = {
+        body: {
+            elements: [
+                {
+                    element: "div",
+                    id: "testDiv",
+                    styleProperties: {
+                        color: "red"
+                    }
+                }
+            ]
+        }
+    };
+    const path = "/0";
+    const propertyName = "color";
+
+    const result = schemaManager.deleteStyleProperty(schemaJson, path, propertyName);
+    assertEquals(result, ValidationResult.success("success"));
+    assertEquals(schemaJson.body.elements[0].styleProperties.color, undefined);
+
+    schemaManager.dispose();
+});

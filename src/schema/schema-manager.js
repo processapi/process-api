@@ -1,5 +1,6 @@
 import { ValidationResult } from './validation-result.js';
 import { RawProvider } from "./providers/raw.js";
+import { schemaItemAt } from "./path-finder.js";
 
 /**
  * @class SchemaManager
@@ -250,35 +251,99 @@ export class SchemaManager {
         return ValidationResult.success("success")
     }
 
-    createAttribute(schemaJson, path, attributeName, attributeValue) {
+    /**
+     * @method setAttribute
+     * @description This method is responsible for setting an attribute in the schema.
+     * If the attribute exists it will be updated but if it does not exist it will be created.
+     * @param schemaJson {Object} The schema JSON object.
+     * @param path {String} The path of the schema part
+     * @param attributeName {String} The name of the attribute
+     * @param attributeValue {String} The value of the attribute
+     * @returns {{type: string, message}}
+     */
+    setAttribute(schemaJson, path, attributeName, attributeValue) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
-    }
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
 
-    updateAttribute(schemaJson, path, attributeName, attributeValue) {
+        schemaItem.attributes ||= {};
+        schemaItem.attributes[attributeName] = attributeValue;
 
+        return ValidationResult.success("success");
     }
 
     deleteAttribute(schemaJson, path, attributeName) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        if (schemaItem.attributes != null) {
+            delete schemaItem.attributes[attributeName];
+        }
+
+        return ValidationResult.success("success");
     }
 
-    createStyle(schemaJson, path, className) {
+    addStyle(schemaJson, path, className) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        schemaItem.styles ||= [];
+        schemaItem.styles.push(className);
+
+        return ValidationResult.success("success");
     }
 
     deleteStyle(schemaJson, path, className) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        if (schemaItem.styles != null) {
+            const index = schemaItem.styles.indexOf(className);
+
+            if (index > -1) {
+                schemaItem.styles.splice(index, 1);
+            }
+        }
+
+        return ValidationResult.success("success");
     }
 
-    createStyleProperty(schemaJson, path, propertyName, propertyValue) {
+    setStyleProperty(schemaJson, path, propertyName, propertyValue) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        schemaItem.styleProperties ||= {};
+        schemaItem.styleProperties[propertyName] = propertyValue;
+
+        return ValidationResult.success("success");
     }
 
-    updateStyleProperty(schemaJson, path, propertyName, propertyValue) {
-
-    }
 
     deleteStyleProperty(schemaJson, path, propertyName) {
+        const schemaItem = schemaItemAt(schemaJson, path);
 
+        if (schemaItem == null) {
+            return ValidationResult.error(`The path ${path} does not exist in the schema.`);
+        }
+
+        if (schemaItem.styleProperties != null) {
+            delete schemaItem.styleProperties[propertyName];
+        }
+
+        return ValidationResult.success("success");
     }
 }
