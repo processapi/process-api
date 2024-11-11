@@ -82,7 +82,6 @@ blockquote {
 /* Lists */
 ul, ol {
     margin: 1em 0;
-    padding-inline-start: 20px;
 }
 
 /* Code Blocks */

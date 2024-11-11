@@ -42,12 +42,12 @@ export class InputProvider extends BaseProvider {
     /**
      * @method create
      * @description This method is responsible for creating a new element in the schema for a given path.
-     * @param schemaItem {Object} The schema
+     * @param schema {Object} The schema
      * @param path {String} The path of the schema part
-     * @param element {Object} The element to create
+     * @param schemaItem {Object} The json object to create on the schema at the given path
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async create(schemaItem, path, element) {
+    static async create(schema, path, schemaItem) {
         // 1. create the element in the schema
         // 2. validate the schema item
 
@@ -57,12 +57,11 @@ export class InputProvider extends BaseProvider {
     /**
      * @method update
      * @description This method is responsible for updating an existing element in the schema for a given path.
-     * @param schemaItem {Object} The schema
+     * @param schema {Object} The schema
      * @param path {String} The path of the schema part
-     * @param element {Object} The element to update
-     * @returns {ValidationResult} True if the schema is valid, false otherwise.
+     * @param schemaItem {Object} The json object to create on the schema at the given path     * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async update(schemaItem, path, element) {
+    static async update(schema, path, schemaItem) {
         // 1. update the element in the schema
         // 2. validate the schema item
         // 3. validate affected managers also e.g. if you add a grid column, make sure the datasource has the same column
@@ -74,11 +73,11 @@ export class InputProvider extends BaseProvider {
      * @method delete
      * @description This method is responsible for deleting an existing element in the schema for a given path.
      * It also checks for dependencies and removes them if necessary
-     * @param schemaItem {Object} The schema
+     * @param schema {Object} The schema
      * @param path {String} The path of the schema part
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async delete(schemaItem, path) {
+    static async delete(schema, path) {
         // 1. can I clean this up?
         // 2. if not, return an error
         // 3. if yes, remove the element from the schema and do clean up

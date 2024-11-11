@@ -122,6 +122,12 @@ class ViewLoaderModule {
 		}
 	}
 
+	/**
+	 * @method listen
+	 * Listen for view changes and load the view
+	 * @param args
+	 * @returns {Promise<void>}
+	 */
 	static async listen(args) {
 		this.routeChangedHandler = routeChanged.bind(args.api);
 
@@ -131,6 +137,12 @@ class ViewLoaderModule {
 		});
 	}
 
+	/**
+	 * @method unlisten
+	 * Stop listening for view changes
+	 * @param args
+	 * @returns {Promise<void>}
+	 */
 	static async unlisten(args) {
 		args.api.try("messaging", "unsubscribe", {
 			topic: "routeChanged",

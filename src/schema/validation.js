@@ -2,14 +2,14 @@ import {ValidationResult} from "./validation-result.js";
 
 export function validate(schemaItem, def, path) {
     for (const key in def) {
-        const isCritical = def[key].critical ?? false;
+        const isCritical = def[key].critical ?? null;
         const hasValue = containsValue(schemaItem[key]);
 
-        if (isCritical && !hasValue) {
+        if (isCritical === true && !hasValue) {
             return ValidationResult.error(`"${key}" is required`, path);
         }
 
-        if (!isCritical && !hasValue) {
+        if (isCritical === false && !hasValue) {
             return ValidationResult.warning(`"${key}" is required`, path);
         }
     }
