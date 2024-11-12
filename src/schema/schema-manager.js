@@ -57,26 +57,30 @@ export class SchemaManager {
      * @returns {Promise<*>}
      */
     async #parseStyles(template, schemaItem) {
-        // 1. no styles to manage
         if (schemaItem.styles == null) {
-            return template.replace("__styles__", "");
+            template = template.replace("__classes__", "");
+        }
+        else {
+            const classes = `class="${schemaItem.styles.join(" ")}"`;
+            template =  template.replace("__classes__", classes);
         }
 
-        // 2. process styles as classes if they are a string array
-        if (Array.isArray(schemaItem.styles)) {
-            const styles = `class="${schemaItem.styles.join(" ")}"`;
-            return template.replace("__styles__", styles);
+        if (schemaItem.styleProperties == null) {
+            template = template.replace("__styles__", "");
+        }
+        else {
+            const styles = [];
+
+            for (const style of Object.keys(schemaItem.styleProperties)) {
+                const styleValue = schemaItem.styleProperties[style];
+                const styleString = `${style}:${styleValue};`;
+                styles.push(styleString);
+            }
+
+            template = template.replace("__styles__", `style="${styles.join(" ")}"`);
         }
 
-        // 3. create styles from object
-        const styles = [];
-        for (const style of Object.keys(schemaItem.styles)) {
-            const styleValue = schemaItem.styles[style];
-            const styleString = `${style}:${styleValue};`;
-            styles.push(styleString);
-        }
-
-        return template.replace("__styles__", `style="${styles.join(" ")}"`);
+        return template;
     }
 
     /**
