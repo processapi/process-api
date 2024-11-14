@@ -345,7 +345,6 @@ export class SchemaManager {
         return ValidationResult.success("success");
     }
 
-
     deleteStyleProperty(schemaJson, path, propertyName) {
         const schemaItem = schemaItemAt(schemaJson, path);
 
