@@ -21,6 +21,13 @@ export class HighlightMemo extends HTMLElement {
         this.#row = null;
     }
 
+    /**
+     * Pushes a word into the memo.
+     * This will automatically be added to a line until the word length is 0.
+     * Then the line is converted from markdown to html and appended to the memo.
+     * @param word
+     * @returns {Promise<unknown>}
+     */
     push(word) {
         return new Promise(async resolve => {
             if (word.trim().length === 0) {
