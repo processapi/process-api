@@ -47,6 +47,59 @@ class ComponentModule {
 	}
 
 	/**
+	 * @method ready
+	 * @description Set the ready attribute to true on an element.
+	 * @param args {Object} - Arguments object
+	 * @param args.element {HTMLElement} - Element to set the ready attribute on
+	 *
+	 * @example
+	 * await ComponentModule.ready({ element: document.querySelector("my-component") });
+	 * @returns {Promise<void>}
+	 */
+	static async ready(args){
+		validateArgs(args, {
+			element: { type: "HTMLElement", required: true },
+		}, "ComponentModule.ready: ");
+
+		const { element } = args;
+
+		element.dataset.ready = "true";
+		element.dispatchEvent(new CustomEvent("ready"));
+	}
+
+	/**
+	 * @method on_ready
+	 * @description Wait for an element to be ready.
+	 * @param args {{callback: *, element: Element}} - Arguments object
+	 * @param args.element {HTMLElement} - Element to wait for
+	 * @param args.callback {function} - Callback to call when element is ready
+	 * @returns {Promise<void>}
+	 *
+	 * @example
+	 * await ComponentModule.on_ready({
+	 *    element: document.querySelector("my-component"),
+	 *    callback: () => {
+	 *    	console.log("Component is ready");
+	 *    }
+	 * });
+	 */
+	static async on_ready(args) {
+		validateArgs(args, {
+			element: { type: "HTMLElement", required: true },
+			callback: { type: "function", required: true },
+		}, "ComponentModule.on_ready: ");
+
+		const { element, callback } = args;
+
+		if (element.dataset.ready === "true") {
+			callback();
+		}
+		else {
+			element.addEventListener("ready", callback);
+		}
+	}
+
+	/**
 	 * @method filter_ul
 	 * @description Filter a list of items in an unordered list.
 	 * Given a text, look at the text content or given attribute to check if a list item should be visible.

@@ -26,6 +26,7 @@ export class Kanban extends HTMLElement {
             })
 
             this.#canvasWorker.call("clear");
+            await ComponentModule.ready({element: this});
         })
     }
 
@@ -43,6 +44,8 @@ export class Kanban extends HTMLElement {
 
     setData(data, rowKey, columnKey) {
         this.#data = groupData(data, rowKey, columnKey);
+
+        console.log(this.#data);
     }
 }
 
