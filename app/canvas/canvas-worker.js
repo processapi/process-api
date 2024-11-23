@@ -95,6 +95,14 @@ class CanvasWorker {
 
         this.#quadTreeWorker.postMessage({ method: "removePoints", args: [rect.x, rect.y, rect.width, rect.height] });
     }
+
+    mouseScroll(deltaY) {
+        this.#mouseRect.width += Math.round(deltaY / 2);
+        this.#mouseRect.height += Math.round(deltaY / 2);
+        this.#mouseRect.x -= Math.round(deltaY / 4);
+        this.#mouseRect.y -= Math.round(deltaY / 4);
+        this.#quadTreeWorker.postMessage({ method: "getBoundaries", args: [this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height] });
+    }
 }
 
 const instance = new CanvasWorker();

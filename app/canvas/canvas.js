@@ -6,6 +6,7 @@ export default class CanvasView extends HTMLElement {
     #canvasWorker;
     #mouseMoveHandler = this.#mouseMove.bind(this);
     #mouseClickHandler = this.#mouseClick.bind(this);
+    #mouseScrollHandler = this.#mouseScroll.bind(this);
 
     constructor() {
         super();
@@ -19,6 +20,7 @@ export default class CanvasView extends HTMLElement {
             const element =  this.shadowRoot.querySelector("canvas");
             element.addEventListener("mousemove", this.#mouseMoveHandler);
             element.addEventListener("click", this.#mouseClickHandler);
+            element.addEventListener("wheel", this.#mouseScrollHandler);
 
             await this.#waitForCanvas();
 
@@ -40,6 +42,10 @@ export default class CanvasView extends HTMLElement {
         this.#canvasWorker.call("mouseClick", event.offsetX, event.offsetY);
     }
 
+    #mouseScroll(event) {
+        this.#canvasWorker.call("mouseScroll", event.deltaY);
+    }
+
     #waitForCanvas() {
         return new Promise((resolve) => {
             const computedStyle = getComputedStyle(this);
@@ -57,6 +63,7 @@ export default class CanvasView extends HTMLElement {
         const canvas = this.shadowRoot.querySelector("canvas");
         canvas.removeEventListener("mousemove", this.#mouseMoveHandler);
         canvas.removeEventListener("click", this.#mouseClickHandler);
+        canvas.removeEventListener("wheel", this.#mouseScrollHandler);
 
         this.#canvasWorker.terminate();
         this.#canvasWorker = null;
