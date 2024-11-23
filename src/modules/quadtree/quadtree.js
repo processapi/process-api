@@ -1,7 +1,7 @@
 export class QuadTree {
     constructor(boundary, capacity = 8) {
-        this.boundary = boundary; // Boundary is a rectangle { x, y, width, height }
-        this.capacity = capacity; // Max items in this node before splitting
+        this.boundary = boundary;
+        this.capacity = capacity;
         this.points = [];
         this.divided = false;
     }
@@ -63,12 +63,7 @@ export class QuadTree {
     }
 
     contains(rect, point) {
-        return (
-            point.x >= rect.x &&
-            point.x < rect.x + rect.width &&
-            point.y >= rect.y &&
-            point.y < rect.y + rect.height
-        );
+        return pointInRect(rect, point.x, point.y) || pointInRect(rect, point.x + point.width, point.y + point.height);
     }
 
     intersects(rect1, rect2) {
@@ -107,4 +102,8 @@ export class QuadTree {
         }
         return false;
     }
+}
+
+function pointInRect(rect, x, y) {
+    return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
 }
