@@ -31,6 +31,9 @@ class CanvasWorker {
 
             this.#ctx.strokeStyle = "red";
             this.#ctx.strokeRect(this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height);
+
+            this.#ctx.font = '24px Arial';
+            this.#ctx.fillText(`Detected Count: ${event.data.args[1].length}`, 10, 50);
         }
     }
 
