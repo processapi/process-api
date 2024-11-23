@@ -84,6 +84,17 @@ class CanvasWorker {
         this.#mouseRect.y = y - this.#mouseRect.height / 2;
         this.#quadTreeWorker.postMessage({ method: "getBoundaries", args: [this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height] });
     }
+
+    mouseClick(x, y) {
+        const rect = {
+            x: x - this.#mouseRect.width / 2,
+            y: y - this.#mouseRect.height / 2,
+            width: this.#mouseRect.width,
+            height: this.#mouseRect.height
+        }
+
+        this.#quadTreeWorker.postMessage({ method: "removePoints", args: [rect.x, rect.y, rect.width, rect.height] });
+    }
 }
 
 const instance = new CanvasWorker();

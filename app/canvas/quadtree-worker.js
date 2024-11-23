@@ -29,6 +29,16 @@ class QuadtreeWorker {
 
         postMessage({ method: "getBoundaries", args: [result, points, collided] });
     }
+
+    async removePoints(x, y, width, height) {
+        const points = this.#quadTree.query({ x, y, width, height });
+
+        for (const point of points) {
+            this.#quadTree.remove(point);
+        }
+
+        await this.getBoundaries();
+    }
 }
 
 function getBoundaries(quadTree, found = []) {

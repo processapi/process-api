@@ -5,6 +5,7 @@ export default class CanvasView extends HTMLElement {
     static tag = "canvas-view";
     #canvasWorker;
     #mouseMoveHandler = this.#mouseMove.bind(this);
+    #mouseClickHandler = this.#mouseClick.bind(this);
 
     constructor() {
         super();
@@ -17,6 +18,7 @@ export default class CanvasView extends HTMLElement {
         requestAnimationFrame(async () => {
             const element =  this.shadowRoot.querySelector("canvas");
             element.addEventListener("mousemove", this.#mouseMoveHandler);
+            element.addEventListener("click", this.#mouseClickHandler);
 
             await this.#waitForCanvas();
 
@@ -32,6 +34,10 @@ export default class CanvasView extends HTMLElement {
 
     #mouseMove(event) {
         this.#canvasWorker.call("mouseMove", event.offsetX, event.offsetY);
+    }
+
+    #mouseClick(event) {
+        this.#canvasWorker.call("mouseClick", event.offsetX, event.offsetY);
     }
 
     #waitForCanvas() {
@@ -50,6 +56,7 @@ export default class CanvasView extends HTMLElement {
     async disconnectedCallback() {
         const canvas = this.shadowRoot.querySelector("canvas");
         canvas.removeEventListener("mousemove", this.#mouseMoveHandler);
+        canvas.removeEventListener("click", this.#mouseClickHandler);
 
         this.#canvasWorker.terminate();
         this.#canvasWorker = null;
