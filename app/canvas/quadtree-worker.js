@@ -16,7 +16,16 @@ class QuadtreeWorker {
     async getBoundaries() {
         const result = [];
         getBoundaries(this.#quadTree, result);
-        postMessage({ method: "getBoundaries", args: [result] });
+
+        const points = this.#quadTree.query(
+            {
+                x: 0,
+                y: 0,
+                width: this.#quadTree.width,
+                height: this.#quadTree.height
+            });
+
+        postMessage({ method: "getBoundaries", args: [result, points] });
     }
 }
 
@@ -50,5 +59,5 @@ function addRandomItems(quadTree, count) {
 const instance = new QuadtreeWorker();
 
 self.onmessage = function(event) {
-    instance[event.data.method](...event.data.args);
+    instance[event.data.method](...(event.data.args ?? []));
 }
