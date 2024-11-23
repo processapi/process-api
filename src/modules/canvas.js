@@ -11,7 +11,10 @@ export class CanvasModule {
 
         const { canvasElement, workerSource } = args;
         const rect = canvasElement.getBoundingClientRect();
-        return initialize(canvasElement, rect.width, rect.height, workerSource);
+        const width = Math.round(rect.width);
+        const height = Math.round(rect.height);
+
+        return initialize(canvasElement, width, height, workerSource);
     }
 }
 

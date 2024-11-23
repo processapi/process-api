@@ -6,10 +6,12 @@ export class QuadTreeModule {
 
     static async initialize(args) {
         validateArgs(args, {
-            canvasElement: {type: "OffscreenCanvas", required: true},
+            width   : {type: "Number", required: true},
+            height  : {type: "Number", required: true},
         }, "QuadTreeModule.initialize: ");
 
-        const {width, height} = args.canvasElement;
+        const { width, height } = args;
+
         return new QuadTree({ x: 0, y: 0, width, height }, 4);
     }
 }

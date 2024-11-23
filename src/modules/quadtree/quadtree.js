@@ -1,4 +1,12 @@
 export class QuadTree {
+    get width() {
+        return this.boundary.width;
+    }
+
+    get height() {
+        return this.boundary.height;
+    }
+
     constructor(boundary, capacity = 8) {
         this.boundary = boundary;
         this.capacity = capacity;

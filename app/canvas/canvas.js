@@ -1,6 +1,6 @@
 import {ComponentModule} from "../../src/modules/component.js";
-import {QuadTreeModule} from "../../src/modules/quadtree.js";
 import {CanvasModule} from "../../src/modules/canvas.js";
+
 
 export default class CanvasView extends HTMLElement {
     static tag = "canvas-view";
@@ -15,16 +15,31 @@ export default class CanvasView extends HTMLElement {
         this.shadowRoot.innerHTML = await ComponentModule.load_html({ url: import.meta.url, hasCss: true });
 
         requestAnimationFrame(async () => {
+            const element =  this.shadowRoot.querySelector("canvas");
+
+            await this.#waitForCanvas();
+
             this.#canvasWorker = await CanvasModule.initialize({
-                canvasElement: this.shadowRoot.querySelector("canvas"),
+                canvasElement: element,
                 workerSource: new URL("./canvas-worker.js", import.meta.url).href
             });
 
             this.#canvasWorker.call("clear");
             await ComponentModule.ready({ element: this });
-
-            this.#canvasWorker.call("clear");
         })
+    }
+
+    #waitForCanvas() {
+        return new Promise((resolve) => {
+            const computedStyle = getComputedStyle(this);
+
+            if (computedStyle.getPropertyValue('--canvas-width').trim() === '100%') {
+                resolve();
+            }
+            else {
+                requestAnimationFrame(() => this.#waitForCanvas().then(resolve));
+            }
+        });
     }
 
     async disconnectedCallback() {

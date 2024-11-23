@@ -1,11 +1,10 @@
-import { QuadTreeModule } from "../../src/modules/quadtree.js";
 
 class CanvasWorker {
     #width;
     #height;
     #dpr;
     #ctx;
-    #quadTree;
+    #quadTreeWorker;
 
     #colors = {
         "background": "#f0f0f0",
@@ -19,9 +18,8 @@ class CanvasWorker {
         this.#ctx.scale(dpr, dpr);
 
         this.setColors(colors);
-        this.#quadTree = await QuadTreeModule.initialize({ canvasElement: canvas });
-
-        addRandomItems(this.#quadTree, 10000);
+        this.#quadTreeWorker = new Worker(new URL("./quadtree-worker.js", import.meta.url).href, { type: "module" });
+        this.#quadTreeWorker.postMessage({ method: "initialize", args: [width, height] });
     }
 
     setColors(colors) {
@@ -41,16 +39,6 @@ class CanvasWorker {
         this.#ctx.canvas.width = this.#width * this.#dpr;
         this.#ctx.canvas.height = this.#height * this.#dpr;
         this.#ctx.scale(this.#dpr, this.#dpr);
-    }
-}
-
-function addRandomItems(quadTree, count) {
-    for (let i = 0; i < count; i++) {
-        const x = Math.random() * quadTree.width;
-        const y = Math.random() * quadTree.height;
-        const width = 10 + Math.random() * 3;
-        const height = 10 + Math.random() * 3;
-        quadTree.insert({ x, y });
     }
 }
 
