@@ -8,10 +8,11 @@ export class QuadTreeModule {
         validateArgs(args, {
             width   : {type: "Number", required: true},
             height  : {type: "Number", required: true},
+            capacity: {type: "Number", required: false}
         }, "QuadTreeModule.initialize: ");
 
-        const { width, height } = args;
+        const { width, height, capacity } = args;
 
-        return new QuadTree({ x: 0, y: 0, width, height }, 4);
+        return new QuadTree({ x: 0, y: 0, width, height }, capacity ?? 8);
     }
 }

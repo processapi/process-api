@@ -11,7 +11,7 @@ class QuadtreeWorker {
         this.#quadTree = await QuadTreeModule.initialize({ width, height });
         await addRandomItems(this.#quadTree, 10000);
 
-        const allPoints = this.#quadTree.allPoints;
+        const allPoints = this.#quadTree.getAllPoints();
         console.log(allPoints.length);
 
         await this.getBoundaries();
@@ -21,17 +21,17 @@ class QuadtreeWorker {
         const result = [];
         getBoundaries(this.#quadTree, result);
 
-        const points = this.#quadTree.query(
-            {
-                x: 0,
-                y: 0,
-                width: this.#quadTree.width,
-                height: this.#quadTree.height
-            });
-
+        // const points = this.#quadTree.query(
+        //     {
+        //         x: 0,
+        //         y: 0,
+        //         width: this.#quadTree.width,
+        //         height: this.#quadTree.height
+        //     });
+        //
         const collided = this.#quadTree.query({x, y, width, height});
 
-        postMessage({ method: "getBoundaries", args: [result, points, collided] });
+        postMessage({ method: "getBoundaries", args: [result, collided] });
     }
 
     async removePoints(x, y, width, height) {
@@ -65,8 +65,8 @@ function getBoundaries(quadTree, found = []) {
 }
 
 function addRandomItems(quadTree, count) {
-    const topLeft = { x: -quadTree.width, y: -quadTree.height };
-    const bottomRight = { x: quadTree.width * 2, y: quadTree.height * 2 };
+    const topLeft = { x: 0, y: 0 };
+    const bottomRight = { x: quadTree.width, y: quadTree.height };
 
     for (let i = 0; i < count; i++) {
         const x = Math.random() * (bottomRight.x - topLeft.x) + topLeft.x;

@@ -1,6 +1,4 @@
 export class QuadTree {
-    #allPoints = [];
-
     get width() {
         return this.boundary.width;
     }
@@ -9,15 +7,16 @@ export class QuadTree {
         return this.boundary.height;
     }
 
-    get allPoints() {
-        return this.#allPoints;
-    }
-
-    constructor(boundary, capacity = 8) {
+    constructor(boundary, capacity = 8, level = 0) {
         this.boundary = boundary;
         this.capacity = capacity;
         this.points = [];
         this.divided = false;
+        this.level = level;
+    }
+
+    getAllPoints() {
+        return getAllPoints(this);
     }
 
     clear() {
@@ -37,12 +36,10 @@ export class QuadTree {
     }
 
     resize(width, height) {
+        const points = this.getAllPoints(); // Store points before clearing
         this.clear();
         this.boundary.width = width;
         this.boundary.height = height;
-
-        const points = this.#allPoints;
-        this.#allPoints = [];
 
         for (const point of points) {
             this.insert(point);
@@ -54,16 +51,14 @@ export class QuadTree {
         const halfWidth = width / 2;
         const halfHeight = height / 2;
 
-        this.northwest = new QuadTree({ x, y, width: halfWidth, height: halfHeight }, this.capacity);
-        this.northeast = new QuadTree({ x: x + halfWidth, y, width: halfWidth, height: halfHeight }, this.capacity);
-        this.southwest = new QuadTree({ x, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity);
-        this.southeast = new QuadTree({ x: x + halfWidth, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity);
+        this.northwest = new QuadTree({ x, y, width: halfWidth, height: halfHeight }, this.capacity, this.level + 1);
+        this.northeast = new QuadTree({ x: x + halfWidth, y, width: halfWidth, height: halfHeight }, this.capacity, this.level + 1);
+        this.southwest = new QuadTree({ x, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity, this.level + 1);
+        this.southeast = new QuadTree({ x: x + halfWidth, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity, this.level + 1);
         this.divided = true;
     }
 
     insert(point) {
-        this.#allPoints.push(point);
-
         if (!this.contains(this.boundary, point)) {
             return false;
         }
@@ -188,13 +183,16 @@ function pointInRect(rect, x, y) {
     return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
 }
 
-function getAllPoints(quadTree, points) {
-    points.push(...quadTree.points);
-
-    if (quadTree.divided) {
-        getAllPoints(quadTree.northwest, points);
-        getAllPoints(quadTree.northeast, points);
-        getAllPoints(quadTree.southwest, points);
-        getAllPoints(quadTree.southeast, points);
+function getAllPoints(quadTree, found = []) {
+    if (!quadTree.divided) {
+        found.push(...quadTree.points);
     }
+    else {
+        getAllPoints(quadTree.northwest, found);
+        getAllPoints(quadTree.northeast, found);
+        getAllPoints(quadTree.southwest, found);
+        getAllPoints(quadTree.southeast, found);
+    }
+
+    return found;
 }

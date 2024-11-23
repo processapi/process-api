@@ -31,11 +31,6 @@ class CanvasWorker {
 
             this.#ctx.strokeStyle = "red";
             this.#ctx.strokeRect(this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height);
-
-            this.#ctx.fillStyle = "red";
-            for (const point of event.data.args[2]) {
-                this.#ctx.fillRect(point.x, point.y, point.width, point.height);
-            }
         }
     }
 
