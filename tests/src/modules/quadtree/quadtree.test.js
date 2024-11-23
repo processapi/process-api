@@ -103,16 +103,16 @@ Deno.test("QuadTree: Insert multiple points with dimensions and query within ran
     const boundary = { x: 0, y: 0, width: 100, height: 100 };
     const qt = new QuadTree(boundary, 4);
 
-    qt.insert({ x: 10, y: 10, width: 5, height: 5 });
-    qt.insert({ x: 20, y: 20, width: 5, height: 5 });
-    qt.insert({ x: 30, y: 30, width: 5, height: 5 });
-    qt.insert({ x: 40, y: 40, width: 5, height: 5 });
+    qt.insert({id: 0, x: 10, y: 10, width: 5, height: 5 });
+    qt.insert({id: 1, x: 20, y: 20, width: 5, height: 5 });
+    qt.insert({id: 2, x: 30, y: 30, width: 5, height: 5 });
+    qt.insert({id: 3, x: 40, y: 40, width: 5, height: 5 });
 
     const results = qt.query({ x: 12, y: 12, width: 10, height: 10 });
 
     const expected = [
-        { x: 10, y: 10, width: 5, height: 5 },
-        { x: 20, y: 20, width: 5, height: 5 }
+        {id: 0, x: 10, y: 10, width: 5, height: 5 },
+        {id: 1, x: 20, y: 20, width: 5, height: 5 }
     ];
 
     assertEquals(results.length, expected.length);
