@@ -10,6 +10,10 @@ class QuadtreeWorker {
     async initialize(width, height) {
         this.#quadTree = await QuadTreeModule.initialize({ width, height });
         await addRandomItems(this.#quadTree, 10000);
+
+        const allPoints = this.#quadTree.allPoints;
+        console.log(allPoints.length);
+
         await this.getBoundaries();
     }
 

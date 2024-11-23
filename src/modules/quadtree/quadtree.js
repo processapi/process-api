@@ -1,10 +1,16 @@
 export class QuadTree {
+    #allPoints = [];
+
     get width() {
         return this.boundary.width;
     }
 
     get height() {
         return this.boundary.height;
+    }
+
+    get allPoints() {
+        return this.#allPoints;
     }
 
     constructor(boundary, capacity = 8) {
@@ -31,20 +37,16 @@ export class QuadTree {
     }
 
     resize(width, height) {
-        const points = this.getAll();
         this.clear();
         this.boundary.width = width;
         this.boundary.height = height;
 
+        const points = this.#allPoints;
+        this.#allPoints = [];
+
         for (const point of points) {
             this.insert(point);
         }
-    }
-
-    getAll() {
-        const points = [];
-        getAllPoints(this, points);
-        return points;
     }
 
     subdivide() {
@@ -56,11 +58,12 @@ export class QuadTree {
         this.northeast = new QuadTree({ x: x + halfWidth, y, width: halfWidth, height: halfHeight }, this.capacity);
         this.southwest = new QuadTree({ x, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity);
         this.southeast = new QuadTree({ x: x + halfWidth, y: y + halfHeight, width: halfWidth, height: halfHeight }, this.capacity);
-
         this.divided = true;
     }
 
     insert(point) {
+        this.#allPoints.push(point);
+
         if (!this.contains(this.boundary, point)) {
             return false;
         }

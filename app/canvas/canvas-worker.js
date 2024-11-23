@@ -6,7 +6,6 @@ class CanvasWorker {
     #ctx;
     #quadTreeWorker;
     #quadTreeMessageHandler = this.#quadTreeMessage.bind(this);
-    // #animationHandler = this.#animation.bind(this);
     #mouseRect = { x: 0, y: 0, width: 100, height: 100 };
 
     #colors = {
@@ -39,11 +38,6 @@ class CanvasWorker {
             }
         }
     }
-
-    // #animation() {
-    //     this.#quadTreeWorker.postMessage({ method: "getBoundaries", args: [this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height] });
-    //     requestAnimationFrame(this.#animationHandler);
-    // }
 
     async initialize(canvas, width, height, dpr, colors) {
         this.#width = width;
