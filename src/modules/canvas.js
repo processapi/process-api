@@ -18,7 +18,7 @@ export class CanvasModule {
     }
 }
 
-export function initialize(canvasElement, width, height, workerSource) {
+function initialize(canvasElement, width, height, workerSource) {
     canvasElement.style.setProperty("--width", `${width}px`);
     canvasElement.style.setProperty("--height", `${height}px`);
     return createCanvas(canvasElement, width, height, workerSource);
@@ -33,7 +33,7 @@ function createCanvas(canvasElement, width, height, workerSource) {
     return new CanvasWorker(workerSource, offscreen, width, height, dpr);
 }
 
-class CanvasWorker {
+export class CanvasWorker {
     #worker;
 
     constructor(workerSource, offscreen, width, height, dpr) {
