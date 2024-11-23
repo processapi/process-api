@@ -5,9 +5,22 @@ class CanvasWorker {
     #dpr;
     #ctx;
     #quadTreeWorker;
+    #quadTreeMessageHandler = this.#quadTreeMessage.bind(this);
 
     #colors = {
         "background": "#f0f0f0",
+        "quadTree": "gray"
+    }
+
+    #quadTreeMessage(event) {
+        if (event.data.method === "getBoundaries") {
+            this.#ctx.fillStyle = "transparent";
+            this.#ctx.strokeStyle = this.#colors.quadTree;
+
+            for (const boundary of event.data.args[0]) {
+                this.#ctx.strokeRect(boundary.x, boundary.y, boundary.width, boundary.height);
+            }
+        }
     }
 
     async initialize(canvas, width, height, dpr, colors) {
@@ -19,6 +32,7 @@ class CanvasWorker {
 
         this.setColors(colors);
         this.#quadTreeWorker = new Worker(new URL("./quadtree-worker.js", import.meta.url).href, { type: "module" });
+        this.#quadTreeWorker.addEventListener("message", this.#quadTreeMessageHandler);
         this.#quadTreeWorker.postMessage({ method: "initialize", args: [width, height] });
     }
 

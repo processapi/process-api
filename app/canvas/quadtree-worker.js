@@ -9,20 +9,38 @@ class QuadtreeWorker {
 
     async initialize(width, height) {
         this.#quadTree = await QuadTreeModule.initialize({ width, height });
-        await this.addRandomItems(10000);
-
-        console.log(this.#quadTree);
+        await addRandomItems(this.#quadTree, 10000);
+        await this.getBoundaries();
     }
 
-    async addRandomItems(count) {
-        addRandomItems(this.#quadTree, count);
+    async getBoundaries() {
+        const result = [];
+        getBoundaries(this.#quadTree, result);
+        postMessage({ method: "getBoundaries", args: [result] });
     }
 }
 
+function getBoundaries(quadTree, found = []) {
+    if (!quadTree.divided) {
+        found.push(quadTree.boundary);
+    }
+    else {
+        getBoundaries(quadTree.northwest, found);
+        getBoundaries(quadTree.northeast, found);
+        getBoundaries(quadTree.southwest, found);
+        getBoundaries(quadTree.southeast, found);
+    }
+
+    return found;
+}
+
 function addRandomItems(quadTree, count) {
+    const topLeft = { x: -quadTree.width, y: -quadTree.height };
+    const bottomRight = { x: quadTree.width * 2, y: quadTree.height * 2 };
+
     for (let i = 0; i < count; i++) {
-        const x = Math.random() * quadTree.width;
-        const y = Math.random() * quadTree.height;
+        const x = Math.random() * (bottomRight.x - topLeft.x) + topLeft.x;
+        const y = Math.random() * (bottomRight.y - topLeft.y) + topLeft.y;
         const width = 10 + Math.random() * 3;
         const height = 10 + Math.random() * 3;
         quadTree.insert({ x, y, width, height });
