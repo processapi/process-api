@@ -80,7 +80,6 @@ class CanvasWorker {
     }
 
     mouseMove(x, y) {
-        this.#quadTreeWorker.postMessage({ method: "moveItems", args: [x, y] });
         this.#mouseRect.x = x - this.#mouseRect.width / 2;
         this.#mouseRect.y = y - this.#mouseRect.height / 2;
     }
@@ -89,5 +88,8 @@ class CanvasWorker {
 const instance = new CanvasWorker();
 
 self.onmessage = function(event) {
+    if (instance[event.data.method] == null) {
+        console.error(`Method ${event.data.method} does not exist`);
+    }
     instance[event.data.method](...event.data.args);
 }

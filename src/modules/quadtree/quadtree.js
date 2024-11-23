@@ -90,8 +90,7 @@ export class QuadTree {
 
         const index = this.points.findIndex(p => p.x === point.x && p.y === point.y);
         if (index !== -1) {
-            this.points.splice(index, 1);
-            return true;
+            return this.points.splice(index, 1);
         }
 
         if (this.divided) {
@@ -105,10 +104,14 @@ export class QuadTree {
     }
 
     move(oldPoint, newPoint) {
-        if (this.remove(oldPoint)) {
-            return this.insert(newPoint);
+        const point = this.remove(oldPoint);
+
+        if (point && point.length > 0) {
+            point[0].x = newPoint.x;
+            point[0].y = newPoint.y;
+
+            this.insert(point[0]);
         }
-        return false;
     }
 }
 

@@ -29,10 +29,6 @@ class QuadtreeWorker {
 
         postMessage({ method: "getBoundaries", args: [result, points, collided] });
     }
-
-    moveItems() {
-
-    }
 }
 
 function getBoundaries(quadTree, found = []) {
@@ -65,5 +61,8 @@ function addRandomItems(quadTree, count) {
 const instance = new QuadtreeWorker();
 
 self.onmessage = function(event) {
+    if (instance[event.data.method] == null) {
+        console.error(`Method ${event.data.method} does not exist`);
+    }
     instance[event.data.method](...(event.data.args ?? []));
 }
