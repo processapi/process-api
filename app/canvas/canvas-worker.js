@@ -7,6 +7,7 @@ class CanvasWorker {
     #quadTreeWorker;
     #quadTreeMessageHandler = this.#quadTreeMessage.bind(this);
     #animationHandler = this.#animation.bind(this);
+    #mouseRect = { x: 0, y: 0, width: 100, height: 100 };
 
     #colors = {
         "background": "#f0f0f0",
@@ -28,6 +29,9 @@ class CanvasWorker {
             for (const point of event.data.args[1]) {
                 this.#ctx.fillRect(point.x, point.y, point.width, point.height);
             }
+
+            this.#ctx.strokeStyle = "red";
+            this.#ctx.strokeRect(this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height);
         }
     }
 
@@ -68,6 +72,12 @@ class CanvasWorker {
         this.#ctx.canvas.width = this.#width * this.#dpr;
         this.#ctx.canvas.height = this.#height * this.#dpr;
         this.#ctx.scale(this.#dpr, this.#dpr);
+    }
+
+    mouseMove(x, y) {
+        this.#quadTreeWorker.postMessage({ method: "moveItems", args: [x, y] });
+        this.#mouseRect.x = x - this.#mouseRect.width / 2;
+        this.#mouseRect.y = y - this.#mouseRect.height / 2;
     }
 }
 

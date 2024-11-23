@@ -5,6 +5,7 @@ import {CanvasModule} from "../../src/modules/canvas.js";
 export default class CanvasView extends HTMLElement {
     static tag = "canvas-view";
     #canvasWorker;
+    #mouseMoveHandler = this.#mouseMove.bind(this);
 
     constructor() {
         super();
@@ -16,6 +17,7 @@ export default class CanvasView extends HTMLElement {
 
         requestAnimationFrame(async () => {
             const element =  this.shadowRoot.querySelector("canvas");
+            element.addEventListener("mousemove", this.#mouseMoveHandler);
 
             await this.#waitForCanvas();
 
@@ -27,6 +29,10 @@ export default class CanvasView extends HTMLElement {
             this.#canvasWorker.call("clear");
             await ComponentModule.ready({ element: this });
         })
+    }
+
+    #mouseMove(event) {
+        this.#canvasWorker.call("mouseMove", event.offsetX, event.offsetY);
     }
 
     #waitForCanvas() {
@@ -43,6 +49,9 @@ export default class CanvasView extends HTMLElement {
     }
 
     async disconnectedCallback() {
+        const canvas = this.shadowRoot.querySelector("canvas");
+        canvas.removeEventListener("mousemove", this.#mouseMoveHandler);
+
         this.#canvasWorker.terminate();
         this.#canvasWorker = null;
     }

@@ -27,6 +27,10 @@ class QuadtreeWorker {
 
         postMessage({ method: "getBoundaries", args: [result, points] });
     }
+
+    moveItems() {
+
+    }
 }
 
 function getBoundaries(quadTree, found = []) {
