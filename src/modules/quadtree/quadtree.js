@@ -14,6 +14,39 @@ export class QuadTree {
         this.divided = false;
     }
 
+    clear() {
+        if (this.divided) {
+            this.northwest.clear();
+            this.northeast.clear();
+            this.southwest.clear();
+            this.southeast.clear();
+        }
+
+        this.points = [];
+        this.northwest = null;
+        this.northeast = null;
+        this.southwest = null;
+        this.southeast = null;
+        this.divided = false;
+    }
+
+    resize(width, height) {
+        const points = this.getAll();
+        this.clear();
+        this.boundary.width = width;
+        this.boundary.height = height;
+
+        for (const point of points) {
+            this.insert(point);
+        }
+    }
+
+    getAll() {
+        const points = [];
+        getAllPoints(this, points);
+        return points;
+    }
+
     subdivide() {
         const { x, y, width, height } = this.boundary;
         const halfWidth = width / 2;
@@ -150,4 +183,15 @@ export class QuadTree {
 
 function pointInRect(rect, x, y) {
     return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
+}
+
+function getAllPoints(quadTree, points) {
+    points.push(...quadTree.points);
+
+    if (quadTree.divided) {
+        getAllPoints(quadTree.northwest, points);
+        getAllPoints(quadTree.northeast, points);
+        getAllPoints(quadTree.southwest, points);
+        getAllPoints(quadTree.southeast, points);
+    }
 }

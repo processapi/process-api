@@ -73,10 +73,16 @@ class CanvasWorker {
         this.#ctx.fillRect(0, 0, this.#width, this.#height);
     }
 
-    resize() {
+    resize(width, height) {
+        this.#width = width;
+        this.#height = height;
+
         this.#ctx.canvas.width = this.#width * this.#dpr;
         this.#ctx.canvas.height = this.#height * this.#dpr;
         this.#ctx.scale(this.#dpr, this.#dpr);
+
+        this.#quadTreeWorker.postMessage({ method: "resize", args: [width, height] });
+        this.#quadTreeWorker.postMessage({ method: "getBoundaries", args: [this.#mouseRect.x, this.#mouseRect.y, this.#mouseRect.width, this.#mouseRect.height] });
     }
 
     mouseMove(x, y) {

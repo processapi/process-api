@@ -39,6 +39,11 @@ class QuadtreeWorker {
 
         await this.getBoundaries();
     }
+
+    async resize(width, height) {
+        await this.#quadTree.resize(width, height);
+        await this.getBoundaries();
+    }
 }
 
 function getBoundaries(quadTree, found = []) {
