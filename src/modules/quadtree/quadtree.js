@@ -90,28 +90,61 @@ export class QuadTree {
 
         const index = this.points.findIndex(p => p.x === point.x && p.y === point.y);
         if (index !== -1) {
-            return this.points.splice(index, 1);
+            this.points.splice(index, 1);
+            this.checkIfShouldDissolve();
+            return true;
         }
 
         if (this.divided) {
-            if (this.northwest.remove(point)) return true;
-            if (this.northeast.remove(point)) return true;
-            if (this.southwest.remove(point)) return true;
-            if (this.southeast.remove(point)) return true;
+            if (this.northwest.remove(point)) {
+                this.checkIfShouldDissolve();
+                return true;
+            }
+            if (this.northeast.remove(point)) {
+                this.checkIfShouldDissolve();
+                return true;
+            }
+            if (this.southwest.remove(point)) {
+                this.checkIfShouldDissolve();
+                return true;
+            }
+            if (this.southeast.remove(point)) {
+                this.checkIfShouldDissolve();
+                return true;
+            }
         }
 
         return false;
     }
 
-    move(oldPoint, newPoint) {
-        const point = this.remove(oldPoint);
-
-        if (point && point.length > 0) {
-            point[0].x = newPoint.x;
-            point[0].y = newPoint.y;
-
-            this.insert(point[0]);
+    checkIfShouldDissolve() {
+        if (this.divided &&
+            this.northwest.isEmpty() &&
+            this.northeast.isEmpty() &&
+            this.southwest.isEmpty() &&
+            this.southeast.isEmpty()) {
+            this.northwest = null;
+            this.northeast = null;
+            this.southwest = null;
+            this.southeast = null;
+            this.divided = false;
         }
+    }
+
+    isEmpty() {
+        return this.points.length === 0 &&
+            (!this.divided ||
+                (this.northwest.isEmpty() &&
+                    this.northeast.isEmpty() &&
+                    this.southwest.isEmpty() &&
+                    this.southeast.isEmpty()));
+    }
+
+    move(oldPoint, newPoint) {
+        if (this.remove(oldPoint)) {
+            return this.insert(newPoint);
+        }
+        return false;
     }
 }
 
