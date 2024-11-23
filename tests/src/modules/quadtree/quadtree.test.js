@@ -88,3 +88,28 @@ Deno.test("QuadTree: Query range exceeding boundaries", () => {
     assert(pointExists(results, { x: 10, y: 10 }));
     assert(pointExists(results, { x: 90, y: 90 }));
 });
+
+Deno.test("QuadTree: Move point and update position", () => {
+    const boundary = { x: 0, y: 0, width: 100, height: 100 };
+    const qt = new QuadTree(boundary, 4);
+
+    qt.insert({ x: 10, y: 10 });
+    qt.move({ x: 10, y: 10 }, { x: 20, y: 20 });
+
+    const results = qt.query({ x: 0, y: 0, width: 100, height: 100 });
+
+    assertEquals(results.length, 1);
+    assert(pointExists(results, { x: 20, y: 20 }));
+});
+
+Deno.test("QuadTree: Move point outside query range", () => {
+    const boundary = { x: 0, y: 0, width: 100, height: 100 };
+    const qt = new QuadTree(boundary, 4);
+
+    qt.insert({ x: 10, y: 10 });
+    qt.move({ x: 10, y: 10 }, { x: 210, y: 210 });
+
+    const results = qt.query({ x: 0, y: 0, width: 100, height: 100 });
+
+    assertEquals(results.length, 0);
+});

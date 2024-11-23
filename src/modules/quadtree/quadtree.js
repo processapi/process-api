@@ -1,5 +1,5 @@
 export class QuadTree {
-    constructor(boundary, capacity) {
+    constructor(boundary, capacity = 8) {
         this.boundary = boundary; // Boundary is a rectangle { x, y, width, height }
         this.capacity = capacity; // Max items in this node before splitting
         this.points = [];
@@ -20,18 +20,15 @@ export class QuadTree {
     }
 
     insert(point) {
-        // Check if the point lies within the boundary
         if (!this.contains(this.boundary, point)) {
             return false;
         }
 
-        // If capacity is not reached, store the point
         if (this.points.length < this.capacity) {
             this.points.push(point);
             return true;
         }
 
-        // If capacity is reached, subdivide and delegate
         if (!this.divided) {
             this.subdivide();
         }
@@ -41,7 +38,7 @@ export class QuadTree {
         if (this.southwest.insert(point)) return true;
         if (this.southeast.insert(point)) return true;
 
-        return false; // Shouldn't reach here
+        return false;
     }
 
     query(range, found = []) {
@@ -82,5 +79,32 @@ export class QuadTree {
             rect1.y >= rect2.y + rect2.height
         );
     }
-}
 
+    remove(point) {
+        if (!this.contains(this.boundary, point)) {
+            return false;
+        }
+
+        const index = this.points.findIndex(p => p.x === point.x && p.y === point.y);
+        if (index !== -1) {
+            this.points.splice(index, 1);
+            return true;
+        }
+
+        if (this.divided) {
+            if (this.northwest.remove(point)) return true;
+            if (this.northeast.remove(point)) return true;
+            if (this.southwest.remove(point)) return true;
+            if (this.southeast.remove(point)) return true;
+        }
+
+        return false;
+    }
+
+    move(oldPoint, newPoint) {
+        if (this.remove(oldPoint)) {
+            return this.insert(newPoint);
+        }
+        return false;
+    }
+}
