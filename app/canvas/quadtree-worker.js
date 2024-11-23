@@ -13,7 +13,7 @@ class QuadtreeWorker {
         await this.getBoundaries();
     }
 
-    async getBoundaries() {
+    async getBoundaries(x, y, width, height) {
         const result = [];
         getBoundaries(this.#quadTree, result);
 
@@ -25,7 +25,9 @@ class QuadtreeWorker {
                 height: this.#quadTree.height
             });
 
-        postMessage({ method: "getBoundaries", args: [result, points] });
+        const collided = this.#quadTree.query({x, y, width, height});
+
+        postMessage({ method: "getBoundaries", args: [result, points, collided] });
     }
 
     moveItems() {

@@ -1,7 +1,6 @@
 import {ComponentModule} from "../../src/modules/component.js";
 import {CanvasModule} from "../../src/modules/canvas.js";
 
-
 export default class CanvasView extends HTMLElement {
     static tag = "canvas-view";
     #canvasWorker;
