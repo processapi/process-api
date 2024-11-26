@@ -16,7 +16,7 @@ async function getModels() {
 }
 
 async function getModelDetails(model) {
-	const url = `https://ollama.com/library/${model}`;
+	const url = `https://ollama.com/library/${model}/tags`;
 
 	const result = {
 		url,

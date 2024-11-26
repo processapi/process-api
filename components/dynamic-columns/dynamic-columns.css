@@ -1,0 +1,19 @@
+:host {
+    --columns: 1fr 1fr;
+
+    display: grid;
+    grid-template-columns: var(--columns);
+    gap: 0.5rem;
+    position: relative;
+    user-select: none;
+}
+
+.resize-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.5rem;
+    height: 100%;
+    cursor: ew-resize;
+    background-color: var(--cl-brd, #000);
+}
