@@ -9,6 +9,7 @@ class DynamicColumns extends HTMLElement {
     #animationHandler = this.#animation.bind(this);
 
     #columns;
+    #width;
 
     #translateX = {
         start: 0,
@@ -85,6 +86,8 @@ class DynamicColumns extends HTMLElement {
 
             const style = getComputedStyle(this);
             this.#translateX.startColumns = style.gridTemplateColumns.split(" ").map(column => parseFloat(column.replace("px", "")));
+
+            this.#width = style.width.replace("px", "");
 
             this.#isAnimating = true;
             this.#animationHandler();
