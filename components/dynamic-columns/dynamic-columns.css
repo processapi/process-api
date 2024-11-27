@@ -16,4 +16,5 @@
     height: 100%;
     cursor: ew-resize;
     background-color: var(--cl-brd, #000);
+    will-change: transform;
 }

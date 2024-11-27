@@ -1,7 +1,25 @@
 import {ComponentModule} from "../../src/modules/component.js";
 
+/**
+ * todo:
+ * 1. add resize support
+ */
 class DynamicColumns extends HTMLElement {
     static name = Object.freeze("dynamic-columns");
+
+    #mouseDownHandler = this.#mouseDown.bind(this);
+    #mouseMoveHandler = this.#mouseMove.bind(this);
+    #mouseUpHandler = this.#mouseUp.bind(this);
+    #animationHandler = this.#animation.bind(this);
+
+    #translateX = {
+        start: 0,
+        current: 0,
+        location: 0
+    }
+
+    #target;
+    #frameId;
 
     constructor() {
         super();
@@ -18,7 +36,53 @@ class DynamicColumns extends HTMLElement {
 
         requestAnimationFrame(() => {
             createResizeHandles(this);
+            this.addEventListener("mousedown", this.#mouseDownHandler);
         })
+    }
+
+    async disconnectedCallback() {
+        this.removeEventListener("mousedown", this.#mouseDownHandler);
+        this.#mouseDownHandler = null;
+        this.#mouseMoveHandler = null;
+        this.#mouseUpHandler = null;
+        this.#animationHandler = null;
+    }
+
+    #animation() {
+        const x = this.#translateX.location + (this.#translateX.current - this.#translateX.start);
+        this.#target.style.translate = `${x}px 0`;
+        this.#frameId = requestAnimationFrame(this.#animationHandler);
+    }
+
+    #mouseDown(event) {
+        const target = event.composedPath()[0];
+
+        if (target.classList.contains("resize-handle")) {
+            this.#target = target;
+            this.#translateX.location = parseFloat(this.#target.style.translate.split(" ")[0].replace("px", ""));
+
+            this.addEventListener("mousemove", this.#mouseMoveHandler);
+            this.addEventListener("mouseup", this.#mouseUpHandler);
+
+            this.#translateX.start = event.clientX;
+            this.#translateX.current = event.clientX;
+            this.#animationHandler();
+        }
+    }
+
+    #mouseMove(event) {
+        this.#translateX.current = event.clientX;
+    }
+
+    #mouseUp(event) {
+        cancelAnimationFrame(this.#frameId);
+
+        this.removeEventListener("mousemove", this.#mouseMoveHandler);
+        this.removeEventListener("mouseup", this.#mouseUpHandler);
+
+        this.#translateX.start = 0;
+        this.#translateX.current = 0;
+        this.#target = null;
     }
 }
 
