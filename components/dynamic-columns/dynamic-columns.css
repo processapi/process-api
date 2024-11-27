@@ -1,24 +1,19 @@
 :host {
     --columns: 1fr 1fr;
+    --gap: 0.25rem;
 
     display: grid;
     grid-template-columns: var(--columns);
-    gap: 0.5rem;
+    gap: var(--gap);
     position: relative;
     user-select: none;
 }
 
-.resize-handle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0.5rem;
+::slotted(.resize-handle) {
+    width: 0.25rem;
     height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
     cursor: ew-resize;
     background-color: var(--cl-brd, #000);
-    will-change: transform;
-}
-
-.hidden {
-    display: none;
 }

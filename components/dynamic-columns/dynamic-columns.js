@@ -8,18 +8,18 @@ class DynamicColumns extends HTMLElement {
     #mouseUpHandler = this.#mouseUp.bind(this);
     #animationHandler = this.#animation.bind(this);
 
-    #columns;
-    #width;
-
     #translateX = {
         start: 0,
-        current: 0,
-        startColumns: null,
+        current: 0
     }
 
+    #columns;
+    #widths;
+    #width;
+    #width2;
+    #gap;
+
     #target;
-    #frameId;
-    #handles;
     #isAnimating = false;
 
     constructor() {
@@ -32,13 +32,9 @@ class DynamicColumns extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.#columns = (this.getAttribute("columns") ?? "1fr 1fr").split(" ");
+        this.#columns = getGridTemplateColumns(this);
         this.style.setProperty("--columns", this.#columns.join(" "));
-
-        requestAnimationFrame(() => {
-            this.#handles = createResizeHandles(this);
-            this.addEventListener("mousedown", this.#mouseDownHandler);
-        });
+        this.addEventListener("mousedown", this.#mouseDownHandler);
     }
 
     disconnectedCallback() {
@@ -49,27 +45,23 @@ class DynamicColumns extends HTMLElement {
     #animation() {
         if (!this.#isAnimating) return;
 
-        const offset = this.#translateX.current - this.#translateX.start;
         const index = parseInt(this.#target.dataset.index);
-        const style = getComputedStyle(this);
-        const columns = style.gridTemplateColumns.split(" ");
-        const gapSize = parseFloat(style.gap.replace("px", ""));
+        const offset = this.#translateX.current - this.#translateX.start;
 
-        columns[index] = `${Math.max(this.#translateX.startColumns[index] + offset, gapSize)}px`;
-        columns[columns.length - 1] = "1fr";
-        this.style.setProperty("--columns", columns.join(" "));
+        this.#widths[index] = `${Number(this.#width) + offset}px`;
+        this.#widths[index + 2] = `${Number(this.#width2) - offset}px`;
 
-        let handleX = 0;
-
-        for (let i = 0; i < this.#handles.length; i++) {
-            const handle = this.#handles[i];
-            handleX += parseFloat(columns[i].replace("px", ""));
-            handle.style.translate = `${handleX}px 0`;
-
-            handleX += gapSize;
+        // ensure that the gap is not less than the minimum
+        for (let i = 0; i < this.#widths.length; i++) {
+            const width = Number(this.#widths[i].replace("px", ""));
+            if (width < this.#gap) {
+                this.#widths[i] = `${this.#gap}px`;
+            }
         }
 
-        this.#frameId = requestAnimationFrame(this.#animationHandler);
+        this.style.setProperty("--columns", this.#widths.join(" "));
+
+        requestAnimationFrame(this.#animationHandler);
     }
 
     #mouseDown(event) {
@@ -84,10 +76,15 @@ class DynamicColumns extends HTMLElement {
             this.#translateX.start = event.clientX;
             this.#translateX.current = event.clientX;
 
-            const style = getComputedStyle(this);
-            this.#translateX.startColumns = style.gridTemplateColumns.split(" ").map(column => parseFloat(column.replace("px", "")));
+            const index = parseInt(this.#target.dataset.index);
+            this.#widths = structuredClone(this.#columns);
 
-            this.#width = style.width.replace("px", "");
+            const styles = getComputedStyle(this);
+            this.#gap = Number(styles.gap.replace("px", ""));
+            this.#widths = styles.gridTemplateColumns.split(" ");
+            this.#width = this.#widths[index].replace("px", "");
+            this.#width2 = this.#widths[index + 2].replace("px", "");
+            this.#widths[this.#widths.length - 1] = "1fr";
 
             this.#isAnimating = true;
             this.#animationHandler();
@@ -100,13 +97,10 @@ class DynamicColumns extends HTMLElement {
 
     #mouseUp() {
         this.#isAnimating = false;
-        cancelAnimationFrame(this.#frameId);
-
         this.#removeMouseListeners();
 
         this.#translateX.start = 0;
         this.#translateX.current = 0;
-        this.#translateX.startColumns = null;
         this.#target = null;
     }
 
@@ -116,29 +110,23 @@ class DynamicColumns extends HTMLElement {
     }
 }
 
-function createResizeHandles(component) {
-    const styles = getComputedStyle(component);
-    const columns = styles.gridTemplateColumns.split(" ");
-    const columnCount = columns.length;
+function getGridTemplateColumns(element) {
+    const columns = [];
 
-    let x = 0;
-    const handles = [];
+    let index = 0;
+    for (let child of element.children) {
+        if (child.classList.contains("resize-handle")) {
+            child.dataset.index = index - 1;
+            columns.push("auto");
+        }
+        else {
+            columns.push(child.dataset.widths ?? "1fr");
+        }
 
-    for (let i = 0; i < columnCount - 1; i++) {
-        x += parseFloat(columns[i].replace("px", ""));
-
-        const handle = document.createElement("div");
-        handle.dataset.index = i;
-        handle.classList.add("resize-handle");
-        handle.style.translate = `${x}px 0`;
-        component.shadowRoot.appendChild(handle);
-
-        x += parseFloat(styles.gap.replace("px", ""));
-
-        handles.push(handle);
+        index += 1;
     }
 
-    return handles;
+    return columns;
 }
 
 customElements.define(DynamicColumns.name, DynamicColumns);
