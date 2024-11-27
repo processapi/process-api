@@ -18,3 +18,7 @@
     background-color: var(--cl-brd, #000);
     will-change: transform;
 }
+
+.hidden {
+    display: none;
+}
