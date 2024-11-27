@@ -1,9 +1,5 @@
 import {ComponentModule} from "../../src/modules/component.js";
 
-/**
- * todo:
- * 1. add resize support
- */
 class DynamicColumns extends HTMLElement {
     static name = Object.freeze("dynamic-columns");
 
@@ -23,6 +19,7 @@ class DynamicColumns extends HTMLElement {
     #target;
     #frameId;
     #handles;
+    #isAnimating = false;
 
     constructor() {
         super();
@@ -40,18 +37,17 @@ class DynamicColumns extends HTMLElement {
         requestAnimationFrame(() => {
             this.#handles = createResizeHandles(this);
             this.addEventListener("mousedown", this.#mouseDownHandler);
-        })
+        });
     }
 
-    async disconnectedCallback() {
+    disconnectedCallback() {
         this.removeEventListener("mousedown", this.#mouseDownHandler);
-        this.#mouseDownHandler = null;
-        this.#mouseMoveHandler = null;
-        this.#mouseUpHandler = null;
-        this.#animationHandler = null;
+        this.#removeMouseListeners();
     }
 
     #animation() {
+        if (!this.#isAnimating) return;
+
         const offset = this.#translateX.current - this.#translateX.start;
         const index = parseInt(this.#target.dataset.index);
         const style = getComputedStyle(this);
@@ -90,6 +86,7 @@ class DynamicColumns extends HTMLElement {
             const style = getComputedStyle(this);
             this.#translateX.startColumns = style.gridTemplateColumns.split(" ").map(column => parseFloat(column.replace("px", "")));
 
+            this.#isAnimating = true;
             this.#animationHandler();
         }
     }
@@ -98,16 +95,21 @@ class DynamicColumns extends HTMLElement {
         this.#translateX.current = event.clientX;
     }
 
-    #mouseUp(event) {
+    #mouseUp() {
+        this.#isAnimating = false;
         cancelAnimationFrame(this.#frameId);
 
-        this.removeEventListener("mousemove", this.#mouseMoveHandler);
-        this.removeEventListener("mouseup", this.#mouseUpHandler);
+        this.#removeMouseListeners();
 
         this.#translateX.start = 0;
         this.#translateX.current = 0;
         this.#translateX.startColumns = null;
         this.#target = null;
+    }
+
+    #removeMouseListeners() {
+        this.removeEventListener("mousemove", this.#mouseMoveHandler);
+        this.removeEventListener("mouseup", this.#mouseUpHandler);
     }
 }
 
