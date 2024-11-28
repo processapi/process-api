@@ -1,22 +1,21 @@
 import {ComponentModule} from "../../src/modules/component.js";
 
-class DynamicColumns extends HTMLElement {
-    static name = Object.freeze("dynamic-columns");
+class DynamicRows extends HTMLElement {
+    static name = Object.freeze("dynamic-rows");
 
     #mouseDownHandler = this.#mouseDown.bind(this);
     #mouseMoveHandler = this.#mouseMove.bind(this);
     #mouseUpHandler = this.#mouseUp.bind(this);
     #animationHandler = this.#animation.bind(this);
 
-    #translateX = {
+    #translateY = {
         start: 0,
-        current: 0,
-        minWidths: [],
+        current: 0
     }
 
-    #pixelWidths;
-    #leftCellWidth;
-    #rightCellWidth;
+    #pixelHeights;
+    #topCellHeight;
+    #bottomCellHeight;
     #gap;
 
     #index;
@@ -32,10 +31,7 @@ class DynamicColumns extends HTMLElement {
             url: import.meta.url,
         });
 
-        const { columns, minWidths } = getGridTemplateColumns(this);
-        this.#translateX.minWidths = minWidths;
-
-        this.style.setProperty("--columns", columns.join(" "));
+        this.style.setProperty("--heights", getGridTemplateRows(this).join(" "));
         this.addEventListener("mousedown", this.#mouseDownHandler);
     }
 
@@ -47,20 +43,20 @@ class DynamicColumns extends HTMLElement {
     #animation() {
         if (!this.#isAnimating) return;
 
-        const offset = this.#translateX.current - this.#translateX.start;
+        const offset = this.#translateY.current - this.#translateY.start;
 
-        this.#pixelWidths[this.#index] = `${Number(this.#leftCellWidth) + offset}px`;
-        this.#pixelWidths[this.#index + 2] = `${Number(this.#rightCellWidth) - offset}px`;
+        this.#pixelHeights[this.#index] = `${Number(this.#topCellHeight) + offset}px`;
+        this.#pixelHeights[this.#index + 2] = `${Number(this.#bottomCellHeight) - offset}px`;
 
         // ensure that the gap is not less than the minimum
-        for (let i = 0; i < this.#pixelWidths.length; i++) {
-            const width = Number(this.#pixelWidths[i].replace("px", ""));
+        for (let i = 0; i < this.#pixelHeights.length; i++) {
+            const width = Number(this.#pixelHeights[i].replace("px", ""));
             if (width < this.#gap) {
-                this.#pixelWidths[i] = `${this.#gap}px`;
+                this.#pixelHeights[i] = `${this.#gap}px`;
             }
         }
 
-        this.style.setProperty("--columns", this.#pixelWidths.join(" "));
+        this.style.setProperty("--heights", this.#pixelHeights.join(" "));
 
         requestAnimationFrame(this.#animationHandler);
     }
@@ -74,15 +70,15 @@ class DynamicColumns extends HTMLElement {
             this.addEventListener("mousemove", this.#mouseMoveHandler);
             this.addEventListener("mouseup", this.#mouseUpHandler);
 
-            this.#translateX.start = event.clientX;
-            this.#translateX.current = event.clientX;
+            this.#translateY.start = event.clientY;
+            this.#translateY.current = event.clientY;
 
             const styles = getComputedStyle(this);
 
             this.#gap = Number(styles.gap.replace("px", ""));
-            this.#pixelWidths = styles.gridTemplateColumns.split(" ");
-            this.#leftCellWidth = this.#pixelWidths[this.#index].replace("px", "");
-            this.#rightCellWidth = this.#pixelWidths[this.#index + 2].replace("px", "");
+            this.#pixelHeights = styles.gridTemplateRows.split(" ");
+            this.#topCellHeight = this.#pixelHeights[this.#index].replace("px", "");
+            this.#bottomCellHeight = this.#pixelHeights[this.#index + 2].replace("px", "");
 
             this.#isAnimating = true;
             this.#animationHandler();
@@ -93,7 +89,8 @@ class DynamicColumns extends HTMLElement {
     }
 
     #mouseMove(event) {
-        this.#translateX.current = event.clientX;
+        this.#translateY.current = event.clientY;
+
         event.preventDefault();
         event.stopPropagation();
     }
@@ -102,8 +99,8 @@ class DynamicColumns extends HTMLElement {
         this.#isAnimating = false;
         this.#removeMouseListeners();
 
-        this.#translateX.start = 0;
-        this.#translateX.current = 0;
+        this.#translateY.start = 0;
+        this.#translateY.current = 0;
 
         event.preventDefault();
         event.stopPropagation();
@@ -115,25 +112,26 @@ class DynamicColumns extends HTMLElement {
     }
 }
 
-function getGridTemplateColumns(element) {
-    const columns = [];
-    const minWidths = [];
+function getGridTemplateRows(element) {
+    const rows = [];
 
     let index = 0;
+    let zIndex = 0;
     for (let child of element.children) {
         if (child.classList.contains("resize-handle")) {
             child.dataset.index = index - 1;
-            columns.push("auto");
+            rows.push("auto");
         }
         else {
-            columns.push(child.dataset.width ?? "1fr");
-            minWidths.push(Number(child.dataset.minWidth ?? "100"));
+            child.style.zindex = zIndex;
+            zIndex += 1;
+            rows.push(child.dataset.height ?? "1fr");
         }
 
         index += 1;
     }
 
-    return { columns, minWidths };
+    return rows;
 }
 
-customElements.define(DynamicColumns.name, DynamicColumns);
+customElements.define(DynamicRows.name, DynamicRows);

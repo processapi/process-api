@@ -1,7 +1,8 @@
 import "./../../components/dynamic-columns/dynamic-columns.js";
+import "./../../components/dynamic-rows/dynamic-rows.js";
 
-export default class DynamicColumnsView extends HTMLElement {
-    static tag = "dynamic-columns-view";
+export default class DynamicView extends HTMLElement {
+    static tag = "dynamic-view";
 
     constructor() {
         super();
@@ -18,4 +19,4 @@ export default class DynamicColumnsView extends HTMLElement {
     }
 }
 
-customElements.define(DynamicColumnsView.tag, DynamicColumnsView);
+customElements.define(DynamicView.tag, DynamicView);

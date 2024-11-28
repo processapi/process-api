@@ -12,7 +12,8 @@ dyanmic-columns {
     height: 100%;
 }
 
-dynamic-columns div {
+div {
     border: var(--border, 1px solid #c3c3c3);
     padding: var(--padding, 0.5rem);
+    background: white;
 }
