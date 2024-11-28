@@ -19,3 +19,9 @@
     cursor: ew-resize;
     background-color: var(--cl-brd, #000) !important;
 }
+
+::slotted(.cell) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

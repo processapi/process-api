@@ -126,6 +126,7 @@ function getGridTemplateColumns(element) {
             columns.push("auto");
         }
         else {
+            child.classList.add("cell");
             columns.push(child.dataset.width ?? "1fr");
             minWidths.push(Number(child.dataset.minWidth ?? "100"));
         }

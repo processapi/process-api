@@ -116,15 +116,13 @@ function getGridTemplateRows(element) {
     const rows = [];
 
     let index = 0;
-    let zIndex = 0;
     for (let child of element.children) {
         if (child.classList.contains("resize-handle")) {
             child.dataset.index = index - 1;
             rows.push("auto");
         }
         else {
-            child.style.zindex = zIndex;
-            zIndex += 1;
+            child.classList.add("cell");
             rows.push(child.dataset.height ?? "1fr");
         }
 

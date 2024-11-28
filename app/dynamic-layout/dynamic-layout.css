@@ -16,8 +16,4 @@ div {
     border: var(--border, 1px solid #c3c3c3);
     padding: var(--padding, 0.5rem);
     background: white;
-
-    overflow: hidden; /* Prevent content overflow */
-    text-overflow: ellipsis; /* Optional for truncated text */
-    white-space: nowrap; /* Prevent text from wrapping */
 }
