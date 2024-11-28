@@ -13,13 +13,12 @@ class DynamicColumns extends HTMLElement {
         current: 0
     }
 
-    #columns;
-    #widths;
-    #width;
-    #width2;
+    #pixelWidths;
+    #leftCellWidth;
+    #rightCellWidth;
     #gap;
 
-    #target;
+    #index;
     #isAnimating = false;
 
     constructor() {
@@ -32,8 +31,7 @@ class DynamicColumns extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.#columns = getGridTemplateColumns(this);
-        this.style.setProperty("--columns", this.#columns.join(" "));
+        this.style.setProperty("--columns", getGridTemplateColumns(this).join(" "));
         this.addEventListener("mousedown", this.#mouseDownHandler);
     }
 
@@ -45,21 +43,20 @@ class DynamicColumns extends HTMLElement {
     #animation() {
         if (!this.#isAnimating) return;
 
-        const index = parseInt(this.#target.dataset.index);
         const offset = this.#translateX.current - this.#translateX.start;
 
-        this.#widths[index] = `${Number(this.#width) + offset}px`;
-        this.#widths[index + 2] = `${Number(this.#width2) - offset}px`;
+        this.#pixelWidths[this.#index] = `${Number(this.#leftCellWidth) + offset}px`;
+        this.#pixelWidths[this.#index + 2] = `${Number(this.#rightCellWidth) - offset}px`;
 
         // ensure that the gap is not less than the minimum
-        for (let i = 0; i < this.#widths.length; i++) {
-            const width = Number(this.#widths[i].replace("px", ""));
+        for (let i = 0; i < this.#pixelWidths.length; i++) {
+            const width = Number(this.#pixelWidths[i].replace("px", ""));
             if (width < this.#gap) {
-                this.#widths[i] = `${this.#gap}px`;
+                this.#pixelWidths[i] = `${this.#gap}px`;
             }
         }
 
-        this.style.setProperty("--columns", this.#widths.join(" "));
+        this.style.setProperty("--columns", this.#pixelWidths.join(" "));
 
         requestAnimationFrame(this.#animationHandler);
     }
@@ -68,7 +65,7 @@ class DynamicColumns extends HTMLElement {
         const target = event.composedPath()[0];
 
         if (target.classList.contains("resize-handle")) {
-            this.#target = target;
+            this.#index = parseInt(target.dataset.index);
 
             this.addEventListener("mousemove", this.#mouseMoveHandler);
             this.addEventListener("mouseup", this.#mouseUpHandler);
@@ -76,15 +73,12 @@ class DynamicColumns extends HTMLElement {
             this.#translateX.start = event.clientX;
             this.#translateX.current = event.clientX;
 
-            const index = parseInt(this.#target.dataset.index);
-            this.#widths = structuredClone(this.#columns);
-
             const styles = getComputedStyle(this);
+
             this.#gap = Number(styles.gap.replace("px", ""));
-            this.#widths = styles.gridTemplateColumns.split(" ");
-            this.#width = this.#widths[index].replace("px", "");
-            this.#width2 = this.#widths[index + 2].replace("px", "");
-            this.#widths[this.#widths.length - 1] = "1fr";
+            this.#pixelWidths = styles.gridTemplateColumns.split(" ");
+            this.#leftCellWidth = this.#pixelWidths[this.#index].replace("px", "");
+            this.#rightCellWidth = this.#pixelWidths[this.#index + 2].replace("px", "");
 
             this.#isAnimating = true;
             this.#animationHandler();
@@ -101,7 +95,6 @@ class DynamicColumns extends HTMLElement {
 
         this.#translateX.start = 0;
         this.#translateX.current = 0;
-        this.#target = null;
     }
 
     #removeMouseListeners() {
@@ -120,7 +113,7 @@ function getGridTemplateColumns(element) {
             columns.push("auto");
         }
         else {
-            columns.push(child.dataset.widths ?? "1fr");
+            columns.push(child.dataset.width ?? "1fr");
         }
 
         index += 1;
