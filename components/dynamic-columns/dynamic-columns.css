@@ -1,6 +1,6 @@
 :host {
     --columns: 1fr 1fr;
-    --gap: 0.25rem;
+    --gap: 0;
 
     display: grid;
     grid-template-columns: var(--columns);
