@@ -1,0 +1,18 @@
+.toast {
+  padding: var(--padding);
+  margin: 0.5rem;
+  border-radius: var(--border-radius);
+  color: #fff;
+}
+.toast-info {
+  background-color: var(--cl-progress);
+}
+.toast-error {
+  background-color: var(--cl-danger);
+}
+.toast-success {
+  background-color: var(--cl-valid);
+}
+.toast-warning {
+  background-color: var(--cl-invalid);
+}
