@@ -1,1 +1,5 @@
 /data/
+/wasm/markdown/target/
+/.vscode/
+/.vs/
+/x/

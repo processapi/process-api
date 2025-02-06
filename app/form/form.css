@@ -1,0 +1,12 @@
+@import "./../../components/styles/input.css";
+@import "./../../components/styles/buttons.css";
+
+:host {
+    padding: var(--padding);
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
