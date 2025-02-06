@@ -16,7 +16,7 @@ input:hover {
 input:focus {
     outline: none;
     border: 1px solid var(--cl-text);
-    box-shadow: 0 0 0 2px var(--cl-brd);
+    border-color: var(--cl-focused);
 }
 
 input:valid {
@@ -25,6 +25,7 @@ input:valid {
 
 input:invalid {
     border-color: var(--cl-invalid);
+    background: var(--cl-invalid-back);
 }
 
 label {

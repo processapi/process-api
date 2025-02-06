@@ -10,6 +10,8 @@
 	--cl-progress: #1E88E5;
 	--cl-valid: #009900;
 	--cl-invalid: #cc0000;
+	--cl-invalid-back: #ffeded;
+	--cl-focused: #1E88E5;
 	--transition: 0.2s ease-in-out;
 
 	--border: 1px solid var(--cl-border);
