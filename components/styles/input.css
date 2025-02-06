@@ -1,7 +1,6 @@
 input {
     padding: var(--padding);
     box-sizing: border-box;
-    transition: var(--transition);
     border-radius: 0.25rem;
     border: 1px solid var(--cl-border);
     background-color: var(--cl-bg);
