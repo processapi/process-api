@@ -1,0 +1,20 @@
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.icon.info {
+    fill: var(--cl-progress);
+}
+  
+.icon.error {
+    fill: var(--cl-invalid);
+}
+
+.icon.success {
+    fill: var(--cl-valid);
+}
+
+.icon.warning {
+    fill: var(--cl-danger);
+}

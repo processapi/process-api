@@ -1,8 +1,24 @@
+@import "./../styles/icon.css";
+
 .toast {
   position: relative;
   padding: var(--padding) var(--padding) var(--padding) calc(var(--padding) * 2);
   width: 20rem;
   height: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.toast span {
+  flex: 1;
+}
+
+.toast .message {
+  color: black;
+  margin-top: 0.25rem;
 }
 
 .toast::before {
@@ -68,4 +84,9 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+
+.close {
+  cursor: pointer;
+  align-self: flex-start;
 }
