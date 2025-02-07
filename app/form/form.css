@@ -1,5 +1,6 @@
 @import "./../../components/styles/input.css";
 @import "./../../components/styles/buttons.css";
+@import "./../../components/styles/toolbar.css";
 
 :host {
     display: block;
