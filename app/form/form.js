@@ -40,6 +40,14 @@ export default class FormView extends HTMLElement {
 	info() {
 		toastNotification.info("Something interesting happened");
 	}
+
+	success() {
+		toastNotification.success("Something good happened");
+	}
+
+	warning() {
+		toastNotification.warning("Something not so good happened");
+	}
 }
 
 customElements.define(FormView.tag, FormView);
