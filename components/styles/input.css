@@ -33,3 +33,23 @@ label {
     font-weight: bold;
     margin-bottom: 0.25rem;
 }
+
+@media (max-width: 768px) {
+    label {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    input {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .input-container {
+        display: grid;
+        grid-template-columns: var(--label-width) 1fr;
+    }
+    input {
+        width: var(--input-width);
+    }
+}
