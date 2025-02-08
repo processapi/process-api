@@ -86,7 +86,7 @@ function parseTextContent(element, markers) {
         const marker = key.split(":")[1];
         const callback = value;
 
-        if (element.textContent.includes(marker)) {
+        if (element.textContent?.includes(marker)) {
             callback({ marker, element });
         }
     }
@@ -160,9 +160,10 @@ function parseChildElements(children, markers) {
     if (children == null || markers == null) return;
 
     // recursively parse each child element
-    children.forEach(element => {
-        parseElement(element, markers);    
-    });
+    for (let i = 0; i < children.length; i++) {
+        const element = children[i];
+        parseElement(element, markers, true);
+    }
 }
 
 export { DomParserModule };
