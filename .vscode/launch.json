@@ -19,6 +19,22 @@
 				"${file}"
 			],
 			"attachSimplePort": 9229
-		}
+		},
+
+		{
+			// This tells VS Code we want to debug an extension
+			"type": "extensionHost",
+			"request": "launch",
+			// Name of the configuration as shown in the Run and Debug panel
+			"name": "PI Extension",
+			// Tells VS Code which copy of VS Code to use for the Extension Host
+			"runtimeExecutable": "${execPath}",
+			// Points to the folder of your extension
+			"args": ["--extensionDevelopmentPath=${workspaceFolder}"],
+			// Where the compiled output of your extension is located (if you're compiling TypeScript, for example)
+			"outFiles": [
+			  "${workspaceFolder}/out/**/*.js"
+			]
+		  }
 	]
 }

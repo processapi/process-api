@@ -1,0 +1,46 @@
+{
+  "name": "application-designer",
+  "displayName": "Application Designer",
+  "description": "A VS Code extension for designing applications.",
+  "version": "0.0.1",
+  "publisher": "caperaven",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.showDesigner"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.showDesigner",
+        "title": "PI Design"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.showDesigner",
+          "when": "resourceExtname == .html",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "vscode": "^1.1.37",
+    "@types/node": "^14.14.37",
+    "@types/vscode": "^1.60.0"
+  }
+}
