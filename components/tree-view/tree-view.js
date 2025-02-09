@@ -79,12 +79,18 @@ export class TreeView extends HTMLElement {
         }
     }
 
+    /**
+     * Marks a node as busy or not busy.
+     * @param {HTMLElement} node - The node to be marked.
+     * @param {boolean} isBusy - Whether the node is busy.
+     */
     #markNodeAsBusy(node, isBusy) {
         node.setAttribute("aria-busy", isBusy);
     }
 
     /**
      * Expands the current node in the tree view.
+     * @param {HTMLElement} node - The node to be expanded.
      */
     #expandNode(node) {
         this.#markNodeAsBusy(node, true);
@@ -110,12 +116,17 @@ export class TreeView extends HTMLElement {
 
     /**
      * Collapses the current node in the tree view.
+     * @param {HTMLElement} node - The node to be collapsed.
      */
     #collapseNode(node) {
         node.setAttribute('aria-expanded', 'false');
         this.dispatchEvent(new CustomEvent("collapsed", { detail: node }));
     }
 
+    /**
+     * Handles click events and triggers the corresponding action.
+     * @param {Event} event - The click event.
+     */
     #click(event) {
         const target = event.target;
         const li = target.closest("li");
