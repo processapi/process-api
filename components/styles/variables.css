@@ -17,6 +17,7 @@
 	--border: 1px solid var(--cl-border);
 	--border-radius: 0.5rem;
 	--padding: 0.5rem;
+	--list-padding: 0.25rem;
 	--input-width: min(100%, 20rem);
 	--label-width: 10rem;
 

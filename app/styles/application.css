@@ -1,4 +1,5 @@
 @import "./../../components/styles/variables.css";
+@import "./../../components/styles/states.css";
 
 * {
 	box-sizing: border-box;

@@ -3,6 +3,10 @@
     height: 1.5rem;
 }
 
+.icon * {
+    pointer-events: none;
+}
+
 .icon.info {
     fill: var(--cl-progress);
 }
