@@ -17,9 +17,7 @@ ul {
 }
 
 li {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: block; /* Change from flex to block */
     padding: var(--list-padding);
     cursor: pointer;
 
@@ -27,17 +25,36 @@ li {
     user-select: none;
 }
 
+li > .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+li[aria-busy="true"] {
+    cursor: wait;
+}
+
+li[aria-busy="true"] .expander {
+    display: none;
+}
+
 li[has-children="false"] .expander {
     display: none;
 }
 
-li[aria-expanded="true"] .expander {
+li[aria-expanded="true"] > .content .expander {
     transform: rotate(90deg);
 }
 
 li[aria-selected] {
     background-color: var(--selected-background-color);
     color: var(--selected-color);
+}
+
+li ul {
+    padding-left: 1em;
+    margin-top: 0.5em; /* Add margin to separate from li content */
 }
 
 .fill {

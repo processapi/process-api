@@ -109,8 +109,11 @@ export class TreeView extends HTMLElement {
         this.#doneCallbacks.set(node, doneCallback);
 
         this.dispatchEvent(new CustomEvent("expanded", { 
-            detail: node,
-            doneCallback: doneCallback,
+            detail: {
+                treeView: this,
+                node,
+                doneCallback
+            }
         }));
     }
 
@@ -135,7 +138,13 @@ export class TreeView extends HTMLElement {
         this.#setSelectedNode(li);
 
         if (isExpandButton) {
-            this.#expandNode(li);
+            const isExpanded = li.getAttribute("aria-expanded") === "true";
+
+            if (isExpanded) {
+                this.#collapseNode(li);
+            } else {
+                this.#expandNode(li);
+            }
         }
     }
 
@@ -172,6 +181,8 @@ export class TreeView extends HTMLElement {
      * @param {string|HTMLElement} template - The template to be used for creating nodes.
      */
     addNodes(parentElement, dataCollection, template) {
+        template ||= "simple-item";
+
         if (typeof template === "string") {
             template = this.shadowRoot.querySelector(`#${template}`);
         }
@@ -185,12 +196,18 @@ export class TreeView extends HTMLElement {
 
             element.setAttribute("role", "treeitem");
             element.setAttribute("aria-selected", "false");
-
+            element.setAttribute("has-children", dataItem._hasChildren ?? true);
             fragment.appendChild(element);
         }
 
         parentElement ||= this.shadowRoot.querySelector("ul");
-        parentElement.setAttribute("role", "tree");
+
+        if (parentElement.tagName === "LI") {
+            const container = document.createElement("ul");
+            parentElement.appendChild(container);
+            parentElement = container;
+        }
+
         parentElement.appendChild(fragment);
     }
 }
