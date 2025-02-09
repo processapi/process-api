@@ -5,74 +5,50 @@ import {
 
 import { DomParserModule } from "../../../src/modules/dom-parser.js";
 
-Deno.test("DomParserModule.parse_element - parse text content", () => {
+Deno.test("DomParserModule.parse_element - replace text content marker", () => {
     const mockElement = {
-        textContent: "Hello, World!",
+        textContent: "Hello, ${company}!",
     };
 
-    let callbackCalled = false;
+    const dictionary = {
+        company: "test1",
+    };
 
-    const marker = {
-        "tc:World": () => callbackCalled = true,
-    }
+    DomParserModule.parse_element(mockElement, dictionary);
 
-    DomParserModule.parse_element(mockElement, marker);
-
-    assertEquals(callbackCalled, true);
+    assertEquals(mockElement.textContent, "Hello, test1!");
 });
 
-Deno.test("DomParserModule.parse_element - parse attribute name", () => {
+Deno.test("DomParserModule.parse_element - replace attribute value marker", () => {
     const mockElement = {
         attributes: [
-            { name: "data-bind", value: "value" }
+            { name: "data-company", value: "${company}" }
         ]
     };
 
-    let callbackCalled = false;
+    const dictionary = {
+        company: "test1",
+    };
 
-    const marker = {
-        "an:bind": () => callbackCalled = true,
-    }
+    DomParserModule.parse_element(mockElement, dictionary);
 
-    DomParserModule.parse_element(mockElement, marker);
-
-    assertEquals(callbackCalled, true);
+    assertEquals(mockElement.attributes[0].value, "test1");
 });
 
-Deno.test("DomParserModule.parse_element - parse attribute value", () => {
+Deno.test("DomParserModule.parse_element - replace nested dictionary value", () => {
     const mockElement = {
-        attributes: [
-            { name: "data-hidden", value: "true" }
-        ]
+        textContent: "Company name: ${company.name}",
     };
 
-    let callbackCalled = false;
-
-    const marker = {
-        "av:true": () => callbackCalled = true,
-    }
-
-    DomParserModule.parse_element(mockElement, marker);
-
-    assertEquals(callbackCalled, true);
-});
-
-Deno.test("DomParserModule.parse_element - parse child elements", () => {
-    const mockElement = {
-        children: [
-            { textContent: "Child element" }
-        ]
+    const dictionary = {
+        company: {
+            name: "test1",
+        },
     };
 
-    let callbackCalled = false;
+    DomParserModule.parse_element(mockElement, dictionary);
 
-    const marker = {
-        "tc:Child": () => callbackCalled = true,
-    }
-
-    DomParserModule.parse_element(mockElement, marker);
-
-    assertEquals(callbackCalled, true);
+    assertEquals(mockElement.textContent, "Company name: test1");
 });
 
 Deno.test("DomParserModule.parse_element - no markers", () => {
@@ -94,27 +70,4 @@ Deno.test("DomParserModule.parse_element - null values", () => {
     DomParserModule.parse_element(mockElement, marker);
 
     // No assertion needed, just ensure no errors are thrown
-});
-
-Deno.test("DomParserModule.parse_element - nested child elements", () => {
-    const mockElement = {
-        children: [
-            {
-                textContent: "Parent element",
-                children: [
-                    { textContent: "Child element" }
-                ]
-            }
-        ]
-    };
-
-    let callbackCalled = false;
-
-    const marker = {
-        "tc:Child": () => callbackCalled = true,
-    }
-
-    DomParserModule.parse_element(mockElement, marker);
-
-    assertEquals(callbackCalled, true);
 });

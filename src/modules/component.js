@@ -46,6 +46,28 @@ class ComponentModule {
 		return html;
 	}
 
+	static async load_component(args) {
+		validateArgs(args, {
+			element: { type: "HTMLElement", required: true },
+			url: { type: "string", required: true },
+		}, "ComponentModule.load_component: ");
+
+		const promise = new Promise((resolve) => {
+			const { element, url } = args;
+
+			ComponentModule.load_html({ url }).then((html) => {
+				element.shadowRoot.innerHTML = html;
+
+				requestAnimationFrame(() => {
+					ComponentModule.ready({ element });
+					resolve();
+				});
+			});
+		});
+
+		await promise;
+	}
+
 	/**
 	 * @method ready
 	 * @description Set the ready attribute to true on an element.

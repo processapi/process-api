@@ -17,7 +17,7 @@ class DomParserModule {
      * @function parse
      * @description Parse the DOM.
      * @param {HTMLElement} element - The element to parse.
-     * @param {Object} markers - The markers to look for.
+     * @param {Object} dictionary - The dictionary to replace markers.
      * @param {Boolean} parseChildren - Whether to parse the children of the element.
      * @returns {Promise} - Returns a promise.
      * @static
@@ -28,27 +28,9 @@ class DomParserModule {
      *    "av:$hidden": (arg) => {...},
      * });
      */
-    static parse_element(element, markers, parseChildren = true) {
-        if (element == null || markers == null) return;
-
-        // parse the markers into a lookup table
-        const groupedMarkers = {};
-
-        for (const marker in markers) {
-            if (marker.startsWith("tc:")) {
-                groupedMarkers.tc ||= {};
-                groupedMarkers.tc[marker] = markers[marker];
-            } else if (marker.startsWith("an:")) {
-                groupedMarkers.an ||= {};
-                groupedMarkers.an[marker] = markers[marker];
-            } else if (marker.startsWith("av:")) {
-                groupedMarkers.av ||= {};
-                groupedMarkers.av[marker] = markers[marker];
-            }
-        }
-
-        // parse the markers
-        parseElement(element, groupedMarkers, parseChildren);
+    static parse_element(element, dictionary, parseChildren = true) {
+        if (element == null || dictionary == null) return;
+        parseElement(element, dictionary, parseChildren);
     }
 }
 
@@ -56,113 +38,84 @@ class DomParserModule {
  * @function parseElement
  * @description Parse an element and its children.
  * @param {HTMLElement} element - The element to parse.
- * @param {Object} markers - The grouped markers to look for.
+ * @param {Object} dictionary - The dictionary to replace markers.
  */
-function parseElement(element, markers, parseChildren) {
-    if (element == null || markers == null) return;
+function parseElement(element, dictionary, parseChildren) {
+    if (element == null || dictionary == null) return;
 
-    // parse text content markers
-    parseTextContent(element, markers.tc);
+    // replace text content markers
+    replaceTextContentMarkers(element, dictionary);
     
-    // parse attribute name and value markers
-    parseAttributes(element.attributes, markers.an, markers.av);
+    // replace attribute value markers
+    replaceAttributeMarkers(element.attributes, dictionary);
 
     // parse child elements
     if (parseChildren) {
-        parseChildElements(element.children, markers);
+        parseChildElements(element.children, dictionary);
     }
 }
 
 /**
- * @function parseTextContent
- * @description Parse the text content of an element.
+ * @function replaceTextContentMarkers
+ * @description Replace text content markers in an element.
  * @param {HTMLElement} element - The element to parse.
- * @param {Object} markers - The markers to look for.
+ * @param {Object} dictionary - The dictionary to replace markers.
  */
-function parseTextContent(element, markers) {
-    if (element == null || markers == null) return;
+function replaceTextContentMarkers(element, dictionary) {
+    if (element == null || dictionary == null) return;
 
-    for (const [key, value] of Object.entries(markers)) {
-        const marker = key.split(":")[1];
-        const callback = value;
-
-        if (element.textContent?.includes(marker)) {
-            callback({ marker, element });
-        }
-    }
+    element.textContent = replaceMarkers(element.textContent, dictionary);
 }
 
 /**
- * @function parseAttributes
- * @description Parse the attributes of an element.
+ * @function replaceAttributeMarkers
+ * @description Replace attribute value markers in an element.
  * @param {NamedNodeMap} attributes - The attributes to parse.
- * @param {Object} anMarkers - The attribute name markers to look for.
- * @param {Object} avMarkers - The attribute value markers to look for.
+ * @param {Object} dictionary - The dictionary to replace markers.
  */
-function parseAttributes(attributes, anMarkers, avMarkers) {
-    if (attributes == null || (anMarkers == null && avMarkers == null)) return;
+function replaceAttributeMarkers(attributes, dictionary) {
+    if (attributes == null || dictionary == null) return;
 
     for (let i = 0; i < attributes.length; i++) {
         const attribute = attributes[i];
-
-        // parse attribute name markers
-        parseAttributeName(attribute, anMarkers);
-        // parse attribute value markers
-        parseAttributeValue(attribute, avMarkers);
+        attribute.value = replaceMarkers(attribute.value, dictionary);
     }
 }
 
 /**
- * @function parseAttributeName
- * @description Parse the name of an attribute.
- * @param {Attr} attribute - The attribute to parse.
- * @param {Object} markers - The markers to look for.
+ * @function replaceMarkers
+ * @description Replace markers in a text using a dictionary.
+ * @param {String} text - The text to replace markers.
+ * @param {Object} dictionary - The dictionary to replace markers.
+ * @returns {String} - The text with replaced markers.
  */
-function parseAttributeName(attribute, markers) {
-    if (attribute == null || markers == null) return;
+function replaceMarkers(text, dictionary) {
+    if (text == null || dictionary == null) return text;
 
-    for (const [key, value] of Object.entries(markers)) {
-        const marker = key.split(":")[1];
-        const callback = value;
-
-        if (attribute.name.includes(marker)) {
-            callback({ marker, attribute });
+    return text.replace(/\$\{([^}]+)\}/g, (_, key) => {
+        const keys = key.split('.').map(k => k.trim());
+        let value = dictionary;
+        for (const k of keys) {
+            value = value[k];
+            if (value == null) return '';
         }
-    }
-}
-
-/**
- * @function parseAttributeValue
- * @description Parse the value of an attribute.
- * @param {Attr} attribute - The attribute to parse.
- * @param {Object} markers - The markers to look for.
- */
-function parseAttributeValue(attribute, markers) {
-    if (attribute == null || markers == null) return;
-
-    for (const [key, value] of Object.entries(markers)) {
-        const marker = key.split(":")[1];
-        const callback = value;
-
-        if (attribute.value.includes(marker)) {
-            callback({ marker, attribute });
-        }
-    }
+        return value;
+    });
 }
 
 /**
  * @function parseChildElements
  * @description Parse the children of an element.
  * @param {HTMLCollection} children - The children to parse.
- * @param {Object} markers - The grouped markers to look for.
+ * @param {Object} dictionary - The dictionary to replace markers.
  */
-function parseChildElements(children, markers) {
-    if (children == null || markers == null) return;
+function parseChildElements(children, dictionary) {
+    if (children == null || dictionary == null) return;
 
     // recursively parse each child element
     for (let i = 0; i < children.length; i++) {
         const element = children[i];
-        parseElement(element, markers, true);
+        parseElement(element, dictionary, true);
     }
 }
 
