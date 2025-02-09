@@ -11,10 +11,6 @@ export class TreeView extends HTMLElement {
 
     #eventsManager = new EventsManager();
 
-    // Private method to handle key down events
-    #handleKeyDown = this.#keyDown.bind(this);
-    #clickHandler = this.#click.bind(this);
-
     // Key map for handling arrow keys
     #keyMap = {
         "ArrowDown": this.#selectNextNode,
@@ -32,6 +28,7 @@ export class TreeView extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.style.display = "none";
     }
 
     /**
@@ -43,11 +40,13 @@ export class TreeView extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.eventsManager.addPointerEvent(this.shadowRoot, "click", this.#click.bind(this));
+        this.#eventsManager.addPointerEvent(this.shadowRoot, "click", this.#click.bind(this));
 
         if (!SystemModule.is_mobile()) {
-            this.eventsManager.addKeyboardEvent(this.shadowRoot, "keydown", this.#keyDown.bind(this));
+            this.#eventsManager.addKeyboardEvent(this.shadowRoot, "keydown", this.#keyDown.bind(this));
         }
+
+        this.style.display = "block";
     }
 
     /**
@@ -118,10 +117,14 @@ export class TreeView extends HTMLElement {
     }
 
     #click(event) {
-        const target = event.composePath()[0];
+        const target = event.target;
+        const li = target.closest("li");
+        const isExpandButton = target.matches(".expander");
 
-        if (target.nodeName === "LI") {
-            this.#setSelectedNode(target);
+        this.#setSelectedNode(li);
+
+        if (isExpandButton) {
+            this.#expandNode(li);
         }
     }
 

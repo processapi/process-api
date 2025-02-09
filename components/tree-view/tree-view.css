@@ -21,6 +21,10 @@ li {
     flex-direction: row;
     align-items: center;
     padding: var(--list-padding);
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 li[has-children="false"] .expander {
