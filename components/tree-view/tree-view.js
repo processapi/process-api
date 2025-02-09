@@ -86,7 +86,19 @@ export class TreeView extends HTMLElement {
      */
     #selectPreviousNode(node) {
         const selectedNode = node;
-        const previousNode = selectedNode?.previousElementSibling;
+        let previousNode = selectedNode?.previousElementSibling;
+
+        // we are at the top of the list
+        if (previousNode == null) { 
+            previousNode = node.parentElement.parentElement;
+        }
+        else {
+            if (previousNode.getAttribute("aria-expanded") === "true") {
+                const ul = previousNode.querySelector("ul");
+                previousNode = ul?.lastElementChild;
+            }    
+        }
+
         if (previousNode) {
             this.#setSelectedNode(previousNode);
         }
