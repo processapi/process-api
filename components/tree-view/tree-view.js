@@ -61,7 +61,7 @@ export class TreeView extends HTMLElement {
      * Selects the next node in the tree view.
      */
     #selectNextNode() {
-        const selectedNode = this.shadowRoot.querySelector(".selected");
+        const selectedNode = this.shadowRoot.querySelector("[aria-selected]");
         const nextNode = selectedNode?.nextElementSibling;
         if (nextNode) {
             this.#setSelectedNode(nextNode);
@@ -72,7 +72,7 @@ export class TreeView extends HTMLElement {
      * Selects the previous node in the tree view.
      */
     #selectPreviousNode() {
-        const selectedNode = this.shadowRoot.querySelector(".selected");
+        const selectedNode = this.shadowRoot.querySelector("[aria-selected]");
         const previousNode = selectedNode?.previousElementSibling;
         if (previousNode) {
             this.#setSelectedNode(previousNode);
@@ -122,6 +122,9 @@ export class TreeView extends HTMLElement {
      * @param {HTMLElement} node - The node to be collapsed.
      */
     #collapseNode(node) {
+        const ul = node.querySelector("ul");
+        ul?.remove();
+        
         node.setAttribute('aria-expanded', 'false');
         this.dispatchEvent(new CustomEvent("collapsed", { detail: node }));
     }
@@ -156,7 +159,8 @@ export class TreeView extends HTMLElement {
         const key = event.key;
         
         if (this.#keyMap[key]) {
-            this.#keyMap[key]();
+            const node = this.shadowRoot.querySelector("[aria-selected]");
+            this.#keyMap[key].call(this, node);
         }
     }
 
@@ -165,7 +169,7 @@ export class TreeView extends HTMLElement {
      * @param {HTMLElement} node - The node to be selected.
      */
     #setSelectedNode(node) {
-        const selectedNode = this.shadowRoot.querySelector(".selected");
+        const selectedNode = this.shadowRoot.querySelector("[aria-selected]");
         if (selectedNode) {
             selectedNode.removeAttribute("aria-selected");
         }
@@ -195,7 +199,6 @@ export class TreeView extends HTMLElement {
             DomParserModule.parse_element(element, dataItem);
 
             element.setAttribute("role", "treeitem");
-            element.setAttribute("aria-selected", "false");
             element.setAttribute("has-children", dataItem._hasChildren ?? true);
             fragment.appendChild(element);
         }

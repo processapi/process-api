@@ -12,6 +12,10 @@
 	--cl-invalid: #cc0000;
 	--cl-invalid-back: #ffeded;
 	--cl-focused: #1E88E5;
+
+	--selected-background-color: color-mix(in srgb, var(--cl-focused) 20%, white 100%);
+	--selected-color: var(--cl-focused);
+
 	--transition: 0.2s ease-in-out;
 
 	--border: 1px solid var(--cl-border);

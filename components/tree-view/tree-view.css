@@ -2,9 +2,6 @@
 @import "./../styles/states.css";
 
 :host {
-    --selected-background-color: var(--color-primary-light);
-    --selected-color: var(--color-primary-dark);
-
     display: block;
     width: 100%;
     height: 100%;
@@ -18,7 +15,6 @@ ul {
 
 li {
     display: block; /* Change from flex to block */
-    padding: var(--list-padding);
     cursor: pointer;
 
     -webkit-user-select: none;
@@ -29,6 +25,7 @@ li > .content {
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: var(--list-padding);
 }
 
 li[aria-busy="true"] {
@@ -47,14 +44,13 @@ li[aria-expanded="true"] > .content .expander {
     transform: rotate(90deg);
 }
 
-li[aria-selected] {
+li[aria-selected] > .content {
     background-color: var(--selected-background-color);
     color: var(--selected-color);
 }
 
 li ul {
     padding-left: 1em;
-    margin-top: 0.5em; /* Add margin to separate from li content */
 }
 
 .fill {
