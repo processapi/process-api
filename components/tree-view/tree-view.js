@@ -60,9 +60,22 @@ export class TreeView extends HTMLElement {
     /**
      * Selects the next node in the tree view.
      */
-    #selectNextNode() {
-        const selectedNode = this.shadowRoot.querySelector("[aria-selected]");
-        const nextNode = selectedNode?.nextElementSibling;
+    #selectNextNode(node) {
+        const selectedNode = node;
+
+        var nextNode;
+
+        if (node.getAttribute("aria-expanded") === "true") {
+            nextNode = selectedNode?.querySelector("li");
+        }
+        else {
+            nextNode = selectedNode?.nextElementSibling;
+        }
+
+        if (nextNode == null) { 
+            nextNode = node.parentElement.closest("li")?.nextElementSibling;
+        }
+
         if (nextNode) {
             this.#setSelectedNode(nextNode);
         }
@@ -71,8 +84,8 @@ export class TreeView extends HTMLElement {
     /**
      * Selects the previous node in the tree view.
      */
-    #selectPreviousNode() {
-        const selectedNode = this.shadowRoot.querySelector("[aria-selected]");
+    #selectPreviousNode(node) {
+        const selectedNode = node;
         const previousNode = selectedNode?.previousElementSibling;
         if (previousNode) {
             this.#setSelectedNode(previousNode);
