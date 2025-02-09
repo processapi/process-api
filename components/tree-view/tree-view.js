@@ -1,6 +1,7 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { DomParserModule } from "../../src/modules/dom-parser.js";
 import { SystemModule } from "../../src/modules/system.js";
+import { EventsManager } from "../../src/modules/events-manager.js";
 
 /**
  * The TreeView web component handles creating and displaying a tree view.
@@ -8,8 +9,11 @@ import { SystemModule } from "../../src/modules/system.js";
 export class TreeView extends HTMLElement {
     static name = Object.freeze("tree-view");
 
+    #eventsManager = new EventsManager();
+
     // Private method to handle key down events
     #handleKeyDown = this.#keyDown.bind(this);
+    #clickHandler = this.#click.bind(this);
 
     // Key map for handling arrow keys
     #keyMap = {
@@ -18,6 +22,9 @@ export class TreeView extends HTMLElement {
         "ArrowRight": this.#expandNode,
         "ArrowLeft": this.#collapseNode,
     };
+
+    // WeakMap to store done callbacks for nodes
+    #doneCallbacks = new WeakMap();
 
     /**
      * Constructor attaches a shadow root.
@@ -36,8 +43,10 @@ export class TreeView extends HTMLElement {
             url: import.meta.url,
         });
 
+        this.eventsManager.addPointerEvent(this.shadowRoot, "click", this.#click.bind(this));
+
         if (!SystemModule.is_mobile()) {
-            this.shadowRoot.addEventListener("keydown", this.#handleKeyDown);
+            this.eventsManager.addKeyboardEvent(this.shadowRoot, "keydown", this.#keyDown.bind(this));
         }
     }
 
@@ -45,7 +54,8 @@ export class TreeView extends HTMLElement {
      * Removes event listeners when the element is disconnected.
      */
     disconnectedCallback() {
-        this.shadowRoot.removeEventListener("keydown", this.#handleKeyDown);
+        this.#eventsManager.dispose();
+        this.#doneCallbacks = new WeakMap();
     }
 
     /**
@@ -70,18 +80,49 @@ export class TreeView extends HTMLElement {
         }
     }
 
+    #markNodeAsBusy(node, isBusy) {
+        node.setAttribute("aria-busy", isBusy);
+    }
+
     /**
      * Expands the current node in the tree view.
      */
     #expandNode(node) {
-        this.dispatchEvent(new CustomEvent("expanded", { detail: node }));
+        this.#markNodeAsBusy(node, true);
+
+        const doneCallback = () => {
+            node.setAttribute('has-children', node.children.length > 0);
+
+            if (node.children.length > 0) {
+                node.setAttribute('aria-expanded', 'true');
+            }
+
+            this.#markNodeAsBusy(node, false);
+            this.#doneCallbacks.delete(node);
+        };
+
+        this.#doneCallbacks.set(node, doneCallback);
+
+        this.dispatchEvent(new CustomEvent("expanded", { 
+            detail: node,
+            doneCallback: doneCallback,
+        }));
     }
 
     /**
      * Collapses the current node in the tree view.
      */
     #collapseNode(node) {
+        node.setAttribute('aria-expanded', 'false');
         this.dispatchEvent(new CustomEvent("collapsed", { detail: node }));
+    }
+
+    #click(event) {
+        const target = event.composePath()[0];
+
+        if (target.nodeName === "LI") {
+            this.#setSelectedNode(target);
+        }
     }
 
     /**
