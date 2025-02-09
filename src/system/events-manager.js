@@ -6,6 +6,8 @@
  * When you dispose the class, all events will be removed.
  */
 
+import { SystemModule } from "../modules/system.js";
+
 export class EventsManager {
     constructor() {
         this.events = new Map();
@@ -34,7 +36,12 @@ export class EventsManager {
      * @param {Object} [options] - Optional options for the event listener.
      */
     addPointerEvent(target, type, listener, options) {
-        const eventType = PointerEvent ? type : `mouse${type}`;
+        let eventType;
+        if (SystemModule.is_mobile()) {
+            eventType = `touch${type}`;
+        } else {
+            eventType = PointerEvent ? type : `mouse${type}`;
+        }
         this.addEvent(target, eventType, listener, options);
     }
 
