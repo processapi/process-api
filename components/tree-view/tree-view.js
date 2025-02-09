@@ -1,7 +1,7 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { DomParserModule } from "../../src/modules/dom-parser.js";
 import { SystemModule } from "../../src/modules/system.js";
-import { EventsManager } from "../../src/modules/events-manager.js";
+import { EventsManager } from "../../src/system/events-manager.js";
 
 /**
  * The TreeView web component handles creating and displaying a tree view.
