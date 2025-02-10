@@ -120,6 +120,13 @@ export class TreeView extends HTMLElement {
      * @param {HTMLElement} node - The node to be expanded.
      */
     #expandNode(node) {
+        const isExpanded = node.getAttribute("aria-expanded") === "true";
+        const canExpand = node.getAttribute("has-children") === "true";
+        
+        if (isExpanded || !canExpand) {
+            return;
+        }
+
         this.#markNodeAsBusy(node, true);
 
         const doneCallback = () => {
@@ -149,6 +156,11 @@ export class TreeView extends HTMLElement {
      * @param {HTMLElement} node - The node to be collapsed.
      */
     #collapseNode(node) {
+        const isExpanded = node.getAttribute("aria-expanded") === "true";
+        if (!isExpanded) {
+            return;
+        }
+
         const ul = node.querySelector("ul");
         ul?.remove();
         
