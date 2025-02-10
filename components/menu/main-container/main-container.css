@@ -13,6 +13,7 @@
     border: var(--border);
     box-shadow: --drop-shadow;
     user-select: none;
+    min-width: 10rem;
 }
 
 ::slotted(.menu-item) {

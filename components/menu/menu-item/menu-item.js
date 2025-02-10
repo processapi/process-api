@@ -16,10 +16,6 @@ class MenuItem extends HTMLElement {
 
         this.style.display = "flex";
     }
-
-    disconnectedCallback() {
-
-    }
 }
 
 customElements.define(MenuItem.name, MenuItem);
