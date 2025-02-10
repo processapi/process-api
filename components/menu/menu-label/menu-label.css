@@ -1,8 +1,11 @@
 :host {
     --menu-label-bg: transparent;
     --menu-label-fg: gray;
+    --font-size: small;
+
     display: block;
     padding: var(--padding);
     color: var(--menu-label-fg);
     background-color: var(--menu-label-bg);
+    font-size: var(--font-size);
 }
