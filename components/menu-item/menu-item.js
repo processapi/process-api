@@ -1,8 +1,7 @@
 import { ComponentModule } from "../../src/modules/component.js";
-import "./../menu-item/menu-item.js";
 
-class MainMenu extends HTMLElement {
-    static name = Object.freeze("main-menu");
+class MenuItem extends HTMLElement {
+    static name = Object.freeze("menu-item");
 
     constructor() {
         super();
@@ -23,4 +22,4 @@ class MainMenu extends HTMLElement {
     }
 }
 
-customElements.define(MainMenu.name, MainMenu);
+customElements.define(MenuItem.name, MenuItem);

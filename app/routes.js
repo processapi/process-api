@@ -3,5 +3,6 @@ export const routes = Object.freeze({
 	"about": "/about",
 	"form": "/form",
 	"ollama": "/ollama",
-	"dynamic-columns": "/dynamic-layout"
+	"dynamic-columns": "/dynamic-layout",
+	"main-menu": "/main-menu",
 });

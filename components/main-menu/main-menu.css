@@ -1,13 +1,18 @@
 :host {
     --menu-bg: #fff;
     --menu-item-hover-bg: #eee;
+    --menu-border-radius: 0.25rem;
 
-    display: block;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+
     padding: var(--padding);
     background: var(--menu-bg);
-    border-radius: 1.5rem;
+    border-radius: var(--menu-border-radius);
     border: var(--border);
     box-shadow: --drop-shadow;
+    user-select: none;
 }
 
 ::slotted(.menu-item) {
