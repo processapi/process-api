@@ -1,9 +1,7 @@
 import { ComponentModule } from "../../../src/modules/component.js";
-import "../menu-item/menu-item.js";
-import "../divider-item/divider-item.js";
 
-class MainContainer extends HTMLElement {
-    static name = Object.freeze("main-container");
+class DividerItem extends HTMLElement {
+    static name = Object.freeze("divider-item");
 
     constructor() {
         super();
@@ -18,10 +16,6 @@ class MainContainer extends HTMLElement {
 
         this.style.display = "flex";
     }
-
-    disconnectedCallback() {
-
-    }
 }
 
-customElements.define(MainContainer.name, MainContainer);
+customElements.define(DividerItem.name, DividerItem);
