@@ -1,0 +1,20 @@
+:host {
+    --menu-bg: #fff;
+    --menu-item-hover-bg: #eee;
+
+    display: block;
+    padding: var(--padding);
+    background: var(--menu-bg);
+    border-radius: 1.5rem;
+    border: var(--border);
+    box-shadow: --drop-shadow;
+}
+
+::slotted(.menu-item) {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+::slotted(.menu-item:hover) {
+    background: var(--menu-item-hover-bg);
+}
