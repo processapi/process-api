@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.55.0/testing/asserts.ts";
-import { CanvasModule, CanvasWorker } from "./../../../src/modules/canvas.js";
+import { CanvasModule, CanvasWorker } from "../../../src/modules/canvas/canvas.js";
 import { stub } from "https://deno.land/std@0.224.0/testing/mock.ts";
 
 globalThis.HTMLCanvasElement = class {

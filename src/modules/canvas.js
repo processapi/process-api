@@ -1,4 +1,4 @@
-import { validateArgs } from "../validate/validate-args.js";
+import { validateArgs } from "../../validate/validate-args.js";
 
 export class CanvasModule {
     static name = Object.freeze("canvas");
