@@ -8,6 +8,13 @@
 
 import { SystemModule } from "../modules/system.js";
 
+const EVENTMAP = Object.freeze({
+    "mousedown" : "touchstart",
+    "mouseup"   : "touchend",
+    "mousemove" : "touchmove",
+    "click"     : "touchend",    
+})
+
 export class EventsManager {
     constructor() {
         this.events = new Map();
@@ -37,11 +44,13 @@ export class EventsManager {
      */
     addPointerEvent(target, type, listener, options) {
         let eventType;
+        
         if (SystemModule.is_mobile()) {
-            eventType = `touch${type}`;
+            eventType = EVENTMAP[type];
         } else {
-            eventType = PointerEvent ? type : `mouse${type}`;
+            eventType = type;
         }
+
         this.addEvent(target, eventType, listener, options);
     }
 

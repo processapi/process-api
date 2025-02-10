@@ -1,3 +1,5 @@
+import { env } from "node:process";
+
 /**
  * @class SystemModule
  * @description The system module provides methods that are system related.
@@ -21,6 +23,10 @@ export class SystemModule {
      * const isMobile = SystemModule.is_mobile();
      */
     static is_mobile() {
+        if (globalThis.MOBILE_ENV ?? false) {
+            return true;
+        }
+
         return /Mobi/.test(navigator.userAgent);
     }
 }

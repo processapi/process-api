@@ -6,11 +6,6 @@ if (typeof PointerEvent === "undefined") {
     globalThis.PointerEvent = class extends Event {};
 }
 
-// Mock SystemModule
-const SystemModule = {
-    is_mobile: () => false,
-};
-
 Deno.test("EventsManager: Add event listener", () => {
     const em = new EventsManager();
     const target = new EventTarget();
@@ -65,9 +60,9 @@ Deno.test("EventsManager: Add pointer event listener", () => {
     const target = new EventTarget();
     const listener = () => {};
     
-    em.addPointerEvent(target, "down", listener);
+    const eventType = "mousedown";
+    em.addPointerEvent(target, eventType, listener);
     
-    const eventType = PointerEvent ? "down" : "mousedown";
     assert(em.events.has(target));
     assertEquals(em.events.get(target).length, 1);
     assertEquals(em.events.get(target)[0].type, eventType);
@@ -79,12 +74,13 @@ Deno.test("EventsManager: Add pointer event listener on mobile", () => {
     const target = new EventTarget();
     const listener = () => {};
     
-    SystemModule.is_mobile = () => true;
-    em.addPointerEvent(target, "start", listener);
+    globalThis.MOBILE_ENV = true;
+    em.addPointerEvent(target, "click", listener);
+    delete globalThis.MOBILE_ENV;
     
     assert(em.events.has(target));
     assertEquals(em.events.get(target).length, 1);
-    assertEquals(em.events.get(target)[0].type, "touchstart");
+    assertEquals(em.events.get(target)[0].type, "touchend");
     assertEquals(em.events.get(target)[0].listener, listener);
 });
 
