@@ -44,7 +44,7 @@ function parseElement(element, dictionary, parseChildren) {
     if (element == null || dictionary == null) return;
 
     // replace text content markers
-    if (element.children?.length === 0) {
+    if (element.children == null || element.children?.length === 0) {
         replaceTextContentMarkers(element, dictionary);
     }
     
