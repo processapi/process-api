@@ -1,6 +1,7 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import "./../../components/tree-view/tree-view.js";
 import { EventsManager } from "../../src/system/events-manager.js";
+import "./../../components/toast-notification/toast-notification.js";
 
 export default class TreeView extends HTMLElement {
 	static tag = "tree-view-view";
@@ -29,6 +30,9 @@ export default class TreeView extends HTMLElement {
 				], "simple-item");
 
 				this.#eventsManager.addEvent(treeView, "expanded", this.#expanded.bind(this));
+				this.#eventsManager.addEvent(treeView, "activated", (event) => { 
+					toastNotification.info(`Node activated: ${event.detail.textContent.trim()}`);
+				});
 			},
 		});
 	}

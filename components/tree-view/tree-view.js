@@ -186,8 +186,13 @@ export class TreeView extends HTMLElement {
         const target = event.target;
         const li = target.closest("li");
 
-        if (li && li.getAttribute("has-children") === "true") {
-            this.#expandNode(li);
+        if (li) {
+            if (li.getAttribute("has-children") === "true") {
+                this.#expandNode(li);
+            }
+            else {
+                this.dispatchEvent(new CustomEvent("activated", { detail: li }));
+            }
         }
     }
 
@@ -201,6 +206,11 @@ export class TreeView extends HTMLElement {
         if (this.#keyMap[key]) {
             const node = this.shadowRoot.querySelector("[aria-selected]");
             this.#keyMap[key].call(this, node);
+        }
+
+        if (key === "Enter") {
+            const node = this.shadowRoot.querySelector("[aria-selected]");
+            this.dispatchEvent(new CustomEvent("activated", { detail: node }));
         }
     }
 
