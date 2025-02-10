@@ -29,7 +29,7 @@ export class EventsManager {
     }
 
     /**
-     * Adds a pointer event listener.
+     * Adds a pointer event listener, including double-click.
      * @param {EventTarget} target - The target to which the event listener will be added.
      * @param {string} type - The type of the event.
      * @param {EventListenerOrEventListenerObject} listener - The event listener.
@@ -54,6 +54,16 @@ export class EventsManager {
      */
     addKeyboardEvent(target, type, listener, options) {
         this.addEvent(target, type, listener, options);
+    }
+
+    /**
+     * Adds a double-click event listener.
+     * @param {EventTarget} target - The target to which the event listener will be added.
+     * @param {EventListenerOrEventListenerObject} listener - The event listener.
+     * @param {Object} [options] - Optional options for the event listener.
+     */
+    addDoubleClickEvent(target, listener, options) {
+        this.addEvent(target, 'dblclick', listener, options);
     }
 
     /**

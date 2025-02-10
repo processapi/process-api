@@ -46,6 +46,8 @@ export class TreeView extends HTMLElement {
             this.#eventsManager.addKeyboardEvent(this.shadowRoot, "keydown", this.#keyDown.bind(this));
         }
 
+        this.#eventsManager.addDoubleClickEvent(this.shadowRoot, this.#doubleClick.bind(this));
+
         this.style.display = "block";
     }
 
@@ -173,6 +175,19 @@ export class TreeView extends HTMLElement {
             } else {
                 this.#expandNode(li);
             }
+        }
+    }
+
+    /**
+     * Handles double-click events and expands the node if it has children.
+     * @param {Event} event - The double-click event.
+     */
+    #doubleClick(event) {
+        const target = event.target;
+        const li = target.closest("li");
+
+        if (li && li.getAttribute("has-children") === "true") {
+            this.#expandNode(li);
         }
     }
 
