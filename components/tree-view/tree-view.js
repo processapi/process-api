@@ -229,6 +229,15 @@ export class TreeView extends HTMLElement {
     }
 
     /**
+     * Sets the custom property for the left padding based on the data-level attribute.
+     * @param {HTMLElement} element - The element to set the custom property on.
+     */
+    #setPaddingLevel(element) {
+        const level = element.dataset.level;
+        element.style.setProperty('--level', level);
+    }
+
+    /**
      * Adds nodes to the tree view.
      * @param {HTMLElement} parentElement - The parent element to which nodes will be added.
      * @param {Array} dataCollection - The data collection to be used for creating nodes.
@@ -241,7 +250,10 @@ export class TreeView extends HTMLElement {
             template = this.shadowRoot.querySelector(`#${template}`);
         }
 
+        parentElement ||= this.shadowRoot.querySelector("ul");
+        const level = Number(parentElement.dataset.level || -1);
         const fragment = document.createDocumentFragment();
+
         for (const dataItem of dataCollection) {
             const instance = template.content.cloneNode(true);
             const element = instance.firstElementChild;
@@ -250,10 +262,12 @@ export class TreeView extends HTMLElement {
 
             element.setAttribute("role", "treeitem");
             element.setAttribute("has-children", dataItem._hasChildren ?? true);
+            element.dataset.level = level + 1;
+
+            this.#setPaddingLevel(element); // Set the custom property for padding
+
             fragment.appendChild(element);
         }
-
-        parentElement ||= this.shadowRoot.querySelector("ul");
 
         if (parentElement.tagName === "LI") {
             const container = document.createElement("ul");
