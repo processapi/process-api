@@ -1,4 +1,4 @@
-import "./../../components/main-menu/main-menu.js";
+import "../../components/menu/main-container/main-container.js";
 
 export default class MainMenuView extends HTMLElement {
 	static tag = "main-menu-view";
