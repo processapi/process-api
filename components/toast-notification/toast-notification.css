@@ -1,7 +1,6 @@
 @import "./../styles/icon.css";
 
 .toast {
-  position: relative;
   padding: var(--padding) var(--padding) var(--padding) calc(var(--padding) * 2);
   width: 20rem;
   height: max-content;
@@ -9,73 +8,23 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
-  justify-content: space-between;
+  border: var(--border);
+  filter: var(--drop-shadow);
+  border-radius: var(--border-radius);
 }
 
 .toast use {
   pointer-events: none;
 }
 
-.toast span {
+.toast p {
   flex: 1;
+  margin: 0;
 }
 
 .toast .message {
   color: black;
   margin-top: 0.25rem;
-}
-
-.toast::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0.5rem;
-  height: 100%;
-}
-
-.toast p {
-  margin: 0;
-}
-
-.toast-info {
-  color: var(--cl-progress);
-  border: 1px solid var(--cl-progress);
-  background-color: color-mix(in srgb, var(--cl-progress) 20%, white 100%);
-}
-
-.toast-info::before {
-  background-color: var(--cl-progress);
-}
-
-.toast-error {
-  color: var(--cl-invalid);
-  border: 1px solid var(--cl-invalid);
-  background-color: color-mix(in srgb, var(--cl-danger) 20%, white 100%);
-}
-
-.toast-error::before {
-  background-color: var(--cl-invalid);
-}
-
-.toast-success {
-  color: var(--cl-valid);
-  border: 1px solid var(--cl-valid);
-  background-color: color-mix(in srgb, var(--cl-valid) 20%, white 100%);
-}
-
-.toast-success::before {
-  background-color: var(--cl-valid);
-}
-
-.toast-warning {
-  color: var(--cl-danger);
-  border: 1px solid var(--cl-danger);
-  background-color: color-mix(in srgb, var(--cl-invalid) 20%, white 100%);
-}
-
-.toast-warning::before {
-  background-color: var(--cl-danger);
 }
 
 .toast-container {
