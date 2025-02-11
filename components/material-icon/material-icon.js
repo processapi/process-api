@@ -18,6 +18,7 @@ export class MaterialIcon extends HTMLElement {
         this.style.display = "flex";
         this.style.alignItems = "center";
         this.style.justifyContent = "center";
+        this.style.pointerEvents = "none";
     }
 
     setIcon(iconName) {

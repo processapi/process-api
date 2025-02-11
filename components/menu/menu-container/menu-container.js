@@ -18,7 +18,19 @@ class MenuContainer extends HTMLElement {
             url: import.meta.url,
         });
 
+        await this.#initialize();
         this.style.display = "flex";
+    }
+
+    async disconnectedCallback() {
+        this.eventsManager = this.eventsManager.dispose();
+    }
+
+    async #initialize() {
+        if (this.parentElement?.tagName !== "MENU-GROUP") {
+            const module = await import("./menu-container-input.js");
+            module.initializeInput(this);
+        }
     }
 }
 
