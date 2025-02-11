@@ -3,3 +3,9 @@
 h2 {
 	color: darkslategray;
 }
+
+li {
+	padding: var(--padding);
+	display: flex;
+	align-items: center;
+}

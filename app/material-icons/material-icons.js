@@ -1,3 +1,6 @@
+import {ComponentModule} from "../../src/modules/component.js";
+import "./../../components/material-icon/material-icon.js";
+
 export default class MaterialIconsView extends HTMLElement {
 	static tag = "material-icons-view";
 
@@ -7,7 +10,7 @@ export default class MaterialIconsView extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		this.shadowRoot.innerHTML = await api.call("component", "load_html", {
+		this.shadowRoot.innerHTML = await ComponentModule.load_html({
 			url: import.meta.url,
 		});
 	}
