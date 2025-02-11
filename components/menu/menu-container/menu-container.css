@@ -2,18 +2,19 @@
     --menu-bg: #fff;
     --menu-item-hover-bg: #eee;
     --menu-border-radius: 0.25rem;
+    --min-width: 10rem;
 
     display: flex;
     flex-direction: column;
-    width: max-content;
+    width: fit-content;
 
     padding: var(--padding);
     background: var(--menu-bg);
     border-radius: var(--menu-border-radius);
     border: var(--border);
-    box-shadow: --drop-shadow;
+    filter: var(--drop-shadow);
     user-select: none;
-    min-width: 10rem;
+    min-width: var(--min-width);
 }
 
 ::slotted(.menu-item) {

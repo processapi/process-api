@@ -4,10 +4,12 @@
 
     padding: var(--padding);
     cursor: pointer;
+    width: fit-content;
+    min-width: var(--min-width);
 }
 
 :host(:hover) {
     background: var(--menu-item-hover-bg);
     color: var(--menu-item-hover-fg);
     border-radius: var(--menu-border-radius);
-}
+}   
