@@ -1,11 +1,19 @@
 import { EventsManager } from "./../../../src/system/events-manager.js";
 
+/**
+ * Initialize input events for the menu container.
+ * @param {HTMLElement} container - The menu container element.
+ */
 export function initializeInput(container) {
     container.eventsManager = new EventsManager();
     container.eventsManager.addPointerEvent(container, "click", menuItemCliced.bind(container));
     document.addEventListener("click", handleClickOutside.bind(container));
 }
 
+/**
+ * Close all expanded menu groups.
+ * @this {HTMLElement}
+ */
 function closeAllGroups() {
     const expandedGroups = this.querySelectorAll("menu-item[aria-expanded='true']");
     expandedGroups.forEach((item) => {
@@ -15,9 +23,13 @@ function closeAllGroups() {
     setSelectedItem.call(this, null);
 }
 
+/**
+ * Handle menu item click events.
+ * @param {Event} event - The click event.
+ * @this {HTMLElement}
+ */
 function menuItemCliced(event) {
     event.preventDefault();
-    event.cancelBubble = true;
     const element = event.target;
     const parent = element.parentElement;
 
@@ -32,12 +44,22 @@ function menuItemCliced(event) {
     setSelectedItem.call(this, element);
 }
 
+/**
+ * Handle clicks outside the menu to close all groups.
+ * @param {Event} event - The click event.
+ * @this {HTMLElement}
+ */
 function handleClickOutside(event) {
     if (!this.contains(event.target)) {
         closeAllGroups.call(this);
     }
 }
 
+/**
+ * Set the selected menu item.
+ * @param {HTMLElement} element - The menu item element to select.
+ * @this {HTMLElement}
+ */
 function setSelectedItem(element) {
     const selected = this.querySelector("menu-item[aria-selected]");
 
