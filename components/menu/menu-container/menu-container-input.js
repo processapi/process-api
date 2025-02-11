@@ -30,6 +30,7 @@ function closeAllGroups() {
  */
 function menuItemCliced(event) {
     event.preventDefault();
+    event.stopPropagation();
     const element = event.target;
     const parent = element.parentElement;
 
