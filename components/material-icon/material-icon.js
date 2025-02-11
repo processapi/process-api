@@ -1,5 +1,3 @@
-import { ComponentModule } from "../../src/modules/component.js";
-
 export class MaterialIcon extends HTMLElement {
     static name = Object.freeze("material-icon");
 
