@@ -1,0 +1,15 @@
+@import "./../styles/buttons.css";
+
+:host {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: var(--padding);
+    border-bottom: var(--border);
+}
+
+::slotted(h2) {
+    margin: 0 var(--padding);
+    font-size: 1.5rem;
+}

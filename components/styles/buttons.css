@@ -4,3 +4,9 @@ button {
     cursor: pointer;
     max-width: 4rem;
 }
+
+button.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
