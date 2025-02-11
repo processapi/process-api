@@ -1,5 +1,3 @@
-import { env } from "node:process";
-
 /**
  * @class SystemModule
  * @description The system module provides methods that are system related.
