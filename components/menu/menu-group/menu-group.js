@@ -1,4 +1,5 @@
 import { ComponentModule } from "../../../src/modules/component.js";
+import { EventsManager } from "../../../src/system/events-manager.js";
 import "./../../material-icon/material-icon.js";
 
 class MenuGroup extends HTMLElement {
@@ -15,21 +16,32 @@ class MenuGroup extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.#addChevron();
-
+        await this.#addChevron();
         this.style.display = "flex";
     }
 
     #addChevron() {
-        const chevron = document.createElement("material-icon");
-        chevron.setAttribute("icon", "chevron_right");
-        chevron.style.marginLeft = "auto";
-        chevron.setAttribute("slot", "suffix");
-        
-        requestAnimationFrame(() => {
-            const menuItem = this.querySelector("menu-item");
-            menuItem.appendChild(chevron);
-        })
+        return new Promise((resolve) => {
+            const chevron = document.createElement("material-icon");
+            chevron.setAttribute("icon", "chevron_right");
+            chevron.style.marginLeft = "auto";
+            chevron.setAttribute("slot", "suffix");
+            
+            requestAnimationFrame(() => {
+                const menuItem = this.querySelector("menu-item");
+                menuItem.appendChild(chevron);
+                resolve();
+            });
+        });
+    }
+
+    showSubMenu(isVisible) {
+        const submenu = this.querySelector("menu-container");
+        submenu.classList.remove("visible");
+
+        if (isVisible) {
+            submenu.classList.add("visible");
+        }
     }
 }
 

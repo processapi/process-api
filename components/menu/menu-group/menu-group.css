@@ -6,5 +6,9 @@
     position: absolute;
     top: 0;
     left: 100%;
-    display: block;
+    display: none !important;
+}
+
+::slotted(menu-container.visible) {
+    display: block !important;
 }
