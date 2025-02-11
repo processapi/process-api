@@ -5,4 +5,5 @@ export const routes = Object.freeze({
 	"ollama": "/ollama",
 	"dynamic-columns": "/dynamic-layout",
 	"main-menu": "/main-menu",
+	"material-icons": "/material-icons"
 });

@@ -1,3 +1,10 @@
 :host {
-    
+    position: relative;
+}
+
+::slotted(menu-container) {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: block;
 }
