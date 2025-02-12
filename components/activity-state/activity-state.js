@@ -3,6 +3,8 @@ import { ComponentModule } from "../../src/modules/component.js";
 class ActivityState extends HTMLElement {
     static name = Object.freeze("activity-state");
 
+    #state;
+
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
@@ -14,22 +16,41 @@ class ActivityState extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.style.display = "block";
+        requestAnimationFrame(() => {
+            if (this.#state) {
+                this.setState(this.#state);
+            }
+            this.style.display = "block";
+        });
     }
 
     setState(state) {
         const materialIcon = this.shadowRoot.querySelector("material-icon");
 
+        if (materialIcon == null) {
+            this.#state = state;
+            return;
+        }
+
         const iconName = {
-            "busy": "hourglass_full",
-            "success": "check_circle",
-            "error": "error",
+            "busy"      : "progress_activity",
+            "success"   : "check",
+            "error"     : "error_outline",
         }[state];
 
         ComponentModule.on_ready({
             element: materialIcon,
             callback: () => {
                 materialIcon.setIcon(iconName);
+                materialIcon.classList.remove("success", "error", "rotate");
+
+                if (state === "busy") {
+                    materialIcon.classList.add("rotate");
+                } else if (state === "success") {
+                    materialIcon.classList.add("success");
+                } else if (state === "error") {
+                    materialIcon.classList.add("error");
+                }
             }
         })
     }

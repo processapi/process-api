@@ -21,6 +21,8 @@ export class MaterialIcon extends HTMLElement {
         this.style.alignItems = "center";
         this.style.justifyContent = "center";
         this.style.pointerEvents = "none";
+        this.style.width = "24px";
+        this.style.height = "24px";
 
         ComponentModule.ready({element: this});
     }

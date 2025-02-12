@@ -29,14 +29,14 @@ export function validateArgs(args, def, prefix = "") {
 		const arg = def[key];
 		const value = args[key];
 
-		if (arg.required && value === undefined) {
+		if (arg.required && value == null) {
 			throw new Error(`${prefix}Argument "${key}" is required`.trim());
 		}
 
-		if (value !== undefined) {
+		if (value != null) {
 			const expectedType = arg.type.toLowerCase();
 			const actualType = typeof value === "object"
-				? value.constructor.name.toLowerCase()
+				? value.constructor?.name.toLowerCase()
 				: typeof value;
 
 			const globalType = globalThis[arg.type ?? ""];
@@ -45,7 +45,7 @@ export function validateArgs(args, def, prefix = "") {
 					`${prefix}Argument "${key}" should be of type "${arg.type}"`.trim(),
 				);
 			}
-		} else if (arg.default !== undefined) {
+		} else if (arg.default != null) {
 			args[key] = arg.default;
 		}
 	}

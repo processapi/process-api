@@ -923,6 +923,7 @@ export const icons = [
   "present_to_all",
   "preview",
   "print",
+  "progress_activity",
   "print_disabled",
   "priority_high",
   "privacy_tip",
