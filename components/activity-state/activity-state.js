@@ -16,6 +16,23 @@ class ActivityState extends HTMLElement {
 
         this.style.display = "block";
     }
+
+    setState(state) {
+        const materialIcon = this.shadowRoot.querySelector("material-icon");
+
+        const iconName = {
+            "busy": "hourglass_full",
+            "success": "check_circle",
+            "error": "error",
+        }[state];
+
+        ComponentModule.on_ready({
+            element: materialIcon,
+            callback: () => {
+                materialIcon.setIcon(iconName);
+            }
+        })
+    }
 }
 
 customElements.define(ActivityState.name, ActivityState);

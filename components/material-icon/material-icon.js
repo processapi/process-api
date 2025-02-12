@@ -1,3 +1,5 @@
+import { ComponentModule } from "../../src/modules/component.js";
+
 export class MaterialIcon extends HTMLElement {
     static name = Object.freeze("material-icon");
 
@@ -19,6 +21,8 @@ export class MaterialIcon extends HTMLElement {
         this.style.alignItems = "center";
         this.style.justifyContent = "center";
         this.style.pointerEvents = "none";
+
+        ComponentModule.ready({element: this});
     }
 
     setIcon(iconName) {

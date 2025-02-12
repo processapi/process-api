@@ -1,5 +1,6 @@
 :host {
     display: block;
-    padding: var(--padding);
     box-sizing: border-box;
+    width: 1.5rem;
+    height: 1.5rem;
 }

@@ -27,15 +27,16 @@ export default class ActivityStateView extends HTMLElement {
 	}
 
 	#click(event) {
-		if (event.target.dataset.action) {
-			this.setState("busy");
+		const target = event.composedPath()[0];
+		if (target.dataset.action) {
+			this.setState(target.dataset.action);
 		}
 	}
 
 	setState(state) {
 		requestAnimationFrame(() => {
 			const activityState = this.shadowRoot.querySelector("activity-state");
-			activityState.dataset.state = state;
+			activityState.setState(state);
 		});
 	}
 }

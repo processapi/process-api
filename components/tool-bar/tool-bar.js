@@ -24,7 +24,7 @@ export class ToolBar extends HTMLElement {
             url: import.meta.url,
         });
 
-        this.style.display = "block";
+        this.style.display = "flex";
     }
 }
 
