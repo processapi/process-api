@@ -17,7 +17,7 @@ Deno.test("ProcessApi - loading", async () => {
 	const api = new ProcessApi();
 	api.register(MathModule);
 
-	const result = await api.call("math", "add", { a: 1, b: 2 });
+	const result = await api.call("math", "add", { a: 1, b: 2 })
 	assertExists(result);
 	assertEquals(result, 3);
 });
