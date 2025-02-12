@@ -22,6 +22,11 @@ export class MaterialIcon extends HTMLElement {
     }
 
     setIcon(iconName) {
+        this.shadowRoot.innerHTML = "";
+        if (iconName === null || iconName.trim() === "") {
+            return;
+        }
+
         const url = new URL(`./icons/${iconName}.svg`, import.meta.url);
 
         fetch(url)

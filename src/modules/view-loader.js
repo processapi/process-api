@@ -113,6 +113,8 @@ class ViewLoaderModule {
 		const module = await import(`/${rootFolder}/${view}/${view}.js`);
 		const tag = module.default.tag;
 
+		await customElements.whenDefined(tag);
+
 		const viewElement = document.createElement(tag);
 		container.innerHTML = "";
 		container.appendChild(viewElement);

@@ -1,0 +1,31 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem;
+    background-color: var(--background-color);
+    color: var(--color);
+    border-bottom: var(--border);
+}
+
+:host(.right) {
+    justify-content: flex-end;
+}
+
+:host(.left) {
+    justify-content: flex-start;
+}
+
+:host(.center) {
+    justify-content: center;
+}
+
+::slotted(*) {
+    flex: 1;
+}
+
+::slotted([slot="prefix"]),
+::slotted([slot="suffix"]) {
+    flex: 0;
+}
