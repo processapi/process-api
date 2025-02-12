@@ -16,3 +16,12 @@
     margin: 0 var(--padding);
     font-size: 1.5rem;
 }
+
+::slotted(*) {
+    flex: 1;
+}
+
+::slotted([slot="prefix"]),
+::slotted([slot="suffix"]) {
+    flex: 0;
+}
