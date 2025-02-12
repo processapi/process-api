@@ -20,6 +20,10 @@ class IdleWorker {
     #queue = [];
     #idleCallbackId = null;
 
+    get count() {
+        return this.#queue.length;
+    }
+
     /**
      * Perform the first task in the queue.
      * @returns

@@ -1,6 +1,5 @@
 import {
 	assertEquals,
-	assertThrowsAsync,
 } from "https://deno.land/std@0.55.0/testing/asserts.ts";
 
 import { DomParserModule } from "../../../src/modules/dom-parser.js";
