@@ -2,6 +2,7 @@ import {ComponentModule} from "../../src/modules/component.js";
 import "./../../components/material-icon/material-icon.js";
 import {icons} from "./icons.js";
 import { EventsManager } from "../../src/system/events-manager.js";
+import {IdleModule} from "./../../src/modules/idle.js";
 
 export default class MaterialIconsView extends HTMLElement {
 	static tag = "material-icons-view";
@@ -18,7 +19,7 @@ export default class MaterialIconsView extends HTMLElement {
 			url: import.meta.url,
 		});
 
-		this.#createIcons();
+		IdleModule.perform({tasks: [this.#createIcons.bind(this)]});
 		this.#setupSearch();
 	}
 
