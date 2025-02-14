@@ -27,6 +27,13 @@ async function buildSrcFile(file: string) {
 }
 
 await cleaerDistFolder();
-await buildSrcFile("validate/validate-args.js");
+
+// System Files
+await buildSrcFile("system/assert.js");
+await buildSrcFile("system/events-manager.js");
+await buildSrcFile("system/logger.js");
+
+// Validation Files
+await buildSrcFile("validate/conditions.js");
 
   

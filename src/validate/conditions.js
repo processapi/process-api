@@ -61,4 +61,5 @@ is.not.equal = (val, other) => !is.equal(val, other);
 is.not.empty = (val) => !is.empty(val);
 is.not.between = (val, min, max) => !is.between(val, min, max);
 
+globalThis.is = is;
 export { is };
