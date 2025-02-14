@@ -35,6 +35,11 @@ function menuItemCliced(event) {
     const parent = element.parentElement;
 
     if (element.tagName === "MENU-ITEM") {
+        if (element.getAttribute("value") != null) {
+            this.dispatchEvent(new CustomEvent("selected", { detail: element.getAttribute("value") }));
+            return closeAllGroups.call(this);
+        }
+
         if (parent.tagName === "MENU-GROUP") {
             const isExpanded = element.getAttribute("aria-expanded") === "true";
             element.setAttribute("aria-expanded", !isExpanded);
