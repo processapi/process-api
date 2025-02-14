@@ -12,9 +12,12 @@
     background: var(--menu-bg);
     border-radius: var(--menu-border-radius);
     border: var(--border);
-    filter: var(--drop-shadow);
     user-select: none;
     min-width: var(--min-width);
+}
+
+::slotted(.shadow) {
+    filter: var(--drop-shadow);
 }
 
 ::slotted(.menu-item) {
