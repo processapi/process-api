@@ -88,6 +88,13 @@ async function copyHTMLFiles(srcFolder: string, distFile: string) {
 }
 
 export async function copyFilesToFolder(sourceDir: string, targetDir: string) {
+    // if the targetDir does not exist, create it
+    try {
+        await Deno.stat(targetDir);
+    } catch (error) {
+        await Deno.mkdir(targetDir, { recursive: true });
+    }
+
     for await (const entry of Deno.readDir(sourceDir)) {
         const srcPath = `${sourceDir}/${entry.name}`;
         const distPath = `${targetDir}/${entry.name}`;

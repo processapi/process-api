@@ -15,9 +15,7 @@ async function cleaerDistFolder() {
 await cleaerDistFolder();
 
 // Components
-
-await buildComponent("material-icon");
-await copyFilesToFolder("components/material-icon/icons", "dist/components/material-icon/icons");
+await copyFilesToFolder("components/styles", "dist/components/styles");
 
 await buildComponent("activity-state");
 await buildComponent("app-header");
@@ -36,6 +34,7 @@ await buildComponent("toast-notification");
 await buildComponent("tool-bar");
 await buildComponent("tree-view");
 await buildComponent("ollama-ui");
+
 
 // Modules
 await buildSrcFile("modules/canvas.js");
