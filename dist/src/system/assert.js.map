@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/system/assert.js"],
-  "sourcesContent": ["export function assert(condition, message, context = \"\", data = null) {\r\n    if (!condition) {\r\n        globalThis.logger?.error(message, context, data);\r\n        return false;\r\n    }\r\n    return true;\r\n}"],
-  "mappings": "+EAAO,SAASA,EAAOC,EAAWC,EAASC,EAAU,GAAIC,EAAO,KAAM,CAClE,OAAKH,EAIE,IAHH,WAAW,QAAQ,MAAMC,EAASC,EAASC,CAAI,EACxC,GAGf,CANgBC,EAAAL,EAAA",
-  "names": ["assert", "condition", "message", "context", "data", "__name"]
-}

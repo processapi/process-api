@@ -1,1 +1,0 @@
-:host{display:block;box-sizing:border-box;width:1.5rem;height:1.5rem}.rotate{animation:rotate 2s linear infinite}@keyframes rotate{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.success{fill:green}.error{fill:red}

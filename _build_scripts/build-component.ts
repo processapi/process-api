@@ -6,10 +6,16 @@ await init();
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-export async function buildComponent(componentName: string) {
+export async function buildComponent(componentName: string, copyFolders: string[] = []) {
     console.log(`Building ${componentName}`);
     await build_src(componentName);
     await copy_files(componentName);
+
+    if (copyFolders.length > 0) {
+        for (const folder of copyFolders) {
+            await copyFilesToFolder(`components/${componentName}/${folder}`, `dist/components/${componentName}/${folder}`);
+        }
+    }
 }
 
 async function build_src(componentName: string) {
@@ -39,11 +45,6 @@ async function copy_files(componentName: string) {
 
     for await (const entry of Deno.readDir(srcFolder)) {
         if (entry.isFile && entry.name.endsWith(".js")) {
-            continue;
-        }
-
-        if (entry.isDirectory) {
-            await copyFilesToFolder(`${srcFolder}/${entry.name}`, `${distFolder}/${entry.name}`);
             continue;
         }
 
@@ -91,6 +92,7 @@ async function copyFilesToFolder(sourceDir: string, targetDir: string) {
     for await (const entry of Deno.readDir(sourceDir)) {
         const srcPath = `${sourceDir}/${entry.name}`;
         const distPath = `${targetDir}/${entry.name}`;
+
         await copy(srcPath, distPath, { overwrite: true });
     }
 }
