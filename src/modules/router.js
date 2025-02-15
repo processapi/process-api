@@ -1,7 +1,4 @@
 // deno-lint-ignore-file require-await
-
-import { validateArgs } from "../validate/validate-args.js";
-
 const DEFAULT_ROUTE = "home";
 
 /**
@@ -58,10 +55,6 @@ class RouterModule {
 	 * await api.call("router", "init", { routes });
 	 */
 	static async init(args) {
-		validateArgs(args, {
-			routes: { type: "object", required: true },
-		}, "RouterModule.init: ");
-
 		this.routes = args.routes;
 
 		this.routeUpdateHandler = routeUpdated.bind(args.api);
@@ -112,11 +105,6 @@ class RouterModule {
 	 * const route = await crs.call("router", "getRoute", { route: "person", params: { id: 1 } });
 	 */
 	static async get(args) {
-		validateArgs(args, {
-			route: { type: "string", default: "home" },
-			params: { type: "object", default: {} },
-		}, "RouterModule.getRoute: ");
-
 		const { route, params } = args;
 
 		if (this.routes && this.routes[route]) {
@@ -135,14 +123,9 @@ class RouterModule {
 	 * @returns {Promise<void>}
 	 */
 	static async goto(args) {
-		validateArgs(args, {
-			route: { type: "string", required: true },
-			params: { type: "object", default: {} },
-		}, "RouterModule.goto: ");
-
 		const { route, params } = args;
-
 		const path = await this.get({ route, params });
+		
 		history.pushState({}, "", path);
 
 		args.api.try("messaging", "publish", {

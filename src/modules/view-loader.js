@@ -49,8 +49,6 @@
  * });
  */
 
-import { validateArgs } from "../validate/validate-args.js";
-
 class ViewLoaderModule {
 	/**
 	 * @property name
@@ -74,10 +72,6 @@ class ViewLoaderModule {
 	 * await api.call("view_loader", 'set_container', {container: mainElement});
 	 */
 	static async set_container(args) {
-		validateArgs(args, {
-			container: { type: "HTMLElement", required: true },
-		});
-
 		this.mainElement = args.container;
 	}
 
@@ -99,12 +93,6 @@ class ViewLoaderModule {
 	 * });
 	 */
 	static async load(args) {
-		validateArgs(args, {
-			view: { type: "string", required: true },
-			container: { type: "HTMLElement", required: false },
-			rootFolder: { type: "string", required: false },
-		});
-
 		const rootFolder = args.rootFolder || "app";
 		const view = args.view;
 		const data = args.data;

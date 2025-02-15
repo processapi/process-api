@@ -1,14 +1,7 @@
-import { validateArgs } from "../validate/validate-args.js";
-
 export class CanvasModule {
     static name = Object.freeze("canvas");
 
     static async initialize(args) {
-        validateArgs(args, {
-            canvasElement: { type: "HTMLCanvasElement", required: true },
-            workerSource: { type: "string", required: true }
-        }, "CanvasModule.initialize: ");
-
         const { canvasElement, workerSource } = args;
         const rect = canvasElement.getBoundingClientRect();
         const width = Math.round(rect.width);

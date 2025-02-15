@@ -1,13 +1,7 @@
-import { validateArgs } from "./../validate/validate-args.js";
-
 export class IdleModule {
     static name = Object.freeze("idle");
 
     static perform(args) {
-        validateArgs(args, {
-            tasks: { type: "Array", required: true }
-        }, "IdleModule.initialize: ");
-
         return globalThis.idleWorker.perform(args.tasks);
     }
 }

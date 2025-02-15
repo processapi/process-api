@@ -1,5 +1,3 @@
-import {validateArgs} from "../validate/validate-args.js";
-
 class FilesModule {
     /**
      * @property name
@@ -16,10 +14,6 @@ class FilesModule {
      * @returns {Promise<void>}
      */
     static async load_files(args) {
-        validateArgs(args, {
-            ext: { type: "string", required: true },
-        }, "FilesModule.load_files: ");
-
         const { ext } = args;
 
         const input = document.createElement("input");

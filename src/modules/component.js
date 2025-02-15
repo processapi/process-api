@@ -1,5 +1,3 @@
-import { validateArgs } from "../validate/validate-args.js";
-
 /**
  * @class ComponentModule
  * @description Helper class for working with web components.
@@ -26,11 +24,6 @@ class ComponentModule {
 	 * await api.call("component", "load_html", { url: import.meta.url });
 	 */
 	static async load_html(args) {
-		validateArgs(args, {
-			url: { type: "string", required: true },
-			hasCss: { type: "boolean", required: false },
-		}, "ComponentModule.load_html: ");
-
 		const { url, hasCss } = args;
 		const htmlPath = url.replace(".js", ".html");
 
@@ -47,11 +40,6 @@ class ComponentModule {
 	}
 
 	static async load_component(args) {
-		validateArgs(args, {
-			element: { type: "HTMLElement", required: true },
-			url: { type: "string", required: true },
-		}, "ComponentModule.load_component: ");
-
 		const promise = new Promise((resolve) => {
 			const { element, url } = args;
 
@@ -79,10 +67,6 @@ class ComponentModule {
 	 * @returns {Promise<void>}
 	 */
 	static async ready(args){
-		validateArgs(args, {
-			element: { type: "HTMLElement", required: true },
-		}, "ComponentModule.ready: ");
-
 		const { element } = args;
 
 		element.dataset.ready = "true";
@@ -106,11 +90,6 @@ class ComponentModule {
 	 * });
 	 */
 	static async on_ready(args) {
-		validateArgs(args, {
-			element: { type: "HTMLElement", required: true },
-			callback: { type: "function", required: true },
-		}, "ComponentModule.on_ready: ");
-
 		const { element, callback } = args;
 
 		if (element.dataset.ready === "true") {

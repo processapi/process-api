@@ -1,5 +1,4 @@
 // deno-lint-ignore-file require-await
-import { validateArgs } from "../validate/validate-args.js";
 
 export class CssGridModule {
 	static name = Object.freeze("css_grid");
@@ -13,11 +12,6 @@ export class CssGridModule {
 	 * @returns {Promise<void>}
 	 */
 	static async from(args) {
-		validateArgs(args, {
-			"columns": { type: "string", default: "1fr" },
-			"rows": { type: "string", default: "1fr" },
-		}, "CssGridModule.from: ");
-
 		return {
 			columns: args.columns.split(" "),
 			rows: args.rows.split(" "),
@@ -34,10 +28,6 @@ export class CssGridModule {
 	 * @returns {Promise<{columns: string, rows: string}>}
 	 */
 	static async to(args) {
-		validateArgs(args, {
-			"data": { type: "object", required: true },
-		}, "CssGridModule.to: ");
-
 		return {
 			columns: args.data.columns.join(" "),
 			rows: args.data.rows.join(" "),
@@ -57,12 +47,6 @@ export class CssGridModule {
 	 * @returns {Promise<void>}
 	 */
 	static async apply(args) {
-		validateArgs(args, {
-			"data": { type: "object", required: true },
-			"element": { type: "HTMLElement", required: true },
-		}, "CssGridModule.to: ");
-
-
 		const {data, element} = args;
 		const css = await CssGridModule.to({ data });
 
@@ -87,11 +71,6 @@ export class CssGridModule {
 	static async create(args) {
 		args = args ?? {};
 
-		validateArgs(args, {
-			columnCount: { type: "number", default: 1 },
-			rowCount: { type: "number", default: 1 },
-		}, "CssGridModule.create: ");
-
 		const columns = new Array(args.columnCount).fill("1fr");
 		const rows = new Array(args.rowCount).fill("1fr");
 
@@ -111,12 +90,6 @@ export class CssGridModule {
 	 * @returns {Promise<*>}
 	 */
 	static async push(args) {
-		validateArgs(args, {
-			data: { type: "object", required: true },
-			column: { type: "string" },
-			row: { type: "string" },
-		}, "CssGridModule.push: ");
-
 		if (args.column) {
 			args.data.columns.push(args.column);
 		}
@@ -138,10 +111,6 @@ export class CssGridModule {
 	 * @returns {Promise<string>}
 	 */
 	static async optimize(args) {
-		validateArgs(args, {
-			values: { type: "string", required: true },
-		}, "CssGridModule.optimize: ");
-
 		const parts = args.values.split(" ");
 		const optimized = [];
 		let count = 1;
@@ -189,10 +158,6 @@ export class CssGridModule {
 	 * [A2][B2][C2]
 	 */
 	static async to_regions(args) {
-		validateArgs(args, {
-			"data": { type: "object", required: true },
-		}, "CssGridModule.to_regions: ");
-
 		const result = [];
 
 		for (let i = 0; i < args.data.rows.length; i++) {
@@ -229,12 +194,6 @@ export class CssGridModule {
 	 * 	@return {Promise<*>}
 	 */
 	static async copy_region(args) {
-		validateArgs(args, {
-			"regions": { type: "Array", required: true },
-			"start": { type: "object", required: true },
-			"end": { type: "object", required: true },
-		}, "CssGridModule.copyRegion: ");
-
 		const {regions, start, end} = args;
 
 		// Validate start and end points
@@ -276,12 +235,6 @@ export class CssGridModule {
 	 * @return {Promise<*>}
 	 */
 	static async reset_region(args) {
-		validateArgs(args, {
-			"regions": { type: "Array", required: true },
-			"row": { type: "number", required: true },
-			"column": { type: "number", required: true },
-		}, "CssGridModule.copyRegion: ");
-
 		const {regions, row, column} = args;
 
 		const cellCode = regions[row][column];
