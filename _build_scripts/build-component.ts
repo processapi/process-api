@@ -6,22 +6,27 @@ await init();
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-export async function buildComponent(componentName: string, copyFolders: string[] = []) {
+export async function buildComponent(componentName: string, folder: string = "", copyFolders: string[] = []) {
     console.log(`Building ${componentName}`);
-    await build_src(componentName);
-    await copy_files(componentName);
+
+    if (folder.length > 0) {
+        folder = `${folder}/`;
+    }
+
+    await build_src(componentName, folder);
+    await copy_files(componentName, folder);
 
     if (copyFolders.length > 0) {
-        for (const folder of copyFolders) {
-            await copyFilesToFolder(`components/${componentName}/${folder}`, `dist/components/${componentName}/${folder}`);
+        for (const subFolder of copyFolders) {
+            await copyFilesToFolder(`components/${componentName}/${folder}${subFolder}`, `dist/components/${componentName}/${folder}`);
         }
     }
 }
 
-async function build_src(componentName: string) {
+async function build_src(componentName: string, folder: string = "") {
     const result = await esbuild.build({
-        entryPoints: [`components/${componentName}/${componentName}.js`],
-        outfile: `dist/components/${componentName}/${componentName}.js`,
+        entryPoints: [`components/${folder}${componentName}/${componentName}.js`],
+        outfile: `dist/components/${folder}${componentName}/${componentName}.js`,
         bundle: true,
         minify: true,
         sourcemap: true,
@@ -39,9 +44,9 @@ async function build_src(componentName: string) {
 
 // Copy all files and folders.
 // Ignore js files.
-async function copy_files(componentName: string) {
-    const srcFolder = `components/${componentName}`;
-    const distFolder = `dist/components/${componentName}`;
+async function copy_files(componentName: string, folder: string = "") {
+    const srcFolder = `components/${folder}${componentName}`;
+    const distFolder = `dist/components/${folder}${componentName}`;
 
     for await (const entry of Deno.readDir(srcFolder)) {
         if (entry.isFile && entry.name.endsWith(".js")) {
