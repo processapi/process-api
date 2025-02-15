@@ -1,12 +1,9 @@
 import { VirtualizationModule } from "../../../src/modules/virtualization.js";
 import { SizesManager } from "../../../src/modules/virtualization/sizes-manager.js";
-import {
-    assertEquals,
-    assertThrowsAsync,
-} from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
 
 Deno.test("VirtualizationModule.get_sizes_manager - should throw an error if count is not provided", async () => {
-    await assertThrowsAsync(
+    await assertThrows(
         () => VirtualizationModule.get_sizes_manager({}),
         Error,
         'VirtualizationModule.get_sizes_manager: Argument "count" is required',

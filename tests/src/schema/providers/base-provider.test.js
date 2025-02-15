@@ -1,6 +1,6 @@
 import {BaseProvider} from "../../../../src/schema/providers/base-provider.js";
 import {ValidationResult} from "../../../../src/schema/validation-result.js";
-import { assertEquals, assert, assertExists } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 
 Deno.test("BaseProvider:parse", async () => {
     const template = "<div>__field__</div>";

@@ -1,11 +1,8 @@
 import { ComponentModule } from "../../../src/modules/component.js";
-import {
-	assertEquals,
-	assertThrowsAsync,
-} from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
 
 Deno.test("ComponentModule.load_html - should throw an error if url is not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => ComponentModule.load_html({}),
 		Error,
 		'ComponentModule.load_html: Argument "url" is required',

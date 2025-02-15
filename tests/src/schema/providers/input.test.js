@@ -1,6 +1,6 @@
 import {InputProvider} from "../../../../src/schema/providers/input.js";
 import {ValidationResult} from "../../../../src/schema/validation-result.js";
-import { assertEquals, assert, assertExists } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 
 
 Deno.test("InputProvider:parse", async () => {

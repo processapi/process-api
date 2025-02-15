@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 import { CanvasModule, CanvasWorker } from "../../../src/modules/canvas.js";
 import { stub } from "https://deno.land/std@0.224.0/testing/mock.ts";
 

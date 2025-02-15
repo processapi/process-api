@@ -1,4 +1,4 @@
-import { assertEquals, assert } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import {schemaItemAt} from "../../../src/schema/path-finder.js";
 
 const schema1 = {

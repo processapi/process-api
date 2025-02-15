@@ -1,9 +1,8 @@
 import { validateArgs } from "./../../../src/validate/validate-args.js";
-import { assertEquals } from "https://deno.land/std@0.55.0/testing/asserts.ts";
-import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
 
 Deno.test("validateArgs - should throw an error if arguments are not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() =>
 			validateArgs(
 				null,
@@ -16,7 +15,7 @@ Deno.test("validateArgs - should throw an error if arguments are not provided", 
 });
 
 Deno.test("validateArgs - should throw an error if required argument is missing", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() =>
 			validateArgs({}, { view: { type: "string", required: true } }, "Test: "),
 		Error,
@@ -25,7 +24,7 @@ Deno.test("validateArgs - should throw an error if required argument is missing"
 });
 
 Deno.test("validateArgs - should throw an error if argument type is incorrect", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() =>
 			validateArgs(
 				{ view: 123 },

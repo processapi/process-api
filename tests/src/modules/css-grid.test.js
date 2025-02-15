@@ -1,7 +1,4 @@
-import {
-	assertEquals,
-	assertThrowsAsync,
-} from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
 
 import { CssGridModule } from "./../../../src/modules/css-grid.js";
 
@@ -26,7 +23,7 @@ Deno.test("CssGridModule.create - should return grid with specified column and r
 });
 
 Deno.test("CssGridModule.create - should throw an error if columnCount is not a number", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.create({ columnCount: "invalid" }),
 		Error,
 		'CssGridModule.create: Argument "columnCount" should be of type "number"',
@@ -34,7 +31,7 @@ Deno.test("CssGridModule.create - should throw an error if columnCount is not a 
 });
 
 Deno.test("CssGridModule.create - should throw an error if rowCount is not a number", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.create({ rowCount: "invalid" }),
 		Error,
 		'CssGridModule.create: Argument "rowCount" should be of type "number"',
@@ -61,7 +58,7 @@ Deno.test("CssGridModule.push - should add both a column and a row to the grid",
 });
 
 Deno.test("CssGridModule.push - should throw an error if data is not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.push({ column: "2fr" }),
 		Error,
 		'CssGridModule.push: Argument "data" is required',
@@ -89,7 +86,7 @@ Deno.test("CssGridModule.to - should convert an object to CSS grid-template valu
 });
 
 Deno.test("CssGridModule.to - should throw an error if data is not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.to({}),
 		Error,
 		'CssGridModule.to: Argument "data" is required',
@@ -117,7 +114,7 @@ Deno.test("CssGridModule.optimize - should handle no duplicates correctly", asyn
 });
 
 Deno.test("CssGridModule.optimize - should throw an error if values are not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.optimize({}),
 		Error,
 		'CssGridModule.optimize: Argument "values" is required',
@@ -153,7 +150,7 @@ Deno.test("CssGridModule.to_regions - should handle single row and multiple colu
 });
 
 Deno.test("CssGridModule.to_regions - should throw an error if data is not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.to_regions({}),
 		Error,
 		'CssGridModule.to_regions: Argument "data" is required',
@@ -202,7 +199,7 @@ Deno.test("CssGridModule.copyRegion - should throw an error if start point is ou
 		["A1", "B1", "C1"],
 		["A2", "B2", "C2"],
 	];
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.copy_region({
 			regions,
 			start: { row: -1, column: 0 },
@@ -219,7 +216,7 @@ Deno.test("CssGridModule.copyRegion - should throw an error if end point is out 
 		["A1", "B1", "C1"],
 		["A2", "B2", "C2"],
 	];
-	await assertThrowsAsync(
+	await assertThrows(
 		() => CssGridModule.copy_region({
 			regions,
 			start: { row: 0, column: 0 },

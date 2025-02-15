@@ -1,5 +1,4 @@
-import {assertEquals} from "https://deno.land/std@0.55.0/testing/asserts.ts";
-
+import { assertEquals } from "jsr:@std/assert";
 import {MarkdownModule} from "../../../src/modules/markdown.js";
 
 Deno.test("MarkdownModule.to_html - should convert markdown to html", async () => {

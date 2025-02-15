@@ -1,6 +1,4 @@
-import {
-	assertEquals,
-} from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 
 import { DomParserModule } from "../../../src/modules/dom-parser.js";
 

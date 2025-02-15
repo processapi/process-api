@@ -1,4 +1,4 @@
-import { assertEquals, assert } from "https://deno.land/std@0.194.0/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 import { QuadTree } from "./../../../../src/modules/quadtree/quadtree.js";
 
 function pointsMatch(actual, expected) {

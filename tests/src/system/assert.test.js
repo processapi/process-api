@@ -1,5 +1,5 @@
 import { assert as customAssert } from '../../../src/system/assert.js';
-import { assertEquals } from "https://deno.land/std@0.194.0/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 
 Deno.test('should return true when condition is true', () => {
     const logger = {

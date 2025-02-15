@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import { is } from "../../../src/validate/conditions.js";
 
 Deno.test("is.null / is.not.null", () => {

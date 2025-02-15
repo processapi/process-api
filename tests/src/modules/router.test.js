@@ -1,5 +1,4 @@
-import { assertEquals } from "jsr:@std/assert";
-import { assertThrowsAsync } from "https://deno.land/std@0.55.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
 import { RouterModule } from "../../../src/modules/router.js";
 
 const sampleRoutes = {
@@ -24,7 +23,7 @@ const apiMock = {
 };
 
 Deno.test("RouterModule init throws error if routes are not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		async () => {
 			await RouterModule.init({});
 		},
@@ -52,7 +51,7 @@ Deno.test("RouterModule get returns correct route", async () => {
 
 Deno.test("RouterModule get throws error for invalid route", async () => {
 	await RouterModule.init({ routes: sampleRoutes });
-	await assertThrowsAsync(
+	await assertThrows(
 		async () => {
 			await RouterModule.get({ route: "invalid" });
 		},
@@ -85,7 +84,7 @@ Deno.test("RouterModule.get - should throw an error if route is not found", asyn
 		},
 	});
 
-	await assertThrowsAsync(
+	await assertThrows(
 		async () => {
 			await RouterModule.get({ route: "nonExistentRoute" });
 		},
@@ -101,7 +100,7 @@ Deno.test("RouterModule.get - should throw an error if a parameter is missing", 
 		},
 	});
 
-	await assertThrowsAsync(
+	await assertThrows(
 		async () => {
 			await RouterModule.get({ route: "person" });
 		},
@@ -126,7 +125,7 @@ Deno.test("RouterModule.get - should handle routes without parameters", async ()
 });
 
 Deno.test("RouterModule.goto throws error when route is not provided", async () => {
-	await assertThrowsAsync(
+	await assertThrows(
 		async () => {
 			await RouterModule.goto({ params: {} });
 		},

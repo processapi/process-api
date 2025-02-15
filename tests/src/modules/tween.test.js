@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.114.0/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import { TweenModule } from "./../../../src/modules/tween.js";
 
 const tween = new TweenModule();

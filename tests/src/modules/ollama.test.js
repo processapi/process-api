@@ -1,4 +1,4 @@
-import { assert } from "jsr:@std/assert";
+import { assert, assertEquals, assert } from "jsr:@std/assert";
 import { ChatRoles, OllamaModule } from "./../../../src/modules/ollama.js";
 
 Deno.test("OllamaModule - create_message", async () => {

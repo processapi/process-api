@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals } from "jsr:@std/assert";
 import { ValidationResult } from "./../../../src/schema/validation-result.js";
 
 Deno.test("ValidationResult.error should return an error object", () => {

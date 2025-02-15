@@ -1,4 +1,4 @@
-import { assertEquals, assert } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assert } from "jsr:@std/assert";
 import { SchemaManager } from "./../../../src/schema/schema-manager.js";
 import { ValidationResult } from "./../../../src/schema/validation-result.js";
 
