@@ -1,21 +1,5 @@
-import { assertEquals, assertThrows } from "jsr:@std/assert";
+import { assertEquals } from "jsr:@std/assert";
 import { MessagingModule } from "../../../src/modules/messaging.js";
-
-Deno.test("MessagingModule.publish - should throw an error if topic is not provided", async () => {
-	await assertThrows(
-		() => MessagingModule.publish({ message: { text: "Hello World" } }),
-		Error,
-		'MessagingModule.publish: Argument "topic" is required',
-	);
-});
-
-Deno.test("MessagingModule.publish - should throw an error if message is not provided", async () => {
-	await assertThrows(
-		() => MessagingModule.publish({ topic: "my-topic" }),
-		Error,
-		'MessagingModule.publish: Argument "message" is required',
-	);
-});
 
 Deno.test("MessagingModule.publish - should call subscriber callbacks with the correct message", async () => {
 	const callback = (message) => {

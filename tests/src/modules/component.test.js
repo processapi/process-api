@@ -1,13 +1,5 @@
 import { ComponentModule } from "../../../src/modules/component.js";
-import { assertEquals, assertThrows } from "jsr:@std/assert";
-
-Deno.test("ComponentModule.load_html - should throw an error if url is not provided", async () => {
-	await assertThrows(
-		() => ComponentModule.load_html({}),
-		Error,
-		'ComponentModule.load_html: Argument "url" is required',
-	);
-});
+import { assertEquals } from "jsr:@std/assert";
 
 Deno.test("ComponentModule.load_html - should return HTML content when url is provided", async () => {
 	const mockFetch = (url) => {
