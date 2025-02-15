@@ -12,6 +12,9 @@ export class CssGridModule {
 	 * @returns {Promise<void>}
 	 */
 	static async from(args) {
+		args.columns ||= "1fr";
+		args.rows ||= "1fr";
+
 		return {
 			columns: args.columns.split(" "),
 			rows: args.rows.split(" "),
