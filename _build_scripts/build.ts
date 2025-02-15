@@ -53,6 +53,7 @@ await buildSrcFile("modules/system.js");
 await buildSrcFile("modules/tween.js");
 await buildSrcFile("modules/view-loader.js");
 await buildSrcFile("modules/virtualization.js");
+await buildSrcFile("modules/form.js");
 
 // System Files
 await buildSrcFile("system/assert.js");

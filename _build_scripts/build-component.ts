@@ -93,11 +93,16 @@ async function copyHTMLFiles(srcFolder: string, distFile: string) {
     await Deno.writeTextFile(distFile, result);
 }
 
-async function copyFilesToFolder(sourceDir: string, targetDir: string) {
+export async function copyFilesToFolder(sourceDir: string, targetDir: string) {
+    // create targetDir if it does not exist
+    if (!(await Deno.stat(targetDir).catch(() => null))) {
+        await Deno.mkdir(targetDir, { recursive: true});
+    };
+
     for await (const entry of Deno.readDir(sourceDir)) {
         const srcPath = `${sourceDir}/${entry.name}`;
         const distPath = `${targetDir}/${entry.name}`;
 
-        await copy(srcPath, distPath, { overwrite: true });
+        await Deno.copyFile(srcPath, distPath);
     }
 }
