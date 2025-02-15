@@ -1,2 +1,2 @@
-var u=Object.defineProperty;var t=(r,e)=>u(r,"name",{value:e,configurable:!0});function a(r,e,n="",o=null){var l;return r?!0:((l=globalThis.logger)==null||l.error(e,n,o),!1)}t(a,"assert");export{a as assert};
+var o=Object.defineProperty;var l=(r,e)=>o(r,"name",{value:e,configurable:!0});function s(r,e,t="",n=null){return r?!0:(globalThis.logger?.error(e,t,n),!1)}l(s,"assert");export{s as assert};
 //# sourceMappingURL=assert.js.map

@@ -1,0 +1,28 @@
+:host {
+    display: block;
+    box-sizing: border-box;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.rotate {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.success {
+    fill: green;
+}
+
+.error {
+    fill: red;
+}
+

@@ -1,4 +1,5 @@
-import * as esbuild from "https://deno.land/x/esbuild@v0.17.12/mod.js";
+import { buildSrcFile } from "./build-src.ts";
+import { buildComponent } from "./build-component.ts";
 
 async function cleaerDistFolder() {
     await Deno.remove("dist", { recursive: true });
@@ -6,27 +7,10 @@ async function cleaerDistFolder() {
     await Deno.mkdir("dist/src");
 }
 
-async function buildSrcFile(file: string) {
-    console.log(`Building ${file}`);
-    const result = await esbuild.build({
-        entryPoints: [`src/${file}`],
-        outfile: `dist/src/${file}`,
-        bundle: true,
-        format: "esm",
-        minify: true,
-        sourcemap: true,
-        target: "es6",
-        keepNames: true
-    });
-    esbuild.stop();
-    
-    if (result.errors.length > 0) {
-        console.error(result.errors);
-        Deno.exit(1);
-    }
-}
-
 await cleaerDistFolder();
+
+// Components
+await buildComponent("activity-state");
 
 // System Files
 await buildSrcFile("system/assert.js");
