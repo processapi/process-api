@@ -1,6 +1,10 @@
 import * as esbuild from "https://deno.land/x/esbuild@v0.17.12/mod.js";
 import { copy } from "https://deno.land/std@0.97.0/fs/mod.ts";
-import { minify as minifyCss } from "https://esm.sh/csso@5.0.5";
+import init, {minify} from "https://wilsonl.in/minify-html/deno/0.9.2/index.js";
+
+await init();
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
 
 export async function buildComponent(componentName: string) {
     console.log(`Building ${componentName}`);
@@ -47,6 +51,11 @@ async function copy_files(componentName: string) {
             await copyCSSFiles(`${srcFolder}/${entry.name}`, `${distFolder}/${entry.name}`);
             continue;
         }
+
+        if (entry.name.endsWith(".html")) {
+            await copyHTMLFiles(`${srcFolder}/${entry.name}`, `${distFolder}/${entry.name}`);
+            continue;
+        }
         
         const srcPath = `${srcFolder}/${entry.name}`;
         const distPath = `${distFolder}/${entry.name}`;
@@ -56,12 +65,26 @@ async function copy_files(componentName: string) {
 
 async function copyCSSFiles(srcFile: string, distFile: string) {
     const css = await Deno.readTextFile(srcFile);
-    const result = await minifyCss(css);
-    await Deno.writeTextFile(distFile, result.css);
+
+    const result = await esbuild.transform(css, {
+        loader: "css",
+        minify: true,
+    });
+
+    await Deno.writeTextFile(distFile, result.code);
 }
 
-async function copyHTMLFiles(srcFolder: string, distFolder: string) {
+async function copyHTMLFiles(srcFolder: string, distFile: string) {
+    const html = await Deno.readTextFile(srcFolder);
 
+    const result = decoder.decode(minify(encoder.encode(html), {
+        minify_css: true,
+        minify_js: true,
+        do_not_minify_doctype: true,
+        keep_closing_tags: true
+    }));
+
+    await Deno.writeTextFile(distFile, result);
 }
 
 async function copyFilesToFolder(sourceDir: string, targetDir: string) {
