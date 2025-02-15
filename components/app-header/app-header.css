@@ -1,15 +1,13 @@
 @import "./../styles/buttons.css";
 
 :host {
-    --margin-bottom: 1rem;
-
     display: flex;
     flex-direction: row;
     align-items: center;
 
     padding: var(--padding);
     border-bottom: var(--border);
-    margin-bottom: var(--margin-bottom);
+    margin-bottom: var(--margin-bottom, 1rem);
 }
 
 ::slotted(h2) {
