@@ -1,6 +1,5 @@
 import { ValidationResult } from "./../validation-result.js";
 import { BaseProvider } from "./base-provider.js";
-import { validate } from "../validation.js";
 
 const TEMPLATE = `
 <label data-field="__field__">
@@ -31,12 +30,11 @@ export class InputProvider extends BaseProvider {
      * @param path {String} The path of the schema part
      * @returns {ValidationResult} True if the schema is valid, false otherwise.
      */
-    static async validate(schemaItem, path) {
-        return validate(schemaItem, {
-            field: { type: "string", critical: true },
-            title: { type: "string", critical: true },
-            placeholder: { type: "string" }
-        }, path);
+    static validate(schemaItem, path) {
+        return ValidationResult.from([
+            { condition: is.empty(schemaItem.field), message: "Field is required" },
+            { condition: is.empty(schemaItem.type), message: "Type is required" },
+        ], "InputProvider", path);
     }
 
     /**

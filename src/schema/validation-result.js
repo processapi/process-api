@@ -51,4 +51,19 @@ export class ValidationResult {
     static success(message, path = "") {
         return Object.freeze({ type: SUCCESS, message, path });
     }
+
+    static from(conditions, context, data) {
+        const errors = [];
+        for (const condition of conditions) {
+            if (!assert(condition.condition, condition.message, context, data)) {
+                errors.push(ValidationResult.error(condition.message, data));
+            }
+        }
+
+        if (errors.length > 0) {
+            return this.error(errors.map(e => e.message).join("\n"), data);
+        }
+
+        return this.success("success", data);
+    }
 }
