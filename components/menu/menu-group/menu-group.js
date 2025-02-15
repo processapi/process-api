@@ -1,6 +1,4 @@
 import { ComponentModule } from "../../../src/modules/component.js";
-import { EventsManager } from "../../../src/system/events-manager.js";
-import "./../../material-icon/material-icon.js";
 
 class MenuGroup extends HTMLElement {
     static name = Object.freeze("menu-group");
