@@ -6,7 +6,7 @@ await init();
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-export async function buildComponent(componentName: string, folder: string = "") {
+export async function buildComponent(componentName: string, folder: string = "", copyFolders: string[] = []) {
     console.log(`Building ${componentName}`);
 
     if (folder.length > 0) {
@@ -15,6 +15,12 @@ export async function buildComponent(componentName: string, folder: string = "")
 
     await build_src(componentName, folder);
     await copy_files(componentName, folder);
+
+    if (copyFolders.length > 0) {
+        for (const subFolder of copyFolders) {
+            await copyFilesToFolder(`components/${componentName}/${folder}${subFolder}`, `dist/components/${componentName}/${folder}`);
+        }
+    }
 }
 
 async function build_src(componentName: string, folder: string = "") {
@@ -87,14 +93,7 @@ async function copyHTMLFiles(srcFolder: string, distFile: string) {
     await Deno.writeTextFile(distFile, result);
 }
 
-export async function copyFilesToFolder(sourceDir: string, targetDir: string) {
-    // if the targetDir does not exist, create it
-    try {
-        await Deno.stat(targetDir);
-    } catch (error) {
-        await Deno.mkdir(targetDir, { recursive: true });
-    }
-
+async function copyFilesToFolder(sourceDir: string, targetDir: string) {
     for await (const entry of Deno.readDir(sourceDir)) {
         const srcPath = `${sourceDir}/${entry.name}`;
         const distPath = `${targetDir}/${entry.name}`;

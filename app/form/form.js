@@ -1,4 +1,6 @@
 import "./../../components/toast-notification/toast-notification.js";
+import { FormModule } from "./../../src/modules/form.js";
+
 export default class FormView extends HTMLElement {
 	static tag = "form-view";
 
@@ -47,6 +49,23 @@ export default class FormView extends HTMLElement {
 
 	warning() {
 		toastNotification.warning("Something not so good happened");
+	}
+
+	populate() {
+		const form = this.shadowRoot.querySelector("form");
+		const data = {
+			personName: "John",
+			personAge: 20,
+			personEmail: "john@gmail.com"
+		};
+
+		FormModule.to({ form, data });
+	}
+
+	print() {
+		const form = this.shadowRoot.querySelector("form");
+		const data = FormModule.from({ form });
+		toastNotification.info(JSON.stringify(data, null, 2));
 	}
 }
 
