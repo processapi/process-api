@@ -1,5 +1,6 @@
 import * as esbuild from "https://deno.land/x/esbuild@v0.17.12/mod.js";
 import { copy } from "https://deno.land/std@0.97.0/fs/mod.ts";
+import { minify as minifyCss } from "https://esm.sh/csso@5.0.5";
 
 export async function buildComponent(componentName: string) {
     console.log(`Building ${componentName}`);
@@ -41,11 +42,26 @@ async function copy_files(componentName: string) {
             await copyFilesToFolder(`${srcFolder}/${entry.name}`, `${distFolder}/${entry.name}`);
             continue;
         }
+
+        if (entry.name.endsWith(".css")) {
+            await copyCSSFiles(`${srcFolder}/${entry.name}`, `${distFolder}/${entry.name}`);
+            continue;
+        }
         
         const srcPath = `${srcFolder}/${entry.name}`;
         const distPath = `${distFolder}/${entry.name}`;
         await copy(srcPath, distPath, { overwrite: true });
     }
+}
+
+async function copyCSSFiles(srcFile: string, distFile: string) {
+    const css = await Deno.readTextFile(srcFile);
+    const result = await minifyCss(css);
+    await Deno.writeTextFile(distFile, result.css);
+}
+
+async function copyHTMLFiles(srcFolder: string, distFolder: string) {
+
 }
 
 async function copyFilesToFolder(sourceDir: string, targetDir: string) {

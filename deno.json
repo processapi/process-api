@@ -1,7 +1,9 @@
 {
+	"nodeModulesDir": "auto",
 	"tasks": {
 		"surreal": "surreal start --user root --password root surrealkv:./data/mydatabase.db",
-		"compile_markdown": "wasm-pack build ./wasm/markdown/  --target web --out-dir ./../../src/modules/markdown"
+		"compile_markdown": "wasm-pack build ./wasm/markdown/  --target web --out-dir ./../../src/modules/markdown",
+		"build": "deno run --allow-all _build_scripts/build.ts"
 	},
 	"fmt": {
 		"useTabs": true
