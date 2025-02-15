@@ -1,4 +1,4 @@
-import { ProcessApi } from "../../src/main.js";
+import { ProcessApi } from "../../src/process-api.js";
 import { assertEquals, assertExists } from "jsr:@std/assert";
 
 class MathModule {

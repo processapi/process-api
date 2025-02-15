@@ -1,5 +1,6 @@
 import { buildSrcFile } from "./build-src.ts";
 import { buildComponent } from "./build-component.ts";
+import { build } from "https://deno.land/x/esbuild@v0.17.12/mod.d.ts";
 
 async function cleaerDistFolder() {
     const hasDistFolder = await Deno.stat("dist").catch(() => null);
@@ -55,5 +56,7 @@ await buildSrcFile("system/logger.js");
 
 // Validation Files
 await buildSrcFile("validate/conditions.js");
+
+await buildSrcFile("process-api.js");
 
 Deno.kill(Deno.pid); // Exit the process
