@@ -1,6 +1,5 @@
 import { buildSrcFile } from "./build-src.ts";
-import { buildComponent } from "./build-component.ts";
-import { build } from "https://deno.land/x/esbuild@v0.17.12/mod.d.ts";
+import { buildComponent, copyFilesToFolder } from "./build-component.ts";
 
 async function cleaerDistFolder() {
     const hasDistFolder = await Deno.stat("dist").catch(() => null);
@@ -16,11 +15,18 @@ async function cleaerDistFolder() {
 await cleaerDistFolder();
 
 // Components
+
+await buildComponent("material-icon");
+await copyFilesToFolder("components/material-icon/icons", "dist/components/material-icon/icons");
+
 await buildComponent("activity-state");
 await buildComponent("app-header");
 await buildComponent("dynamic-rows");
 await buildComponent("dynamic-columns");
-await buildComponent("material-icon", "", ["icons"]);
+
+await buildComponent("material-icon");
+await copyFilesToFolder("components/material-icon/icons", "dist/components/material-icon/icons");
+
 await buildComponent("divider-item", "menu");
 await buildComponent("menu-container", "menu");
 await buildComponent("menu-group", "menu");
@@ -29,7 +35,7 @@ await buildComponent("menu-label", "menu");
 await buildComponent("toast-notification");
 await buildComponent("tool-bar");
 await buildComponent("tree-view");
-// await buildComponent("ollama-ui");
+await buildComponent("ollama-ui");
 
 // Modules
 await buildSrcFile("modules/canvas.js");
