@@ -30,6 +30,24 @@ await buildComponent("tool-bar");
 await buildComponent("tree-view");
 // await buildComponent("ollama-ui");
 
+// Modules
+await buildSrcFile("modules/canvas.js");
+await buildSrcFile("modules/component.js");
+await buildSrcFile("modules/css-grid.js");
+await buildSrcFile("modules/dom-parser.js");
+await buildSrcFile("modules/files.js");
+await buildSrcFile("modules/idle.js");
+await buildSrcFile("modules/canvas.js");
+await buildSrcFile("modules/messaging.js");
+await buildSrcFile("modules/ollama.js");
+await buildSrcFile("modules/quadtree.js");
+await buildSrcFile("modules/router.js");
+await buildSrcFile("modules/surrealdb.js");
+await buildSrcFile("modules/system.js");
+await buildSrcFile("modules/tween.js");
+await buildSrcFile("modules/view-loader.js");
+await buildSrcFile("modules/virtualization.js");
+
 // System Files
 await buildSrcFile("system/assert.js");
 await buildSrcFile("system/events-manager.js");
