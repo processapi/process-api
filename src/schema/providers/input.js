@@ -32,8 +32,8 @@ export class InputProvider extends BaseProvider {
      */
     static validate(schemaItem, path) {
         return ValidationResult.from([
-            { condition: is.empty(schemaItem.field), message: "Field is required" },
-            { condition: is.empty(schemaItem.type), message: "Type is required" },
+            { condition: is.not.empty(schemaItem.field), message: "Field is required" },
+            { condition: is.not.empty(schemaItem.title), message: "Type is required" },
         ], "InputProvider", path);
     }
 

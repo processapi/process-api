@@ -1,8 +1,9 @@
 import { assertEquals, assert } from "jsr:@std/assert";
 import { SchemaManager } from "./../../../src/schema/schema-manager.js";
 import { ValidationResult } from "./../../../src/schema/validation-result.js";
-
 import { InputProvider } from "../../../src/schema/providers/input.js";
+import "../../../src/validate/conditions.js";
+import "../../../src/system/assert.js";
 
 Deno.test("SchemaManager.parse should generate HTML code from schema", async () => {
     const schemaManager = new SchemaManager();

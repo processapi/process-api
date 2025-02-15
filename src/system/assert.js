@@ -5,3 +5,5 @@ export function assert(condition, message, context = "", data = null) {
     }
     return true;
 }
+
+globalThis.assert = assert;
