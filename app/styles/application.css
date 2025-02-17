@@ -1,4 +1,7 @@
 @import "./../../components/styles/variables.css";
+@import "./../../components/styles/buttons.css";
+@import "./../../components/styles/input.css";
+@import "./../../components/styles/form.css";
 @import "./../../components/styles/states.css";
 
 * {
