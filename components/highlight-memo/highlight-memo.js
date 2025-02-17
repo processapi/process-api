@@ -1,5 +1,6 @@
 import {ComponentModule} from "../../src/modules/component.js";
 import {MarkdownModule} from "../../src/modules/markdown.js";
+import { HTML } from "./highlight-memo.html.js";
 
 export class HighlightMemo extends HTMLElement {
     static name = Object.freeze("highlight-memo");
@@ -9,12 +10,7 @@ export class HighlightMemo extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-    }
-
-    async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async disconnectedCallback() {

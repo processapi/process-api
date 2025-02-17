@@ -1,6 +1,7 @@
 import {ComponentModule} from "../../src/modules/component.js";
 import {CanvasModule} from "../../src/modules/canvas.js";
 import {groupData} from "./data-processor.js";
+import { HTML } from "./kanban.html.js";
 
 export class Kanban extends HTMLElement {
     static name = Object.freeze("kanban-component");
@@ -12,22 +13,17 @@ export class Kanban extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
-        requestAnimationFrame(async () => {
-            this.#canvasWorker = await CanvasModule.initialize({
-                canvasElement: this.shadowRoot.querySelector("canvas"),
-                workerSource: new URL("./kanban-worker.js", import.meta.url).href
-            })
-
-            this.#canvasWorker.call("clear");
-            await ComponentModule.ready({element: this});
+        this.#canvasWorker = await CanvasModule.initialize({
+            canvasElement: this.shadowRoot.querySelector("canvas"),
+            workerSource: new URL("./kanban-worker.js", import.meta.url).href
         })
+
+        this.#canvasWorker.call("clear");
+        await ComponentModule.ready({element: this});
     }
 
     async disconnectedCallback() {

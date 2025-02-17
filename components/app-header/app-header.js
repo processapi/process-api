@@ -1,4 +1,3 @@
-import {ComponentModule} from "../../src/modules/component.js";
 import {EventsManager} from "../../src/system/events-manager.js";
 import {HTML} from "./app-header.html.js"
 
@@ -11,6 +10,7 @@ class AppHeader extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = HTML;
+        this.style.display = "flex";
     }
 
     async connectedCallback() {
