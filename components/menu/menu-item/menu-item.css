@@ -2,6 +2,8 @@
     --menu-item-hover-bg: var(--selected-background-color);
     --menu-item-hover-fg: var(--selected-color);
 
+    display: flex;
+    flex-direction: row;
     padding: var(--padding);
     cursor: pointer;
     width: fit-content;

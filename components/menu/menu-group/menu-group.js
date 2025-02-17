@@ -1,4 +1,5 @@
 import { ComponentModule } from "../../../src/modules/component.js";
+import { HTML } from "./menu-group.html.js";
 
 class MenuGroup extends HTMLElement {
     static name = Object.freeze("menu-group");
@@ -6,16 +7,11 @@ class MenuGroup extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-        this.style.display = "none";
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
         await this.#addChevron();
-        this.style.display = "flex";
     }
 
     #addChevron() {
