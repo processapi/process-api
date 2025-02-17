@@ -89,7 +89,19 @@ Deno.test("FormModule.clear should clear the form elements", () => {
     inputName.value = "John";
     form.appendChild(inputName);
 
+    const inputAge = document.createElement("input");
+    inputAge.name = "age";
+    inputAge.value = "30";
+    form.appendChild(inputAge);
+
+    const inputEmail = document.createElement("input");
+    inputEmail.name = "email";
+    inputEmail.value = "john@example.com";
+    form.appendChild(inputEmail);
+
     FormModule.clear({ form });
     assertEquals(inputName.value, "");
+    assertEquals(inputAge.value, "");
+    assertEquals(inputEmail.value, "");
 });
 

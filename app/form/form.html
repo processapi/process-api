@@ -1,33 +1,34 @@
 <app-header><h2>Form</h2></app-header>
 
 <form>
-	<div class="input-container">
-		<label for="personName">Name:</label>
-		<input 
-            type="text" 
-            id="personName" 
-            name="personName" 
-            placeholder="Enter name" 
-            required>
-	</div>
-	<div class="input-container">
-		<label for="personAge">Age:</label>
-		<input 
-            type="number" 
-            id="personAge" 
-            name="personAge" 
-            placeholder="Enter age"
-            required min="18" max="65">
-	</div>
-	<div class="input-container">
-		<label for="personEmail">Email:</label>
-		<input 
-            type="email" 
-            id="personEmail" 
-            name="personEmail" 
-            placeholder="Enter email"
-            required>
-	</div>
+      <label for="personName">
+            <div>Name:</div>
+            <input 
+                  type="text" 
+                  id="personName" 
+                  name="personName" 
+                  placeholder="Enter name" 
+                  required>      
+      </label>
+      <label for="personAge">
+            <div>Age:</div>
+            <input 
+                  type="number" 
+                  id="personAge" 
+                  name="personAge" 
+                  placeholder="Enter age"
+                  required min="18" max="65">
+      </label>
+      <label for="personEmail">
+            <div>Email:</div>
+            <input 
+                  type="email" 
+                  id="personEmail" 
+                  name="personEmail" 
+                  placeholder="Enter email"
+                  required>
+      </label>
+
       <div role="toolbar">
             <button type="button" data-action="populate">Populate</button>
             <button type="button" data-action="print">Print</button>

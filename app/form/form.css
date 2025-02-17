@@ -1,14 +1,9 @@
 @import "./../../components/styles/input.css";
 @import "./../../components/styles/buttons.css";
 @import "./../../components/styles/toolbar.css";
+@import "./../../components/styles/form.css";
 
 :host {
     display: block;
     padding: var(--padding);
-}
-
-form {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
 }
