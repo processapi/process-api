@@ -1,5 +1,4 @@
-// This component handles the creation and display of toast notifications.
-import {ComponentModule} from "../../src/modules/component.js";
+import { HTML } from "./toast-notification.html.js";
 
 /**
  * The ToastNotification web component handles creating and displaying toasts.
@@ -19,16 +18,13 @@ export class ToastNotification extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML = HTML;
     }
 
     /**
      * Loads HTML content and attaches click handler.
      */
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
         this.addEventListener("click", this.#clickHandler);
     }
 
