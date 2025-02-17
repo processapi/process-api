@@ -1,4 +1,5 @@
 import {ComponentModule} from "../../src/modules/component.js";
+import { HTML } from "./dynamic-rows.html.js";
 
 class DynamicRows extends HTMLElement {
     static name = Object.freeze("dynamic-rows");
@@ -24,14 +25,11 @@ class DynamicRows extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML = HTML;
+        this.style.setProperty("--heights", getGridTemplateRows(this).join(" "));
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
-        this.style.setProperty("--heights", getGridTemplateRows(this).join(" "));
         this.addEventListener("mousedown", this.#mouseDownHandler);
     }
 

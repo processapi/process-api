@@ -1,4 +1,5 @@
 import {ComponentModule} from "../../src/modules/component.js";
+import { HTML } from "./dynamic-columns.html.js";
 
 class DynamicColumns extends HTMLElement {
     static name = Object.freeze("dynamic-columns");
@@ -25,13 +26,10 @@ class DynamicColumns extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
         const { columns, minWidths } = getGridTemplateColumns(this);
         this.#translateX.minWidths = minWidths;
 
