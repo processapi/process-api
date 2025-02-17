@@ -1,4 +1,5 @@
 import { ComponentModule } from "../../src/modules/component.js";
+import { HTML } from "./activity-state.html.js";
 
 class ActivityState extends HTMLElement {
     static name = Object.freeze("activity-state");
@@ -8,20 +9,13 @@ class ActivityState extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-        this.style.display = "none";
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
-        requestAnimationFrame(() => {
-            if (this.#state) {
-                this.setState(this.#state);
-            }
-            this.style.display = "block";
-        });
+        if (this.#state) {
+            this.setState(this.#state);
+        }
     }
 
     setState(state) {

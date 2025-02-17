@@ -1,5 +1,6 @@
 import {ComponentModule} from "../../src/modules/component.js";
 import {EventsManager} from "../../src/system/events-manager.js";
+import {HTML} from "./app-header.html.js"
 
 class AppHeader extends HTMLElement {
     static name = Object.freeze("app-header");
@@ -9,13 +10,10 @@ class AppHeader extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML = HTML;
     }
 
     async connectedCallback() {
-        this.shadowRoot.innerHTML = await ComponentModule.load_html({
-            url: import.meta.url,
-        });
-
         this.#eventsManager.addPointerEvent(this, "click", this.#click.bind(this));
     }
 
