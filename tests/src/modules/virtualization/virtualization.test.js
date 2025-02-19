@@ -1,5 +1,5 @@
-import { VirtualizationModule } from "../../../src/modules/virtualization.js";
-import { SizesManager } from "../../../src/modules/virtualization/sizes-manager.js";
+import { VirtualizationModule } from "../../../../src/modules/virtualization.js";
+import { SizesManager } from "../../../../src/modules/virtualization/sizes-manager.js";
 import { assertEquals } from "jsr:@std/assert";
 
 Deno.test("VirtualizationModule.get_sizes_manager - should return SizesManager instance with defaultSize and sizes", async () => {

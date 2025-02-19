@@ -1,5 +1,7 @@
 import "./../../components/toast-notification/toast-notification.js";
 import { FormModule } from "./../../src/modules/form.js";
+import "./../../components/dynamic-columns/dynamic-columns.js";
+import "./../../components/virtual-list/virtual-list.js";
 
 export default class FormView extends HTMLElement {
 	static tag = "form-view";

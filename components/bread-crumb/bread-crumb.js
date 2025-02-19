@@ -1,8 +1,8 @@
 import {EventsManager} from "../../src/system/events-manager.js";
-import {HTML} from "./app-header.html.js"
+import {HTML} from "./bread-crumb.html.js"
 
-class AppHeader extends HTMLElement {
-    static name = Object.freeze("app-header");
+class BreadCrumb extends HTMLElement {
+    static name = Object.freeze("bread-crumb");
 
     #eventsManager = new EventsManager();
 
@@ -10,7 +10,6 @@ class AppHeader extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = HTML;
-        this.style.display = "flex";
     }
 
     async connectedCallback() {
@@ -30,8 +29,8 @@ class AppHeader extends HTMLElement {
         }
     }
 
-    home() {
-        window.location.href = "/";
+    append(dataItem, template = null) {
+        
     }
 }
 

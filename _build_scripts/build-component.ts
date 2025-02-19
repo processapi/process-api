@@ -30,9 +30,8 @@ async function build_src(componentName: string, folder: string = "") {
         bundle: true,
         minify: true,
         sourcemap: true,
-        target: ["es2020"],
+        target: "esnext",
         format: "esm",
-        keepNames: true
     });
     esbuild.stop();
     

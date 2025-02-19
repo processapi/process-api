@@ -1,4 +1,3 @@
-import {ComponentModule} from "../../src/modules/component.js";
 import { HTML } from "./dynamic-columns.html.js";
 
 class DynamicColumns extends HTMLElement {
@@ -47,8 +46,20 @@ class DynamicColumns extends HTMLElement {
 
         const offset = this.#translateX.current - this.#translateX.start;
 
-        this.#pixelWidths[this.#index] = `${Number(this.#leftCellWidth) + offset}px`;
-        this.#pixelWidths[this.#index + 2] = `${Number(this.#rightCellWidth) - offset}px`;
+        let leftCellWidth = Number(this.#leftCellWidth) + offset;
+        let rightCellWidth = Number(this.#rightCellWidth) - offset;
+
+        if (leftCellWidth < this.#translateX.minWidths[this.#index]) {
+            leftCellWidth = this.#translateX.minWidths[this.#index];
+        }
+
+        if (rightCellWidth < this.#translateX.minWidths[this.#index + 2]) {
+            rightCellWidth = this.#translateX.minWidths[this.#index + 2];
+        }
+
+        this.#pixelWidths[this.#index] = `${leftCellWidth}px`;
+        this.#pixelWidths[this.#index + 2] = `${rightCellWidth}px`;
+
 
         // ensure that the gap is not less than the minimum
         for (let i = 0; i < this.#pixelWidths.length; i++) {

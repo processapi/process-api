@@ -1,42 +1,51 @@
 <app-header><h2>Form</h2></app-header>
 
-<form>
-      <label for="personName">
-            <div>Name:</div>
-            <input 
-                  type="text" 
-                  id="personName" 
-                  name="personName" 
-                  placeholder="Enter name" 
-                  required>      
-      </label>
-      <label for="personAge">
-            <div>Age:</div>
-            <input 
-                  type="number" 
-                  id="personAge" 
-                  name="personAge" 
-                  placeholder="Enter age"
-                  required min="18" max="65">
-      </label>
-      <label for="personEmail">
-            <div>Email:</div>
-            <input 
-                  type="email" 
-                  id="personEmail" 
-                  name="personEmail" 
-                  placeholder="Enter email"
-                  required>
-      </label>
-
-      <div role="toolbar">
-            <button type="button" data-action="populate">Populate</button>
-            <button type="button" data-action="print">Print</button>
-            <button type="submit">Submit</button>
-            <button type="reset">Reset</button>
-            <button type="button" data-action="error">Error</button>
-            <button type="button" data-action="info">Info</button>
-            <button type="button" data-action="success">Success</button>
-            <button type="button" data-action="warning">Warning</button>      
+<dynamic-columns>
+      <div data-width="200px" data-min-width="200">
+            <virtual-list></virtual-list>
+      </div>    
+      <div class="resize-handle"></div>
+      <div data-width="1fr" data-min-width="100">
+            <form>
+                  <label for="personName">
+                        <div>Name:</div>
+                        <input 
+                              type="text" 
+                              id="personName" 
+                              name="personName" 
+                              placeholder="Enter name" 
+                              required>      
+                  </label>
+                  <label for="personAge">
+                        <div>Age:</div>
+                        <input 
+                              type="number" 
+                              id="personAge" 
+                              name="personAge" 
+                              placeholder="Enter age"
+                              required min="18" max="65">
+                  </label>
+                  <label for="personEmail">
+                        <div>Email:</div>
+                        <input 
+                              type="email" 
+                              id="personEmail" 
+                              name="personEmail" 
+                              placeholder="Enter email"
+                              required>
+                  </label>
+            
+                  <div role="toolbar">
+                        <button type="button" data-action="populate">Populate</button>
+                        <button type="button" data-action="print">Print</button>
+                        <button type="submit">Submit</button>
+                        <button type="reset">Reset</button>
+                        <button type="button" data-action="error">Error</button>
+                        <button type="button" data-action="info">Info</button>
+                        <button type="button" data-action="success">Success</button>
+                        <button type="button" data-action="warning">Warning</button>      
+                  </div>
+            </form>
       </div>
-</form>
+</dynamic-columns>
+
