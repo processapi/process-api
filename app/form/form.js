@@ -19,11 +19,21 @@ export default class FormView extends HTMLElement {
 		});
 
 		this.shadowRoot.addEventListener("click", this.#clickHandler);
+
+		const template = this.shadowRoot.querySelector("#list-item");
+		const data = loadData();
+
+		const virtualList = this.shadowRoot.querySelector("virtual-list");
+		virtualList.load(data, template, this.#inflate.bind(this));
 	}
 
 	async disconnectedCallback() {
 		this.shadowRoot.removeEventListener("click", this.#clickHandler);
 		this.#clickHandler = null;
+	}
+
+	#inflate(element, data) {
+
 	}
 
     load(data) {
@@ -69,6 +79,21 @@ export default class FormView extends HTMLElement {
 		const data = FormModule.from({ form });
 		toastNotification.info(JSON.stringify(data, null, 2));
 	}
+}
+
+function loadData() {
+	const data = [];
+	
+	for (let i = 0; i < 1000; i++) {
+		data.push({
+			id: i,
+			name: `Name ${i}`,
+			age: i,
+			email: `mail@${i}.com`
+		});
+	}
+
+	return data;
 }
 
 customElements.define(FormView.tag, FormView);

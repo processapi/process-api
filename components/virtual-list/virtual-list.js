@@ -1,9 +1,16 @@
 import { HTML } from "./virtual-list.html.js";
+import { SizesManager } from "../../src/modules/virtualization/sizes-manager.js";
 
 /**
  * The VirtualList web component handles creating and displaying a virtual list.
  */
 export class VirtualList extends HTMLElement {
+
+    #template;
+    #inflateFn;
+    #sizeManager;
+    #data = [];
+
     static name = Object.freeze("virtual-list");
 
     /**
@@ -27,14 +34,23 @@ export class VirtualList extends HTMLElement {
      */
     disconnectedCallback() {
         // Clean up resources here
+        this.#data = null;
+        this.#sizeManager = this.#sizeManager.dispose();
+        this.#template = null;
+        this.#inflateFn = null;
     }
 
     /**
      * Method to update the list items.
      * @param {Array} items - The list items to display.
      */
-    append(items) {
+    load(items, template, inflateFn) {
+        this.#template = template;
+        this.#inflateFn = inflateFn;
+
         // Update the virtual list with new items
+        this.#data.push(...items);
+        this.#sizeManager = new SizesManager(this.#data.length, 32);
     }
 }
 
