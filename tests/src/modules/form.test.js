@@ -1,4 +1,4 @@
-import { assertEquals, assert } from "jsr:@std/assert";
+import { assertEquals } from "jsr:@std/assert";
 import { FormModule } from "../../../src/modules/form.js";
 
 // Mocking DOM features
