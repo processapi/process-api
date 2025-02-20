@@ -2,6 +2,7 @@ import "./../../components/toast-notification/toast-notification.js";
 import { FormModule } from "./../../src/modules/form.js";
 import "./../../components/dynamic-columns/dynamic-columns.js";
 import "./../../components/virtual-list/virtual-list.js";
+import { ComponentModule } from "../../src/modules/component.js";
 
 export default class FormView extends HTMLElement {
 	static tag = "form-view";
@@ -24,7 +25,14 @@ export default class FormView extends HTMLElement {
 		const data = loadData();
 
 		const virtualList = this.shadowRoot.querySelector("virtual-list");
-		virtualList.load(data, template, this.#inflate.bind(this));
+		
+		ComponentModule.on_ready({
+			element: virtualList,
+			callback: () => {
+				virtualList.load(data, template, 32, this.#inflate.bind(this));	
+			}
+		})
+
 	}
 
 	async disconnectedCallback() {
@@ -35,9 +43,6 @@ export default class FormView extends HTMLElement {
 	#inflate(element, data) {
 
 	}
-
-    load(data) {
-    }
 
 	async #click(event) {
 		const target = event.target;
@@ -94,6 +99,20 @@ function loadData() {
 	}
 
 	return data;
+}
+
+// Ensure the template is properly styled before measuring
+function measureListItem(template) {
+	const div = document.createElement("div");
+	div.style.position = "absolute";
+	div.style.visibility = "hidden";
+	div.style.height = "auto";
+	div.style.width = "auto";
+	div.appendChild(template.cloneNode(true));
+	document.body.appendChild(div);
+	const height = div.clientHeight;
+	document.body.removeChild(div);
+	return height;
 }
 
 customElements.define(FormView.tag, FormView);

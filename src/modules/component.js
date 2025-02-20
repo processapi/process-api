@@ -66,11 +66,16 @@ class ComponentModule {
 	 * await ComponentModule.ready({ element: document.querySelector("my-component") });
 	 * @returns {Promise<void>}
 	 */
-	static async ready(args){
+	static ready(args){
 		const { element } = args;
 
-		element.dataset.ready = "true";
-		element.dispatchEvent(new CustomEvent("ready"));
+		return new Promise(resolve => {
+			requestAnimationFrame(() => {
+				element.dataset.ready = "true";
+				element.dispatchEvent(new CustomEvent("ready"));
+				resolve();	
+			})	
+		});
 	}
 
 	/**

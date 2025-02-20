@@ -1,5 +1,7 @@
 import { HTML } from "./virtual-list.html.js";
 import { SizesManager } from "../../src/modules/virtualization/sizes-manager.js";
+import { ComponentModule } from "../../src/modules/component.js";
+import { IdleModule } from "../../src/modules/idle.js";
 
 /**
  * The VirtualList web component handles creating and displaying a virtual list.
@@ -27,6 +29,7 @@ export class VirtualList extends HTMLElement {
      */
     async connectedCallback() {
         // Initialize the virtual list here
+        await ComponentModule.ready({element: this});
     }
 
     /**
@@ -39,18 +42,23 @@ export class VirtualList extends HTMLElement {
         this.#template = null;
         this.#inflateFn = null;
     }
+    
+    #loadElements() {
+        const height = this.offsetHeight;
+    }
 
     /**
      * Method to update the list items.
      * @param {Array} items - The list items to display.
      */
-    load(items, template, inflateFn) {
+    async load(items, template, height, inflateFn) {
         this.#template = template;
         this.#inflateFn = inflateFn;
 
         // Update the virtual list with new items
         this.#data.push(...items);
-        this.#sizeManager = new SizesManager(this.#data.length, 32);
+        this.#sizeManager = new SizesManager(this.#data.length, height);
+        IdleModule.perform({ tasks: [this.#loadElements.bind(this)] });
     }
 }
 
