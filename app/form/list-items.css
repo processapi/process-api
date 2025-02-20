@@ -1,0 +1,18 @@
+.list-item {
+    display: flex;
+    flex-direction: row;
+    height: 2rem;
+    align-items: center;
+    gap: var(--padding);
+    box-sizing: border-box;
+    padding: 0 var(--padding);
+}
+
+.list-item .name {
+    font-weight: bold;
+    width: 5rem;
+}
+
+.list-item .age {
+    flex: 1;
+}

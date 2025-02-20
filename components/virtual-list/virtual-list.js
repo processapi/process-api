@@ -45,13 +45,42 @@ export class VirtualList extends HTMLElement {
     
     #loadElements() {
         const height = this.offsetHeight;
+        const visibleRange = this.#sizeManager.getVisibleRange(0, height);
+        const totalHeight = this.#sizeManager.totalSize;
+
+        if (height <= totalHeight) {
+            this.#createElements(visibleRange);
+        }
+    }
+
+    #createElements(visibleRange) {
+        const fragment = document.createDocumentFragment();
+        const { start, end } = visibleRange;
+
+        for (let i = start; i <= end; i++) {
+            const item = this.#data[i];
+            const element = this.#template.content.cloneNode(true);
+            this.#inflateFn(element, item);
+            fragment.appendChild(element);
+        }
+
+        const container = this.shadowRoot.querySelector("#container");
+        container.innerHTML = "";
+        container.appendChild(fragment);
     }
 
     /**
      * Method to update the list items.
      * @param {Array} items - The list items to display.
      */
-    async load(items, template, height, inflateFn) {
+    async load(items, template, height, inflateFn, styles = []) {
+        for (const style of styles) {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href= style;
+            this.shadowRoot.appendChild(link);
+        }
+
         this.#template = template;
         this.#inflateFn = inflateFn;
 

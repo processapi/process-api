@@ -29,7 +29,8 @@ export default class FormView extends HTMLElement {
 		ComponentModule.on_ready({
 			element: virtualList,
 			callback: () => {
-				virtualList.load(data, template, 32, this.#inflate.bind(this));	
+				const listItemStyle = import.meta.url.replace("form.js", "list-items.css");
+				virtualList.load(data, template, 32, this.#inflate.bind(this), [listItemStyle]);	
 			}
 		})
 
@@ -41,7 +42,9 @@ export default class FormView extends HTMLElement {
 	}
 
 	#inflate(element, data) {
-
+		element.querySelector(".name").textContent = data.name;
+		element.querySelector(".age").textContent = data.age;
+		element.querySelector(".email").textContent = data.email;
 	}
 
 	async #click(event) {
