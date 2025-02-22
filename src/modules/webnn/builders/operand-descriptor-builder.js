@@ -13,7 +13,7 @@ export default class OperandDescriptorBuilder {
      * @param {string} [dataType=DataType.FLOAT32] - The data type of the operand.
      * @param {number[]} [shape=[]] - The shape of the operand.
      */
-    constructor(dataType = DataType.FLOAT32, shape = []) {
+    constructor(dataType = DataType.FLOAT32, shape = [1]) {
         this.#dataType = dataType;
         this.#shape = shape;
     }

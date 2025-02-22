@@ -1,0 +1,4 @@
+:host {
+    padding: var(--padding);
+    display: block;
+}
