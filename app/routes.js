@@ -6,5 +6,6 @@ export const routes = Object.freeze({
 	"dynamic-columns": "/dynamic-layout",
 	"main-menu": "/main-menu",
 	"material-icons": "/material-icons",
-	"activity-state": "/activity-state"
+	"activity-state": "/activity-state",
+	"web-nn": "/web-nn"
 });
