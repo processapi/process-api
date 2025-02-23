@@ -40,22 +40,22 @@ export class Program {
     }
 
     /**
-     * Create tensor on context
-     * @param {*} operand 
-     * @param {*} writable 
-     * @param {*} readable 
-     * @returns 
+     * Create tensor on context.
+     * @param {Object} operand - The operand descriptor.
+     * @param {boolean} writable - Whether the tensor is writable.
+     * @param {boolean} readable - Whether the tensor is readable.
+     * @returns {Object} The created tensor.
      */
     #createTensor(operand, writable, readable) {
         return this.#context.createTensor({
             dataType: operand.dataType, shape: operand.shape, writable, readable
-        })
+        });
     }
 
     /**
      * Add an input tensor to the program.
      * @param {string} name - The name of the tensor.
-     * @param {Object} tensor - The tensor object.
+     * @param {Object} operand - The operand object.
      * @returns {Promise<void>}
      */
     async addInputTensor(name, operand) {
@@ -65,14 +65,20 @@ export class Program {
     /**
      * Add an output tensor to the program.
      * @param {string} name - The name of the tensor.
-     * @param {Object} tensor - The tensor object.
+     * @param {Object} operand - The operand object.
      * @returns {Promise<void>}
      */
     async addOutputTensor(name, operand) {
         this.#outputTensors[name] = await this.#createTensor(operand, false, true);
     }
 
-    addConstant(descriptor, values) { 
+    /**
+     * Add a constant to the graph.
+     * @param {Object} descriptor - The descriptor of the constant.
+     * @param {Array<number>} values - The values of the constant.
+     * @returns {Object} The created constant.
+     */
+    addConstant(descriptor, values) {
         return this.#graphBuilder.constant(descriptor, new Float32Array(values));
     }
 
@@ -92,8 +98,8 @@ export class Program {
      * @param {Array<number>} values - The value to set.
      * @returns {Promise<void>}
      */
-    set(name, values) {
-        this.#context.writeTensor(this.#inputTensors[name], new Float32Array(values));
+    async set(name, values) {
+        await this.#context.writeTensor(this.#inputTensors[name], new Float32Array(values));
     }
 
     /**
@@ -124,19 +130,20 @@ export class Program {
  * const program = new Program();
  * await program.init();
  * 
- * const descriptor = {dataType: 'float32', shape: [1]};
- * const A = program.addToGraph("input", "A", descriptor);
- * const B = program.addToGraph("input", "B", descriptor);
- * const C = program.addToGraph("add", A, B);
- * program.build({C});
+ * const descriptor = {dataType: 'float32', shape: [1, 2]};
+ * const features = program.addToGraph("input", "features", descriptor);
+ * const weights = program.addConstant({dataType: 'float32', shape: [2, 1]}, [0.7, 0.3]);
+ * const bias = program.addConstant({dataType: 'float32', shape: [1]}, [-0.5]);
  * 
- * await program.addInputTensor("A", A);
- * await program.addInputTensor("B", B);
- * await program.addOutputTensor("C", C);
+ * const weightedSum = program.addToGraph("matmul", features, weights);
+ * const output = program.addToGraph("add", weightedSum, bias);
+ * await program.build({output});
  * 
- * await program.set("A", [1]);
- * await program.set("B", [2]);
+ * await program.addInputTensor("features", features);
+ * await program.addOutputTensor("output", output);
+ * 
+ * await program.set("features", [0.5, 0.8]);
  * 
  * const result = await program.run();
- * console.log(result); // Output: 3
+ * console.log(result); // Output: some computed value
  */

@@ -27,7 +27,7 @@ export default class WebNNView extends HTMLElement {
             // 2. build graph
             const features = this.#program.addToGraph("input", "features", {dataType: 'float32', shape: [1, 2]});
             const weights = this.#program.addConstant({dataType: 'float32', shape: [2,1]}, [0.7, 0.3]);
-            const bias = this.#program.addConstant({dataType: 'float32', shape: [1]}, [-0.5]);
+            const bias = this.#program.addConstant({dataType: 'float32', shape: [1]}, [0]);
 
             const weightedSum = this.#program.addToGraph("matmul", features, weights);
             const output = this.#program.addToGraph("add", weightedSum, bias);
