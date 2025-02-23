@@ -1,11 +1,11 @@
 import { EventsManager } from "../../src/system/events-manager.js";
-import { WebNNProgram } from "../../src/modules/webnn/webnn-program.js";
+import { Program } from "../../src/webnn/program.js";
 
 export default class WebNNView extends HTMLElement {
     static tag = "webnn-view";
 
     #eventsManager = new EventsManager();
-    #program = new WebNNProgram();
+    #program = new Program();
 
     constructor() {
         super();
@@ -25,17 +25,24 @@ export default class WebNNView extends HTMLElement {
             await this.#program.init();
             
             // 2. build graph
-            const descriptor = {dataType: 'float32', shape: [1]};
-            const A = this.#program.addToGraph("input", "A", descriptor);
-            const B = this.#program.addToGraph("input", "B", descriptor);
-            const C = this.#program.addToGraph("add", A, B);
-            this.#program.build({C});
+            const features = this.#program.addToGraph("input", "features", {dataType: 'float32', shape: [1, 2]});
+            const weights = this.#program.addConstant({dataType: 'float32', shape: [2,1]}, [0.7, 0.3]);
+            const bias = this.#program.addConstant({dataType: 'float32', shape: [1]}, [-0.5]);
+
+            const weightedSum = this.#program.addToGraph("matmul", features, weights);
+            const output = this.#program.addToGraph("add", weightedSum, bias);
+
+            await this.#program.build({output});
 
             // 3. add input and output tensors
-            await this.#program.addInputTensor("A", A);
-            await this.#program.addInputTensor("B", B);
-            await this.#program.addOutputTensor("C", C);
+            await this.#program.addInputTensor("features", features);
+            await this.#program.addOutputTensor("output", output);
         })        
+    }
+
+    async disconnectedCallback() {
+        this.#eventsManager = this.#eventsManager.dispose();
+        this.#program = this.#program.dispose();
     }
 
     async disconnectedCallback() {
@@ -43,12 +50,10 @@ export default class WebNNView extends HTMLElement {
     }
 
     async #submit(event) {
-        const value1 = this.shadowRoot.querySelector("#value1").value;
-        const value2 = this.shadowRoot.querySelector("#value2").value;
+        const cloudiness = this.shadowRoot.querySelector("#cloudiness").value;
+        const humidity = this.shadowRoot.querySelector("#humidity").value;
 
-        await this.#program.set("A", [value1]);
-        await this.#program.set("B", [value2]);
-
+        await this.#program.set("features", [cloudiness, humidity]);
         this.shadowRoot.querySelector("#result").textContent = await this.#program.run();
     }
 }
