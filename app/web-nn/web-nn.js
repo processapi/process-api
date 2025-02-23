@@ -1,16 +1,11 @@
 import { EventsManager } from "../../src/system/events-manager.js";
-import { 
-    WebNNModule, 
-    OperandDescriptorBuilder } from "../../src/modules/webnn.js";
+import { WebNNProgram } from "../../src/modules/webnn/webnn-program.js";
 
 export default class WebNNView extends HTMLElement {
     static tag = "webnn-view";
 
     #eventsManager = new EventsManager();
-    #graphBuilder
-    #graph;
-    #context;
-    #tensors;
+    #program = new WebNNProgram();
 
     constructor() {
         super();
@@ -22,65 +17,39 @@ export default class WebNNView extends HTMLElement {
 			url: import.meta.url,
 		});  
 
-        requestAnimationFrame(() => {
+        requestAnimationFrame(async () => {
             const button = this.shadowRoot.querySelector("button");
             this.#eventsManager.addEvent(button, "click", this.#submit.bind(this));
-        })
-        
-        this.#context = await WebNNModule.createContext();
-        this.#graphBuilder = await WebNNModule.createGraph( { context: this.#context } );
-        const operands = await this.#createGraph();
-        await this.#createTensors(operands.A, operands.B, operands.C);
+
+            // 1. initialize
+            await this.#program.init();
+            
+            // 2. build graph
+            const descriptor = {dataType: 'float32', shape: [1]};
+            const A = this.#program.addToGraph("input", "A", descriptor);
+            const B = this.#program.addToGraph("input", "B", descriptor);
+            const C = this.#program.addToGraph("add", A, B);
+            this.#program.build({C});
+
+            // 3. add input and output tensors
+            await this.#program.addInputTensor("A", A);
+            await this.#program.addInputTensor("B", B);
+            await this.#program.addOutputTensor("C", C);
+        })        
     }
 
     async disconnectedCallback() {
         this.#eventsManager = this.#eventsManager.dispose();
     }
 
-    async #createGraph() {
-        const descriptor = new OperandDescriptorBuilder().build();
-        const A = this.#graphBuilder.input("A", descriptor);
-        const B = this.#graphBuilder.input("B", descriptor);
-        const C = this.#graphBuilder.add(A, B);  
-
-        this.#graph = await this.#graphBuilder.build({C});
-        return { A, B, C };
-    }
-
-    async #createTensors(inputA, inputB, outputC) {
-        this.#tensors = { 
-            inputA: await this.#createTensor(this.#context, inputA, true, true), 
-            inputB: await this.#createTensor(this.#context, inputB, true, true), 
-            outputC: await this.#createTensor(this.#context, outputC, false, true)
-        };
-    }
-
-    async #createTensor(context, operand, writable, readable) {
-        return context.createTensor({
-            dataType: operand.dataType, shape: operand.shape, writable, readable
-        })
-    }
-
     async #submit(event) {
         const value1 = this.shadowRoot.querySelector("#value1").value;
         const value2 = this.shadowRoot.querySelector("#value2").value;
 
-        this.#context.writeTensor(this.#tensors.inputA, new Float32Array([value1]));
-        this.#context.writeTensor(this.#tensors.inputB, new Float32Array([value2]));
+        await this.#program.set("A", [value1]);
+        await this.#program.set("B", [value2]);
 
-        const inputs = {
-            'A': this.#tensors.inputA,
-            'B': this.#tensors.inputB
-        };
-
-        const outputs = {
-            'C': this.#tensors.outputC
-        };
-
-        this.#context.dispatch(this.#graph, inputs, outputs);
-        const output = await this.#context.readTensor(this.#tensors.outputC); 
-        const result = new Float32Array(output)[0];
-        this.shadowRoot.querySelector("#result").textContent = result;
+        this.shadowRoot.querySelector("#result").textContent = await this.#program.run();
     }
 }
 
