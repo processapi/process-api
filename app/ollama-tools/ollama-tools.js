@@ -18,7 +18,7 @@ const tools = [
 			}
 		}
 	}
-]  
+];
 
 export default class OllamaToolsView extends HTMLElement {
 	static tag = "ollama-tools-view";
