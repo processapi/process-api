@@ -1,5 +1,7 @@
 import {OllamaModule, ChatRoles} from "./../../src/modules/ollama.js";
 import "./../../components/monaco-editor/monaco-editor.js";
+import "./../../components/dynamic-columns/dynamic-columns.js";
+import "./../../components/dynamic-rows/dynamic-rows.js";
 
 const tools = [
 	{

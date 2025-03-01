@@ -1,26 +1,55 @@
 <h2>Ollama Tool Calling</h2>
 
-<monaco-editor id="tooling" language="json">
-[
-    {
-        "type": "function",
-        "function": {
-            "name": "age",
-            "description": "Return the age of a person",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "personAge": {
-                        "type": "integer",
-                        "description": "The age of the person"
+<dynamic-rows>
+    <div data-height="1fr">
+        <dynamic-columns>
+            <div data-width="1fr">
+                <section>
+                    <h2>Tools Definitions</h2>            
+                    <monaco-editor data-language="json">
+        [
+            {
+                "type": "function",
+                "function": {
+                    "name": "age",
+                    "description": "Return the age of a person",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "personAge": {
+                                "type": "integer",
+                                "description": "The age of the person"
+                            }
+                        },
+                        "required": ["personAge"]
                     }
-                },
-                "required": ["personAge"]
+                }
             }
-        }
-    }
-]
-</monaco-editor>
+        ];
+                    </monaco-editor>
+                </section>
+            </div>
+            <div class="resize-handle"></div>
+            <div data-width="1fr">
+                <dynamic-rows>
+                    <section data-height="300px">
+                        <h2>System Prompt</h2>
+                        <monaco-editor data-language="text"></monaco-editor>
+                    </section>
+                    <div class="resize-handle"></div>
+                    <section data-height="1fr">
+                        <h2>User Prompt</h2>
+                        <monaco-editor data-language="text"></monaco-editor>
+                    </section>
+                </dynamic-rows>
+            </div>
+        </dynamic-columns>        
+    </div>
+    <div class="resize-handle"></div>
+    <div data-height="100px">
+        <text-area></text-area>
+    </div>
+</dynamic-rows>
 
 
 <button data-action="callFunction">Call Function</button>
