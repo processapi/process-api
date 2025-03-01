@@ -1,4 +1,5 @@
 import {OllamaModule, ChatRoles} from "./../../src/modules/ollama.js";
+import "./../../components/monaco-editor/monaco-editor.js";
 
 const tools = [
 	{
