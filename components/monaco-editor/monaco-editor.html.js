@@ -4,4 +4,5 @@ const monacoCSSUrl = new URL("./node_modules/monaco-editor/min/vs/editor/editor.
 export const HTML = `
 <link rel="stylesheet" href="${thisCSSUrl}"/>
 <link rel="stylesheet" href="${monacoCSSUrl}" data-name="vs/editor/editor.main"/>
+<div id="editor"></div>
 `;

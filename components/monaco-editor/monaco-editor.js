@@ -6,6 +6,10 @@ export default class MonacoEditor extends HTMLElement {
 
     #editor;
 
+    get editor() {
+        return this.#editor;
+    }
+
     get language() {
         return this.dataset.language ?? "json";
     }
@@ -21,15 +25,16 @@ export default class MonacoEditor extends HTMLElement {
     }
 
     async connectedCallback() {
-        await import("./node_modules/monaco-editor/min/vs/loader.js");
-        await import("./node_modules/monaco-editor/min/vs/editor/editor.main.js");
-        
+        const url = new URL('./node_modules/monaco-editor/min/vs', import.meta.url);
+        requirejs.config({ paths: { 'vs': url.href } });
 
-        this.#editor = monaco.editor.create(this.shadowRoot.querySelector("#editor"), {
-            value: this.textContent,
-            language: this.language,
-            theme: this.theme,
-            automaticLayout: true,
+        require(['vs/editor/editor.main'], () => {
+            this.#editor = monaco.editor.create(this.shadowRoot.querySelector("#editor"), {
+                value: this.textContent,
+                language: this.language,
+                theme: this.theme,
+                automaticLayout: true,
+            });
         });
     }
 };
