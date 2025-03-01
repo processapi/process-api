@@ -41,6 +41,7 @@ export const ChatRoles = Object.freeze({
 	USER: "user",
 	ASSISTANT: "assistant",
 	SYSTEM: "system",
+	TOOL: "tool"
 });
 
 export class OllamaModule {
@@ -210,7 +211,7 @@ function createUrl(args, path) {
  * @returns {Object} - The decorated body
  */
 function decorateBody(body, properties, args) {
-	for (const key in properties) {
+	for (const key of properties) {
 		if (key in args) {
 			body[key] = args[key];
 		}
