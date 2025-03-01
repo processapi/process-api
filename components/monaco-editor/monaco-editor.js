@@ -30,12 +30,12 @@ export default class MonacoEditor extends HTMLElement {
 
         require(['vs/editor/editor.main'], () => {
             this.#editor = monaco.editor.create(this.shadowRoot.querySelector("#editor"), {
-                value: this.textContent,
+                value: this.textContent.trim(),
                 language: this.language,
                 theme: this.theme,
                 automaticLayout: true,
             });
-        });
+        });                       
     }
 };
 
