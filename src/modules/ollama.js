@@ -21,6 +21,7 @@ const GENERATE_OPTIONAL_ARGS = Object.freeze([
 	"raw",
 	"keep_alive",
 ]);
+
 const CHAT_OPTIONAL_ARGS = Object.freeze([
 	"tools",
 	"role",
