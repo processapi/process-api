@@ -1,3 +1,7 @@
 h2 {
 	color: darkslateblue;
 }
+
+app-header {
+	flex: 1;
+}

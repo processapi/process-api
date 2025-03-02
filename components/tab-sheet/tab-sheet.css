@@ -1,5 +1,6 @@
 :host {
     --cl-suppressed: gray;
+    --tabs-padding: 0 0.5rem;
     display: flex;
 }
 
@@ -15,6 +16,7 @@
     align-items: center;
     justify-content: start;
     border-bottom: 1px solid var(--cl-border);
+    padding: var(--tabs-padding);
 }
 
 .content {

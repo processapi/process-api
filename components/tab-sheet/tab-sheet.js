@@ -42,7 +42,7 @@ export class TabSheet extends HTMLElement {
     }
 
     #selectFirstTab() {
-        const slot = this.shadowRoot.querySelector(".header slot");
+        const slot = this.shadowRoot.querySelector(".header slot[name='tab']");
         const elements = slot.assignedElements();
         if (elements.length === 0) return;
 
