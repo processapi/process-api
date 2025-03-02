@@ -1,4 +1,6 @@
 :host {
+    --cl-focused-fg: var(--cl-focused);
+    --cl-focused-bg: white;
     display: flex;
 }
 
@@ -13,10 +15,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: start;
+    border-bottom: 1px solid var(--cl-border);
 }
 
 .content {
     flex: 1;
+    padding: var(--padding);
 }
 
 :host(.bottom) .tab-sheet {
@@ -33,4 +37,22 @@
 
 :host(.right) .header, :host(.left) .header {
     flex-direction: column;
+}
+
+::slotted([aria-hidden]) {
+    display: none;
+}
+
+.header ::slotted(*) {
+    margin: 0;
+    padding: var(--padding, 0.5rem);
+    cursor: pointer;
+    background: #f0f0f0;
+}
+
+/* Add styles for the selected slotted items */
+.header ::slotted([aria-selected="true"]) {
+    color: var(--cl-focused-fg);
+    background: var(--cl-focused-bg);
+    border: 1px solid var(--cl-border);
 }
