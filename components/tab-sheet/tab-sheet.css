@@ -1,6 +1,5 @@
 :host {
-    --cl-focused-fg: var(--cl-focused);
-    --cl-focused-bg: white;
+    --cl-suppressed: gray;
     display: flex;
 }
 
@@ -47,12 +46,11 @@
     margin: 0;
     padding: var(--padding, 0.5rem);
     cursor: pointer;
-    background: #f0f0f0;
+    color: var(--cl-suppressed);
 }
 
 /* Add styles for the selected slotted items */
 .header ::slotted([aria-selected="true"]) {
-    color: var(--cl-focused-fg);
-    background: var(--cl-focused-bg);
-    border: 1px solid var(--cl-border);
+    color: var(--cl-focused);
+    border-bottom: 2px solid var(--cl-focused);
 }
