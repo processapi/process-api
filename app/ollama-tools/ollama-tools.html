@@ -6,26 +6,26 @@
             <div data-width="1fr">
                 <section>
                     <h2>Tools Definitions</h2>            
-                    <monaco-editor data-language="json">
-        [
-            {
-                "type": "function",
-                "function": {
-                    "name": "age",
-                    "description": "Return the age of a person",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "personAge": {
-                                "type": "integer",
-                                "description": "The age of the person"
-                            }
-                        },
-                        "required": ["personAge"]
+                    <monaco-editor id="tools" data-language="json">
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "age",
+            "description": "Return the age of a person",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "personAge": {
+                        "type": "integer",
+                        "description": "The age of the person"
                     }
-                }
+                },
+                "required": ["personAge"]
             }
-        ];
+        }
+    }
+]
                     </monaco-editor>
                 </section>
             </div>

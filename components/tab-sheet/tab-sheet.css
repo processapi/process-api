@@ -1,0 +1,36 @@
+:host {
+    display: flex;
+}
+
+.tab-sheet {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.content {
+    flex: 1;
+}
+
+:host(.bottom) .tab-sheet {
+    flex-direction: column-reverse;
+}
+
+:host(.right) .tab-sheet {
+    flex-direction: row-reverse;
+}
+
+:host(.left) .tab-sheet {
+    flex-direction: row;
+}
+
+:host(.right) .header, :host(.left) .header {
+    flex-direction: column;
+}

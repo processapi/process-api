@@ -17,6 +17,14 @@ export default class MonacoEditor extends HTMLElement {
     get theme() {
         return this.dataset.theme ?? "vs-dark";
     }
+
+    get value() {
+        return this.#editor?.getValue();
+    }
+
+    set value(value) {
+        this.#editor?.setValue(value);
+    }
     
     constructor() {
         super();

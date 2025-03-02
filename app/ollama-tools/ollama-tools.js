@@ -3,26 +3,6 @@ import "./../../components/monaco-editor/monaco-editor.js";
 import "./../../components/dynamic-columns/dynamic-columns.js";
 import "./../../components/dynamic-rows/dynamic-rows.js";
 
-const tools = [
-	{
-		"type": "function",
-		"function": {
-			"name": "age",
-			"description": "Return the age of a person",
-			"parameters": {
-				"type": "object",
-				"properties": {
-					"personAge": {
-						"type": "integer",
-						"description": "The age of the person"
-					}
-				},
-				"required": ["personAge"]
-			}
-		}
-	}
-];
-
 export default class OllamaToolsView extends HTMLElement {
 	static tag = "ollama-tools-view";
 
@@ -59,6 +39,8 @@ export default class OllamaToolsView extends HTMLElement {
 			text: "Do you know how old the person is?"
 		});
 
+		const tools = JSON.parse(this.shadowRoot.querySelector("#tools").value);
+
 		const callResult = await OllamaModule.chat({
 			"model": "llama3.2",
 			"tools": tools,
@@ -74,8 +56,6 @@ export default class OllamaToolsView extends HTMLElement {
 		const functionDefinition = toolsJson.message.tool_calls[0];
 		const functionName = functionDefinition.function.name;
 		const functionArgs = functionDefinition.function.arguments;
-
-		console.log(functionName, functionArgs);
 
 		const functionCallMessage = await OllamaModule.create_message({
 			role: ChatRoles.TOOL,
@@ -95,7 +75,7 @@ export default class OllamaToolsView extends HTMLElement {
 			result.push(data);
 		}
 
-		this.shadowRoot.querySelector(".container").textContent = JSON.parse(result[0]).message.content;
+		this.shadowRoot.querySelector("text-area").textContent = JSON.parse(result[0]).message.content;
 	}
 }
 
