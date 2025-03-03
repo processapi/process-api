@@ -1,6 +1,10 @@
 import { ComponentModule } from "../../src/modules/component.js";
 import { HTML } from "./activity-state.html.js";
 
+/**
+ * Class representing the activity state component.
+ * @extends HTMLElement
+ */
 class ActivityState extends HTMLElement {
     static name = Object.freeze("activity-state");
 
@@ -12,12 +16,19 @@ class ActivityState extends HTMLElement {
         this.shadowRoot.innerHTML = HTML;
     }
 
+    /**
+     * Called when the element is connected to the document's DOM.
+     */
     async connectedCallback() {
         if (this.#state) {
             this.setState(this.#state);
         }
     }
 
+    /**
+     * Sets the state of the activity.
+     * @param {string} state - The state to set ('busy', 'success', 'error').
+     */
     setState(state) {
         const materialIcon = this.shadowRoot.querySelector("material-icon");
 
