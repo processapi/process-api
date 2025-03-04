@@ -29,19 +29,43 @@
 
 	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
 
-	--cl-primary: #007bff;
-	--cl-primary-text: #ffffff;
-	--cl-primary-border: #0056b3;
-	--cl-primary-hover: #0056b3;
+    /* --- Standard Button Variables --- */
+    --standard-bg: #f2f2f2;
+    --standard-color: #333;
+    --standard-border: #ccc;
+  
+    --standard-hover-bg: #e6e6e6;
+    --standard-hover-border: #b3b3b3;
+  
+    --standard-active-bg: #cccccc;
+    --standard-active-border: #999999;
+  
+    /* --- Primary Button Variables --- */
+    --primary-bg: #007bff; /* typical “blue” tone */
+    --primary-color: #fff;
+    --primary-border: #007bff;
+  
+    --primary-hover-bg: #0069d9;
+    --primary-hover-border: #0062cc;
+  
+    --primary-active-bg: #005bb5;
+    --primary-active-border: #0056a3;
+  
+    /* --- Secondary Button Variables --- */
+    --secondary-bg: #6c757d; /* typical “grayish” tone */
+    --secondary-color: #fff;
+    --secondary-border: #6c757d;
+  
+    --secondary-hover-bg: #5a6268;
+    --secondary-hover-border: #545b62;
+  
+    --secondary-active-bg: #4e555b;
+    --secondary-active-border: #484e53;
 
-	--cl-secondary: #6c757d;
-	--cl-secondary-text: #ffffff;
-	--cl-secondary-border: #545b62;
-	--cl-secondary-hover: #545b62;
-
-	--cl-disabled: #e0e0e0;
-	--cl-disabled-text: #a0a0a0;
-	--cl-disabled-border: #c0c0c0;
+	/* --- Disabled Button Variables --- */
+	--disabled-bg: #e0e0e0;
+	--disabled-color: #999999;
+	--disabled-border: #cccccc;
 }
 
 /* Dark theme */
