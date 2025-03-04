@@ -7,16 +7,24 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 :host * {
     box-sizing: border-box;
 }
 
+:host > ul {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: max-content;
 }
 
 li {

@@ -4,5 +4,6 @@ h2 {
 
 tree-view {
 	width: 300px;
+	height: 400px;
 	border: var(--border);
 }
