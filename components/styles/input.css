@@ -32,7 +32,6 @@ label {
     grid-template-columns: var(--label-width) 1fr;
     font-size: var(--font-size-small);
     font-weight: bold;
-    margin-bottom: var(--list-padding);
     color: var(--cl-text);
 }
 
