@@ -18,11 +18,15 @@
     padding: 0 !important;
     margin: 0 !important;
     cursor: ew-resize;
-    background-color: var(--cl-brd, #000) !important;
+    background-color: var(--cl-suppressed) !important;
 }
 
 ::slotted(.cell) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+::slotted(.active) {
+    background-color: var(--cl-focused) !important;
 }

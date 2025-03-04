@@ -3,6 +3,7 @@ import { HTML } from "./dynamic-columns.html.js";
 class DynamicColumns extends HTMLElement {
     static name = Object.freeze("dynamic-columns");
 
+    #target;
     #mouseDownHandler = this.#mouseDown.bind(this);
     #mouseMoveHandler = this.#mouseMove.bind(this);
     #mouseUpHandler = this.#mouseUp.bind(this);
@@ -78,6 +79,9 @@ class DynamicColumns extends HTMLElement {
         const target = event.composedPath()[0];
 
         if (target.classList.contains("resize-handle")) {
+            this.#target = target;
+            this.#target.classList.add("active");
+            
             this.#index = parseInt(target.dataset.index);
 
             this.addEventListener("mousemove", this.#mouseMoveHandler);
@@ -108,6 +112,8 @@ class DynamicColumns extends HTMLElement {
     }
 
     #mouseUp(event) {
+        this.#target.classList.remove("active");
+        this.#target = null;
         this.#isAnimating = false;
         this.#removeMouseListeners();
 

@@ -27,3 +27,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+::slotted(.active) {
+    background-color: var(--cl-focused) !important;
+}

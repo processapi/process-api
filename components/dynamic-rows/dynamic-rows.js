@@ -1,9 +1,9 @@
-import {ComponentModule} from "../../src/modules/component.js";
 import { HTML } from "./dynamic-rows.html.js";
 
 class DynamicRows extends HTMLElement {
     static name = Object.freeze("dynamic-rows");
 
+    #target;
     #mouseDownHandler = this.#mouseDown.bind(this);
     #mouseMoveHandler = this.#mouseMove.bind(this);
     #mouseUpHandler = this.#mouseUp.bind(this);
@@ -63,6 +63,8 @@ class DynamicRows extends HTMLElement {
         const target = event.composedPath()[0];
 
         if (target.classList.contains("resize-handle")) {
+            this.#target = target;
+            this.#target.classList.add("active");
             this.#index = parseInt(target.dataset.index);
 
             this.addEventListener("mousemove", this.#mouseMoveHandler);
@@ -94,6 +96,7 @@ class DynamicRows extends HTMLElement {
     }
 
     #mouseUp(event) {
+        this.#target.classList.remove("active");
         this.#isAnimating = false;
         this.#removeMouseListeners();
 
