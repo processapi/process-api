@@ -41,13 +41,14 @@ class ActivityState extends HTMLElement {
             "busy"      : "progress_activity",
             "success"   : "check",
             "error"     : "error_outline",
+            "warning"   : "warning_amber"
         }[state];
 
         ComponentModule.on_ready({
             element: materialIcon,
             callback: () => {
                 materialIcon.setIcon(iconName);
-                materialIcon.classList.remove("success", "error", "rotate");
+                materialIcon.classList.remove("success", "error", "rotate", "warning");
 
                 if (state === "busy") {
                     materialIcon.classList.add("rotate");
@@ -55,6 +56,8 @@ class ActivityState extends HTMLElement {
                     materialIcon.classList.add("success");
                 } else if (state === "error") {
                     materialIcon.classList.add("error");
+                } else if (state === "warning") {
+                    materialIcon.classList.add("warning");
                 }
             }
         })
