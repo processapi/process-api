@@ -1,9 +1,12 @@
-<app-header><h2>Activity State</h2></app-header>
+<app-header>
+    <h2>Activity State</h2>
+    <tool-bar slot="suffix">
+        <button data-action="busy">Set Busy</button>
+        <button data-action="success">Set Success</button>
+        <button data-action="error">Set Error</button>
+        <button data-action="warning">Set warning</button>
+        <activity-state data-state="busy"></activity-state>
+    </tool-bar>
+</app-header>
 
-<tool-bar>
-    <button data-action="busy">Set Busy</button>
-    <button data-action="success">Set Success</button>
-    <button data-action="error">Set Error</button>
-    <button data-action="warning">Set Warning</button>
-    <activity-state data-state="busy"></activity-state>
-</tool-bar>
+
