@@ -7,6 +7,7 @@
 
 .rotate {
     animation: rotate 2s linear infinite;
+    fill: var(--cl-progress);
 }
 
 @keyframes rotate {
@@ -19,14 +20,14 @@
 }
 
 .success {
-    fill: green;
+    fill: var(--cl-valid);
 }
 
 .error {
-    fill: red;
+    fill: var(--cl-invalid);
 }
 
 .warning {
-    fill: orange;
+    fill: var(--cl-danger);
 }
 
