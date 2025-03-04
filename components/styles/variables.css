@@ -1,3 +1,36 @@
+:root {
+	/* 1) Font Families */
+	--font-family-sans: "Open Sans", Arial, sans-serif;
+	--font-family-serif: "Merriweather", Georgia, serif;
+	--font-family-mono: "Fira Code", monospace;
+
+	/* 2) Font Weights */
+	--font-weight-light: 300;
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	/* 3) Font Sizes (Base and Scale) */
+	--font-size-base: 1rem;       /* 16px if the root font-size is 16px */
+	--font-size-sm: 0.875rem;     /* ~14px  */
+	--font-size-lg: 1.125rem;     /* ~18px  */
+	--font-size-h1: 2rem;         /* ~32px  */
+	--font-size-h2: 1.75rem;      /* ~28px  */
+	--font-size-h3: 1.5rem;       /* ~24px  */
+	--font-size-h4: 1.25rem;      /* ~20px  */
+	--font-size-h5: 1.125rem;     /* ~18px  */
+	--font-size-h6: 1rem;         /* ~16px  */
+
+	/* 4) Line Heights */
+	--line-height-base: 1.5;
+	--line-height-heading: 1.2;
+
+	/* 6) Misc. Text Utilities */
+	--letter-spacing-normal: normal;
+	--letter-spacing-wide: 0.5px;
+}
+
 :root, body.light-theme {
 	/* ---------- Basic Colors ---------- */
 	--cl-brd: #cccccc;              /* Soft border color */
@@ -78,38 +111,45 @@
 	--anchor-visited-color: #6f42c1;  /* A rich purple for visited links */
 	--anchor-active-color: #cf5010;   /* A strong orange/brown for active state */
 
-  /* Background & Text */
-  --input-bg: #ffffff;
-  --input-text: #333333;
-  --input-placeholder: #999999;
+	/* Background & Text */
+	--input-bg: #ffffff;
+	--input-text: #333333;
+	--input-placeholder: #999999;
 
-  /* Borders & Hover/Focus */
-  --input-border: #cccccc;
-  --input-hover-border: #b3b3b3;
-  --input-focus-border: #1E88E5;
-  --input-focus-background: #def0ff
+	/* Borders & Hover/Focus */
+	--input-border: #cccccc;
+	--input-hover-border: #b3b3b3;
+	--input-focus-border: #1E88E5;
+	--input-focus-background: #def0ff
 
-  /* Valid/Invalid States */
-  --input-valid-border: #28a745;
+	/* Valid/Invalid States */
+	--input-valid-border: #28a745;
 
-  --input-invalid-border: #dc3545;
-  --input-invalid-background: #ffe8ea;
+	--input-invalid-border: #dc3545;
+	--input-invalid-background: #ffe8ea;
 
-  /* Subtle Shadow */
-  --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	/* Subtle Shadow */
+	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-  /* Material Design Input Variables */
-  --input-bg: #ffffff;
-  --input-text: #333333;
-  --input-placeholder: #999999;
-  --input-border: #cccccc;
-  --input-hover-border: #b3b3b3;
-  --input-focus-border: #1E88E5;
-  --input-focus-background: #def0ff;
-  --input-valid-border: #28a745;
-  --input-invalid-border: #dc3545;
-  --input-invalid-background: #ffe8ea;
-  --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	/* Material Design Input Variables */
+	--input-bg: #ffffff;
+	--input-text: #333333;
+	--input-placeholder: #999999;
+	--input-border: #cccccc;
+	--input-hover-border: #b3b3b3;
+	--input-focus-border: #1E88E5;
+	--input-focus-background: #def0ff;
+	--input-valid-border: #28a745;
+	--input-invalid-border: #dc3545;
+	--input-invalid-background: #ffe8ea;
+	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+	/* 5) Text Colors */
+	--color-text: #333333;        /* Main body text */
+	--color-heading: #111111;     /* Headings */
+	--color-subtle: #777777;      /* Muted/subtle text */
+	--color-link: #0a66c2;        /* Default link color */
+	--color-link-hover: #084c93;  /* Hover link color */
 }
 
 /* ----------------- Dark Theme ----------------- */
@@ -209,4 +249,11 @@
 	--input-invalid-border: #dc3545;
 	--input-invalid-background: #4a2a2a;
 	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+	/* 5) Text Colors */
+	--color-text: #efefef;        /* Main body text on dark BG */
+	--color-heading: #ffffff;     /* Headings often stand out more in dark mode */
+	--color-subtle: #aaaaaa;      /* Muted text color */
+	--color-link: #58a6ff;        /* Bright azure link color for dark backgrounds */
+	--color-link-hover: #79c0ff;  /* Slightly lighter on hover */	
 }

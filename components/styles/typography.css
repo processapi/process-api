@@ -1,0 +1,37 @@
+body {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-heading);
+    color: var(--color-heading);
+    margin: 1rem 0 0.5rem;
+  }
+  
+  h1 {
+    font-size: var(--font-size-h1);
+  }
+  h2 {
+    font-size: var(--font-size-h2);
+  }
+  /* and so on... */
+  
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  a:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+  }
+  
+  .small-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-subtle);
+  }

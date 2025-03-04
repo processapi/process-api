@@ -13,7 +13,7 @@
 }
 
 ::slotted(h2) {
-    margin: 0 var(--padding);
+    margin: 0 var(--padding) !important;
     font-size: 1.5rem;
 }
 
