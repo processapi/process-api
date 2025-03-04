@@ -1,7 +1,7 @@
 :host {
     --menu-label-bg: transparent;
-    --menu-label-fg: gray;
-    --font-size: small;
+    --menu-label-fg: var(--cl-suppressed);
+    --font-size: var(--font-size-small);
 
     display: block;
     padding: var(--padding);

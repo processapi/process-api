@@ -1,8 +1,4 @@
 @import "./../../components/styles/variables.css";
-@import "./../../components/styles/buttons.css";
-@import "./../../components/styles/input.css";
-@import "./../../components/styles/form.css";
-@import "./../../components/styles/states.css";
 
 * {
 	box-sizing: border-box;
@@ -16,4 +12,6 @@ html, body, main {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+	color: var(--cl-text);
+	background-color: var(--cl-bkg-l);
 }

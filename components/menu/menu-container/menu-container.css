@@ -1,7 +1,7 @@
 :host {
-    --menu-bg: #fff;
-    --menu-item-hover-bg: #eee;
-    --menu-border-radius: 0.25rem;
+    --menu-bg: var(--cl-bkg-l);
+    --menu-item-hover-bg: var(--cl-bkg-l2);
+    --menu-border-radius: var(--border-radius);
     --min-width: 10rem;
 
     display: flex;

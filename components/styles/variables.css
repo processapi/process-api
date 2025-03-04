@@ -66,6 +66,12 @@
 	--disabled-bg: #e0e0e0;
 	--disabled-color: #999999;
 	--disabled-border: #cccccc;
+
+	/* --- Anchor Variables --- */
+	--anchor-color: var(--cl-focused);
+	--anchor-hover-color: var(--cl-progress);
+	--anchor-visited-color: var(--cl-valid);
+	--anchor-active-color: var(--cl-danger);
 }
 
 /* Dark theme */
