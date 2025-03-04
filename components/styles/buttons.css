@@ -3,10 +3,40 @@ button {
     padding: 0.25rem;
     cursor: pointer;
     max-width: 4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 button.icon-button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+button.primary {
+    background-color: var(--cl-primary);
+    color: var(--cl-primary-text);
+    border: 1px solid var(--cl-primary-border);
+}
+
+button.primary:hover {
+    background-color: var(--cl-primary-hover);
+}
+
+button.secondary {
+    background-color: var(--cl-secondary);
+    color: var(--cl-secondary-text);
+    border: 1px solid var(--cl-secondary-border);
+}
+
+button.secondary:hover {
+    background-color: var(--cl-secondary-hover);
+}
+
+button:disabled {
+    background-color: var(--cl-disabled);
+    color: var(--cl-disabled-text);
+    cursor: not-allowed;
+    border: 1px solid var(--cl-disabled-border);
 }

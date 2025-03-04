@@ -27,7 +27,21 @@
 	--input-width: min(100%, 20rem);
 	--label-width: 10rem;
 
-	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25))
+	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
+
+	--cl-primary: #007bff;
+	--cl-primary-text: #ffffff;
+	--cl-primary-border: #0056b3;
+	--cl-primary-hover: #0056b3;
+
+	--cl-secondary: #6c757d;
+	--cl-secondary-text: #ffffff;
+	--cl-secondary-border: #545b62;
+	--cl-secondary-hover: #545b62;
+
+	--cl-disabled: #e0e0e0;
+	--cl-disabled-text: #a0a0a0;
+	--cl-disabled-border: #c0c0c0;
 }
 
 /* Dark theme */
