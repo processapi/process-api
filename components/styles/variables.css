@@ -73,10 +73,10 @@
 	--disabled-border: #cccccc;
 
 	/* ---------- Anchor Variables ---------- */
-	--anchor-color: var(--cl-focused);   /* Matches primary/focus accent */
-	--anchor-hover-color: #1976d2;       /* Slightly darker on hover */
-	--anchor-visited-color: #6f42c1;     /* Common “visited link” variant */
-	--anchor-active-color: #ff6a1a;      /* Same as danger highlight */
+	--anchor-color: #0a66c2;          /* A vivid blue that stands out against light bg */
+	--anchor-hover-color: #084c93;    /* Darker shade for hover */
+	--anchor-visited-color: #6f42c1;  /* A rich purple for visited links */
+	--anchor-active-color: #cf5010;   /* A strong orange/brown for active state */
 
   /* Background & Text */
   --input-bg: #ffffff;
@@ -87,15 +87,28 @@
   --input-border: #cccccc;
   --input-hover-border: #b3b3b3;
   --input-focus-border: #1E88E5;
-  --input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2); 
-    /* Adds a subtle blue outline glow */
+  --input-focus-background: #def0ff
 
   /* Valid/Invalid States */
   --input-valid-border: #28a745;
+
   --input-invalid-border: #dc3545;
-  --input-invalid-bg: #ffe8ea;
+  --input-invalid-background: #ffe8ea;
 
   /* Subtle Shadow */
+  --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  /* Material Design Input Variables */
+  --input-bg: #ffffff;
+  --input-text: #333333;
+  --input-placeholder: #999999;
+  --input-border: #cccccc;
+  --input-hover-border: #b3b3b3;
+  --input-focus-border: #1E88E5;
+  --input-focus-background: #def0ff;
+  --input-valid-border: #28a745;
+  --input-invalid-border: #dc3545;
+  --input-invalid-background: #ffe8ea;
   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -157,27 +170,43 @@
 	--disabled-color: #999999;
 	--disabled-border: #5a5a5a;
 
-	--anchor-color: #1E88E5;
-	--anchor-hover-color: #1976d2;
-	--anchor-visited-color: #9f42cf;
-	--anchor-active-color: #ff6a1a;
+	/* Anchor Colors */
+	--anchor-color: #58a6ff;          /* Brighter azure for dark bg contrast */
+	--anchor-hover-color: #79c0ff;    /* Lightens further on hover */
+	--anchor-visited-color: #c9a2ff;  /* A soft violet for visited links */
+	--anchor-active-color: #ff6a1a;   /* Keeps the orange from your danger color */
 
 	/* Background & Text */
-	--input-bg: #2f2f2f;
-	--input-text: #f2f2f2;
-	--input-placeholder: #b0b0b0;
+	--input-bg: #dfdfdf;
+	--input-text: #333333;
+	--input-placeholder: #999999;
 
 	/* Borders & Hover/Focus */
 	--input-border: #4a4a4a;
 	--input-hover-border: #5a5a5a;
 	--input-focus-border: #1E88E5;
+	--input-focus-background: #def0ff;
 	--input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
 
 	/* Valid/Invalid States */
 	--input-valid-border: #28a745;
 	--input-invalid-border: #dc3545;
-	--input-invalid-bg: #4a2a2a;
+	--input-invalid-bg: #ffe8ea;
 
 	/* Subtle Shadow */
+	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+	/* Material Design Input Variables */
+	--input-bg: #2f2f2f;
+	--input-text: #f2f2f2;
+	--input-placeholder: #b0b0b0;
+	--input-border: #4a4a4a;
+	--input-hover-border: #5a5a5a;
+	--input-focus-border: #1E88E5;
+	--input-focus-background: #3a3a3a;
+	--input-focus-shadow: 0 2px 4px rgba(30, 136, 229, 0.3);
+	--input-valid-border: #28a745;
+	--input-invalid-border: #dc3545;
+	--input-invalid-background: #4a2a2a;
 	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
