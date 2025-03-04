@@ -12,11 +12,6 @@
     border-bottom: var(--border);
 }
 
-button {
-    width: 2.5rem;
-    height: 2.5rem;
-}
-
 ::slotted(h2) {
     margin: 0 var(--padding);
     font-size: 1.5rem;
