@@ -69,6 +69,7 @@ button[disabled] {
 button.icon {
     background-color: transparent;
     color: var(--standard-color);
+    fill: var(--standard-color);
     border-color: transparent;
     padding: 0;
     width: 2rem;

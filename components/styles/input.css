@@ -1,39 +1,39 @@
 input {
-    padding: var(--padding);
-    box-sizing: border-box;
-    border-radius: 0.25rem;
-    border: 1px solid var(--cl-border);
-    background-color: var(--cl-bg);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    width: var(--input-width);
-    min-width: 15rem;
+    background: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    box-shadow: var(--input-shadow);
+    border-radius: 4px;
+    padding: 0.5rem;
+    transition: border-color 0.2s ease-in-out;
 }
 
 input:hover {
-    border-color: var(--cl-border);
+    border-color: var(--input-hover-border);
 }
 
 input:focus {
-    outline: none;
-    border: 1px solid var(--cl-text);
-    border-color: var(--cl-focused);
+    border-color: var(--input-focus-border);
+    box-shadow: var(--input-focus-shadow);
+    outline: none; /* Typically remove default outline in favor of custom style */
 }
 
 input:valid {
-    border-color: var(--cl-valid);
+    border-color: var(--input-valid-border);
 }
-
+  
 input:invalid {
-    border-color: var(--cl-invalid);
-    background: var(--cl-invalid-back);
+    border-color: var(--input-invalid-border);
+    background-color: var(--input-invalid-bg);
 }
-
+  
 label {
     display: grid;
     grid-template-columns: var(--label-width) 1fr;
-    font-size: 0.875rem;
+    font-size: var(--font-size-small);
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--list-padding);
+    color: var(--cl-text);
 }
 
 @media (max-width: 768px) {

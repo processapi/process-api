@@ -1,87 +1,183 @@
-:root {
-	--cl-brd: #333333;
-	--cl-bkg-d: #f0f0f0;
-	--cl-bkg-l: #ffffff;
-	--cl-bkg-l2: #e0e0e0;
+:root, body.light-theme {
+	/* ---------- Basic Colors ---------- */
+	--cl-brd: #cccccc;              /* Soft border color */
+	--cl-bkg-d: #fafafa;            /* Light “darker” background */
+	--cl-bkg-l: #ffffff;            /* Light background */
+	--cl-bkg-l2: #f2f2f2;           /* Another light grey background */
+	
+	--cl-suppressed: #999999;       /* For less important text or placeholders */
+	--cl-text: #333333;             /* Main text color (darker grey) */
+	--cl-border: #cccccc;           /* Same as --cl-brd for consistency */
+	--cl-icon: #666666;             /* Icon default shade */
+	
+	--cl-danger: #ff6a1a;           /* Orange-red highlight for errors or destructive actions */
+	--cl-progress: #1E88E5;         /* Primary blue accent used in progress & general accent elements */
+	--cl-valid: #28a745;            /* Standard “success” green */
+	--cl-invalid: #dc3545;          /* Standard “error” red */
+	--cl-invalid-back: #ffe8ea;     /* Light red background for invalid fields */
+	--cl-focused: #1E88E5;          /* Same as progress to unify accent color */
 
-	--cl-suppressed: silver;
-	--cl-text: #000000;
-	--cl-border: #c3c3c3;
-	--cl-icon: grey;
-	--cl-danger: #ff6a1a;
-	--cl-progress: #1E88E5;
-	--cl-valid: #009900;
-	--cl-invalid: #cc0000;
-	--cl-invalid-back: #ffeded;
-	--cl-focused: #1E88E5;
-
-	--selected-background-color: color-mix(in srgb, var(--cl-focused) 20%, white 100%);
+	--selected-background-color: color-mix(
+		in srgb, var(--cl-focused) 20%, white 100%
+	);
 	--selected-color: var(--cl-focused);
 
+	/* ---------- Transitional Properties ---------- */
 	--transition: 0.2s ease-in-out;
 
+	/* ---------- Common Layout-Related Vars ---------- */
 	--border: 1px solid var(--cl-border);
 	--border-radius: 0.5rem;
 	--padding: 0.5rem;
 	--list-padding: 0.25rem;
 	--input-width: min(100%, 20rem);
 	--label-width: 10rem;
-
 	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
 
-    /* --- Standard Button Variables --- */
-    --standard-bg: #f2f2f2;
-    --standard-color: #333;
-    --standard-border: #ccc;
+	/* ---------- Standard Button Variables ---------- */
+	--standard-bg: #f7f7f7;
+	--standard-color: #333333;
+	--standard-border: #cccccc;
   
-    --standard-hover-bg: #e6e6e6;
-    --standard-hover-border: #b3b3b3;
+	--standard-hover-bg: #e6e6e6;
+	--standard-hover-border: #bbbbbb;
   
-    --standard-active-bg: #cccccc;
-    --standard-active-border: #999999;
+	--standard-active-bg: #dddddd;
+	--standard-active-border: #aaaaaa;
   
-    /* --- Primary Button Variables --- */
-    --primary-bg: #007bff; /* typical “blue” tone */
-    --primary-color: #fff;
-    --primary-border: #007bff;
+	/* ---------- Primary Button Variables ---------- */
+	--primary-bg: #1E88E5;  /* Unified accent */
+	--primary-color: #ffffff;
+	--primary-border: #1E88E5;
   
-    --primary-hover-bg: #0069d9;
-    --primary-hover-border: #0062cc;
+	--primary-hover-bg: #1976d2;
+	--primary-hover-border: #1976d2;
   
-    --primary-active-bg: #005bb5;
-    --primary-active-border: #0056a3;
+	--primary-active-bg: #1565c0;
+	--primary-active-border: #1565c0;
   
-    /* --- Secondary Button Variables --- */
-    --secondary-bg: #6c757d; /* typical “grayish” tone */
-    --secondary-color: #fff;
-    --secondary-border: #6c757d;
+	/* ---------- Secondary Button Variables ---------- */
+	--secondary-bg: #6c757d;
+	--secondary-color: #ffffff;
+	--secondary-border: #6c757d;
   
-    --secondary-hover-bg: #5a6268;
-    --secondary-hover-border: #545b62;
+	--secondary-hover-bg: #5a6268;
+	--secondary-hover-border: #545b62;
   
-    --secondary-active-bg: #4e555b;
-    --secondary-active-border: #484e53;
+	--secondary-active-bg: #4e555b;
+	--secondary-active-border: #484e53;
 
-	/* --- Disabled Button Variables --- */
+	/* ---------- Disabled Button Variables ---------- */
 	--disabled-bg: #e0e0e0;
 	--disabled-color: #999999;
 	--disabled-border: #cccccc;
 
-	/* --- Anchor Variables --- */
-	--anchor-color: var(--cl-focused);
-	--anchor-hover-color: var(--cl-progress);
-	--anchor-visited-color: var(--cl-valid);
-	--anchor-active-color: var(--cl-danger);
+	/* ---------- Anchor Variables ---------- */
+	--anchor-color: var(--cl-focused);   /* Matches primary/focus accent */
+	--anchor-hover-color: #1976d2;       /* Slightly darker on hover */
+	--anchor-visited-color: #6f42c1;     /* Common “visited link” variant */
+	--anchor-active-color: #ff6a1a;      /* Same as danger highlight */
+
+  /* Background & Text */
+  --input-bg: #ffffff;
+  --input-text: #333333;
+  --input-placeholder: #999999;
+
+  /* Borders & Hover/Focus */
+  --input-border: #cccccc;
+  --input-hover-border: #b3b3b3;
+  --input-focus-border: #1E88E5;
+  --input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2); 
+    /* Adds a subtle blue outline glow */
+
+  /* Valid/Invalid States */
+  --input-valid-border: #28a745;
+  --input-invalid-border: #dc3545;
+  --input-invalid-bg: #ffe8ea;
+
+  /* Subtle Shadow */
+  --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--cl-brd: #c5c5c5;
-		--cl-bkg-d: #212121;
-		--cl-bkg-l: #2f2f2f;
-		--cl-bkg-l2: #676767;
-		--cl-text: #f2f2f2;
-		--cl-icon: #f2f2f2;
-	}
+/* ----------------- Dark Theme ----------------- */
+:root, body.dark-theme {
+	--cl-brd: #4a4a4a;
+	--cl-bkg-d: #212121;
+	--cl-bkg-l: #2f2f2f;
+	--cl-bkg-l2: #404040;
+
+	--cl-text: #f2f2f2;
+	--cl-icon: #f2f2f2;
+	--cl-suppressed: #b0b0b0;
+	--cl-border: #4a4a4a;
+
+	--cl-danger: #ff6a1a;
+	--cl-progress: #1E88E5;
+	--cl-valid: #28a745;
+	--cl-invalid: #dc3545;
+	--cl-invalid-back: #4a2a2a;
+	--cl-focused: #1E88E5;
+
+	--selected-background-color: color-mix(
+		in srgb, var(--cl-focused) 20%, #2f2f2f 100%
+	);
+	--selected-color: var(--cl-focused);
+
+	--standard-bg: #3a3a3a;
+	--standard-color: #f2f2f2;
+	--standard-border: #4a4a4a;
+
+	--standard-hover-bg: #4a4a4a;
+	--standard-hover-border: #5a5a5a;
+
+	--standard-active-bg: #5a5a5a;
+	--standard-active-border: #6a6a6a;
+
+	--primary-bg: #1E88E5;
+	--primary-color: #fff;
+	--primary-border: #1E88E5;
+
+	--primary-hover-bg: #1976d2;
+	--primary-hover-border: #1976d2;
+
+	--primary-active-bg: #1565c0;
+	--primary-active-border: #1565c0;
+
+	--secondary-bg: #5a6268;
+	--secondary-color: #fff;
+	--secondary-border: #5a6268;
+
+	--secondary-hover-bg: #4a5258;
+	--secondary-hover-border: #424a4e;
+
+	--secondary-active-bg: #3a4248;
+	--secondary-active-border: #323a3e;
+
+	--disabled-bg: #4a4a4a;
+	--disabled-color: #999999;
+	--disabled-border: #5a5a5a;
+
+	--anchor-color: #1E88E5;
+	--anchor-hover-color: #1976d2;
+	--anchor-visited-color: #9f42cf;
+	--anchor-active-color: #ff6a1a;
+
+	/* Background & Text */
+	--input-bg: #2f2f2f;
+	--input-text: #f2f2f2;
+	--input-placeholder: #b0b0b0;
+
+	/* Borders & Hover/Focus */
+	--input-border: #4a4a4a;
+	--input-hover-border: #5a5a5a;
+	--input-focus-border: #1E88E5;
+	--input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
+
+	/* Valid/Invalid States */
+	--input-valid-border: #28a745;
+	--input-invalid-border: #dc3545;
+	--input-invalid-bg: #4a2a2a;
+
+	/* Subtle Shadow */
+	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
