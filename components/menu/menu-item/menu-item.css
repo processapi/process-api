@@ -1,7 +1,4 @@
 :host {
-    --menu-item-hover-bg: var(--selected-selected-color);
-    --menu-item-hover-fg: var(--cl-selected);
-
     display: flex;
     flex-direction: row;
     padding: var(--padding);
@@ -10,10 +7,11 @@
     min-width: var(--min-width);
     min-height: 1.5rem;
     align-items: center;
+    fill: var(--cl-icon);
 }
 
 :host(:hover) {
-    background: var(--menu-item-hover-bg);
-    color: var(--menu-item-hover-fg);
+    background: var(--selected-selected-color);
+    color: var(--cl-selected);
     border-radius: var(--menu-border-radius);
 }   
