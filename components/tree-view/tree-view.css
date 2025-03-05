@@ -32,7 +32,6 @@ li {
     position: relative;
     display: block; /* Change from flex to block */
     cursor: pointer;
-
     -webkit-user-select: none;
     user-select: none;
 }
@@ -62,10 +61,9 @@ li[aria-expanded="true"] > .content .expander {
 }
 
 li[aria-selected] > .content {
-    background-color: var(--selected-selected-color);
+    background-color: var(--cl-selected-background);
     color: var(--cl-selected);
-
-    border: var(--border);
+    border: var(--cl-border);
 }
 
 .fill {
@@ -77,5 +75,6 @@ li[aria-selected] > .content {
 
 .expander {
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform var(--transition);
+    fill: var(--cl-icon);
 }

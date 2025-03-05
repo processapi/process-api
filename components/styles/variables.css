@@ -39,6 +39,11 @@
 	--letter-spacing-normal: normal;
 	--letter-spacing-wide: 0.5px;
 	--cl-primary-hover-background: #1976d2;
+	--cl-danger: #ff6a1a;           /* Orange-red highlight for errors or destructive actions */
+	--cl-progress: #1E88E5;         /* Primary blue accent used in progress & general accent elements */
+	--cl-valid: #28a745;            /* Standard “success” green */
+	--cl-invalid: #dc3545;          /* Standard “error” red */
+	--cl-focused: #1E88E5;          /* Same as progress to unify accent color */
 }
 
 :root, body.light-theme {
@@ -50,15 +55,9 @@
 	
 	--cl-suppressed: #999999;       /* For less important text or placeholders */
 	--cl-text: #333333;             /* Main text color (darker grey) */
-	--cl-border: #cccccc;           /* Same as --cl-border for consistency */
 	--cl-icon: #666666;             /* Icon default shade */
 	
-	--cl-danger: #ff6a1a;           /* Orange-red highlight for errors or destructive actions */
-	--cl-progress: #1E88E5;         /* Primary blue accent used in progress & general accent elements */
-	--cl-valid: #28a745;            /* Standard “success” green */
-	--cl-invalid: #dc3545;          /* Standard “error” red */
 	--cl-invalid-back: #ffe8ea;     /* Light red background for invalid fields */
-	--cl-focused: #1E88E5;          /* Same as progress to unify accent color */
 
 	--cl-selected-background: color-mix(
 		in srgb, var(--cl-focused) 20%, white 100%
@@ -132,7 +131,6 @@
 
 /* ----------------- Dark Theme ----------------- */
 :root, body.dark-theme {
-	--cl-border: #4a4a4a;
 	--cl-background-dark: #212121;
 	--cl-background-light: #2f2f2f;
 	--cl-background-light2: #404040;
@@ -141,12 +139,7 @@
 	--cl-suppressed: #b0b0b0;
 	--cl-border: #4a4a4a;
 
-	--cl-danger: #ff6a1a;
-	--cl-progress: #1E88E5;
-	--cl-valid: #28a745;
-	--cl-invalid: #dc3545;
 	--cl-invalid-back: #4a2a2a;
-	--cl-focused: #1E88E5;
 
 	--selected-selected-color: color-mix(
 		in srgb, var(--cl-focused) 20%, #2f2f2f 100%
