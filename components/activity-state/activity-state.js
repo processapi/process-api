@@ -14,6 +14,8 @@ class ActivityState extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = HTML;
+        this.setAttribute('role', 'status');
+        this.setAttribute('aria-live', 'polite');
     }
 
     /**
@@ -27,7 +29,7 @@ class ActivityState extends HTMLElement {
 
     /**
      * Sets the state of the activity.
-     * @param {string} state - The state to set ('busy', 'success', 'error').
+     * @param {string} state - The state to set ('busy', 'success', 'error', 'warning').
      */
     setState(state) {
         const materialIcon = this.shadowRoot.querySelector("material-icon");
@@ -59,6 +61,8 @@ class ActivityState extends HTMLElement {
                 } else if (state === "warning") {
                     materialIcon.classList.add("warning");
                 }
+
+                this.setAttribute('aria-label', `Activity state is ${state}`);
             }
         })
     }

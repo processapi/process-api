@@ -39,6 +39,13 @@ The `ActivityState` component supports the following states:
 - `success`: Indicates that the activity was successful.
 - `error`: Indicates that there was an error in the activity.
 
+## Accessibility
+
+The `ActivityState` component uses ARIA attributes to ensure accessibility:
+
+- `role="status"`: Indicates the live region where updates are announced.
+- `aria-live="polite"`: Ensures updates are announced politely.
+
 ## Example
 
 Here is a complete example of how to use the `ActivityState` component:
