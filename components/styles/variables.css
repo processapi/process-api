@@ -38,6 +38,7 @@
 	/* 6) Misc. Text Utilities */
 	--letter-spacing-normal: normal;
 	--letter-spacing-wide: 0.5px;
+	--cl-primary-hover-background: #1976d2;
 }
 
 :root, body.light-theme {
@@ -103,30 +104,30 @@
 	--cl-disabled-border: #cccccc;
 
 	/* ---------- Anchor Variables ---------- */
-	--anchor-color: #0a66c2;          /* A vivid blue that stands out against light bg */
-	--anchor-hover-color: #084c93;    /* Darker shade for hover */
-	--anchor-visited-color: #6f42c1;  /* A rich purple for visited links */
-	--anchor-active-color: #cf5010;   /* A strong orange/brown for active state */
+	--cl-anchor-color: #0a66c2;          /* A vivid blue that stands out against light bg */
+	--cl-anchor-hover-color: #084c93;    /* Darker shade for hover */
+	--cl-anchor-visited-color: #6f42c1;  /* A rich purple for visited links */
+	--cl-anchor-active-color: #cf5010;   /* A strong orange/brown for active state */
 
 	/* Material Design Input Variables */
-	--input-bg: #ffffff;
-	--input-text: #333333;
-	--input-placeholder: #999999;
-	--input-border: #cccccc;
-	--input-hover-border: #b3b3b3;
-	--input-focus-border: #1E88E5;
-	--input-focus-background: #def0ff;
-	--input-valid-border: #28a745;
-	--input-invalid-border: #dc3545;
-	--input-invalid-background: #ffe8ea;
-	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	--cl-input-background: #ffffff;
+	--cl-input-text: #333333;
+	--cl-input-placeholder: #999999;
+	--cl-input-border: #cccccc;
+	--cl-input-hover-border: #b3b3b3;
+	--cl-input-focus-border: #1E88E5;
+	--cl-input-focus-background: #def0ff;
+	--cl-input-valid-border: #28a745;
+	--cl-input-invalid-border: #dc3545;
+	--cl-input-invalid-background: #ffe8ea;
+	--cl-input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 	/* 5) Text Colors */
-	--text: #333333;        /* Main body text */
-	--heading: #111111;     /* Headings */
-	--subtle: #777777;      /* Muted/subtle text */
-	--link: #0a66c2;        /* Default link color */
-	--link-hover: #084c93;  /* Hover link color */
+	--cl-text: #333333;        /* Main body text */
+	--cl-heading: #111111;     /* Headings */
+	--cl-subtle: #777777;      /* Muted/subtle text */
+	--cl-link: #0a66c2;        /* Default link color */
+	--cl-link-hover: #084c93;  /* Hover link color */
 }
 
 /* ----------------- Dark Theme ----------------- */
@@ -187,46 +188,46 @@
 	--cl-disabled-border: #5a5a5a;
 
 	/* Anchor Colors */
-	--anchor-color: #58a6ff;          /* Brighter azure for dark bg contrast */
-	--anchor-hover-color: #79c0ff;    /* Lightens further on hover */
-	--anchor-visited-color: #c9a2ff;  /* A soft violet for visited links */
-	--anchor-active-color: #ff6a1a;   /* Keeps the orange from your danger color */
+	--cl-anchor-color: #58a6ff;          /* Brighter azure for dark bg contrast */
+	--cl-anchor-hover-color: #79c0ff;    /* Lightens further on hover */
+	--cl-anchor-visited-color: #c9a2ff;  /* A soft violet for visited links */
+	--cl-anchor-active-color: #ff6a1a;   /* Keeps the orange from your danger color */
 
 	/* Background & Text */
-	--input-bg: #dfdfdf;
-	--input-text: #333333;
-	--input-placeholder: #999999;
+	--cl-input-background: #dfdfdf;
+	--cl-input-text: #333333;
+	--cl-input-placeholder: #999999;
 
 	/* Borders & Hover/Focus */
-	--input-border: #4a4a4a;
-	--input-hover-border: #5a5a5a;
-	--input-focus-border: #1E88E5;
-	--input-focus-background: #def0ff;
-	--input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
+	--cl-input-border: #4a4a4a;
+	--cl-input-hover-border: #5a5a5a;
+	--cl-input-focus-border: #1E88E5;
+	--cl-input-focus-background: #def0ff;
+	--cl-input-focus-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
 
 	/* Valid/Invalid States */
-	--input-valid-border: #28a745;
-	--input-invalid-border: #dc3545;
-	--input-invalid-bg: #ffe8ea;
+	--cl-input-valid-border: #28a745;
+	--cl-input-invalid-border: #dc3545;
+	--cl-input-invalid-bg: #ffe8ea;
 
 	/* Material Design Input Variables */
-	--input-bg: #2f2f2f;
-	--input-text: #f2f2f2;
-	--input-placeholder: #b0b0b0;
-	--input-border: #4a4a4a;
-	--input-hover-border: #5a5a5a;
-	--input-focus-border: #1E88E5;
-	--input-focus-background: #3a3a3a;
-	--input-focus-shadow: 0 2px 4px rgba(30, 136, 229, 0.3);
-	--input-valid-border: #28a745;
-	--input-invalid-border: #dc3545;
-	--input-invalid-background: #4a2a2a;
-	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	--cl-input-background: #2f2f2f;
+	--cl-input-text: #f2f2f2;
+	--cl-input-placeholder: #b0b0b0;
+	--cl-input-border: #4a4a4a;
+	--cl-input-hover-border: #5a5a5a;
+	--cl-input-focus-border: #1E88E5;
+	--cl-input-focus-background: #3a3a3a;
+	--cl-input-focus-shadow: 0 2px 4px rgba(30, 136, 229, 0.3);
+	--cl-input-valid-border: #28a745;
+	--cl-input-invalid-border: #dc3545;
+	--cl-input-invalid-background: #4a2a2a;
+	--cl-input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
 	/* 5) Text Colors */
-	--color-text: #efefef;        /* Main body text on dark BG */
-	--color-heading: #ffffff;     /* Headings often stand out more in dark mode */
-	--color-subtle: #aaaaaa;      /* Muted text color */
-	--color-link: #58a6ff;        /* Bright azure link color for dark backgrounds */
-	--color-link-hover: #79c0ff;  /* Slightly lighter on hover */	
+	--cl-text: #efefef;        /* Main body text on dark BG */
+	--cl-heading: #ffffff;     /* Headings often stand out more in dark mode */
+	--cl-subtle: #aaaaaa;      /* Muted text color */
+	--cl-link: #58a6ff;        /* Bright azure link color for dark backgrounds */
+	--cl-link-hover: #79c0ff;  /* Slightly lighter on hover */	
 }
