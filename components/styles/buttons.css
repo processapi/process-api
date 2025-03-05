@@ -8,26 +8,26 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-    background-color: var(--standard-bg);
-    color: var(--standard-color);
-    border-color: var(--standard-border);
+    background-color: var(--cl-standard-background);
+    color: var(--cl-standard);
+    border-color: var(--cl-standard-border);
 }
 
 button:hover {
-    background-color: var(--standard-hover-bg);
-    border-color: var(--standard-hover-border);
+    background-color: var(--cl-standard-hover-background);
+    border-color: var(--cl-standard-hover-border);
 }
 
 button:active {
-    background-color: var(--standard-active-bg);
-    border-color: var(--standard-active-border);
+    background-color: var(--cl-standard-active-background);
+    border-color: var(--cl-standard-active-border);
 }
 
 /* Primary Button */
 button.primary {
-    background-color: var(--primary-bg);
-    color: var(--primary-color);
-    border-color: var(--primary-border);
+    background-color: var(--cl-primary-background);
+    color: var(--cl-primary-color);
+    border-color: var(--cl-primary-border);
 }
 
 button.primary:hover {
@@ -68,8 +68,8 @@ button[disabled] {
 
 button.icon {
     background-color: transparent;
-    color: var(--standard-color);
-    fill: var(--standard-color);
+    color: var(--cl-standard);
+    fill: var(--cl-standard);
     border-color: transparent;
     padding: 0;
     width: 2rem;
@@ -80,11 +80,11 @@ button.icon {
 }
 
 button.icon:hover {
-    background-color: var(--standard-hover-bg);
-    border-color: var(--standard-hover-border);
+    background-color: var(--cl-standard-hover-background);
+    border-color: var(--cl-standard-hover-border);
 }
 
 button.icon:active {
-    background-color: var(--standard-active-bg);
-    border-color: var(--standard-active-border);
+    background-color: var(--cl-standard-active-background);
+    border-color: var(--cl-standard-active-border);
 }

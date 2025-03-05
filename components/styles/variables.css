@@ -59,26 +59,26 @@
 	--cl-invalid-back: #ffe8ea;     /* Light red background for invalid fields */
 	--cl-focused: #1E88E5;          /* Same as progress to unify accent color */
 
-	--selected-background-color: color-mix(
+	--cl-selected-background: color-mix(
 		in srgb, var(--cl-focused) 20%, white 100%
 	);
-	--selected-color: var(--cl-focused);
+	--cl-selected: var(--cl-focused);
 
 	/* ---------- Standard Button Variables ---------- */
-	--standard-bg: #f7f7f7;
-	--standard-color: #333333;
-	--standard-border: #cccccc;
+	--cl-standard-background: #f7f7f7;
+	--cl-standard: #333333;
+	--cl-standard-border: #cccccc;
   
-	--standard-hover-bg: #e6e6e6;
-	--standard-hover-border: #bbbbbb;
+	--cl-standard-hover-background: #e6e6e6;
+	--cl-standard-hover-border: #bbbbbb;
   
-	--standard-active-bg: #dddddd;
-	--standard-active-border: #aaaaaa;
+	--cl-standard-active-background: #dddddd;
+	--cl-standard-active-border: #aaaaaa;
   
 	/* ---------- Primary Button Variables ---------- */
-	--primary-bg: #1E88E5;  /* Unified accent */
-	--primary-color: #ffffff;
-	--primary-border: #1E88E5;
+	--cl-primary-background: #1E88E5;  /* Unified accent */
+	--cl-primary-color: #ffffff;
+	--cl-primary-border: #1E88E5;
   
 	--primary-hover-bg: #1976d2;
 	--primary-hover-border: #1976d2;
@@ -147,24 +147,24 @@
 	--cl-invalid-back: #4a2a2a;
 	--cl-focused: #1E88E5;
 
-	--selected-background-color: color-mix(
+	--selected-selected-color: color-mix(
 		in srgb, var(--cl-focused) 20%, #2f2f2f 100%
 	);
-	--selected-color: var(--cl-focused);
+	--cl-selected: var(--cl-focused);
 
-	--standard-bg: #3a3a3a;
-	--standard-color: #f2f2f2;
-	--standard-border: #4a4a4a;
+	--cl-standard-background: #3a3a3a;
+	--cl-standard: #f2f2f2;
+	--cl-standard-border: #4a4a4a;
 
-	--standard-hover-bg: #4a4a4a;
-	--standard-hover-border: #5a5a5a;
+	--cl-standard-hover-background: #4a4a4a;
+	--cl-standard-hover-border: #5a5a5a;
 
-	--standard-active-bg: #5a5a5a;
-	--standard-active-border: #6a6a6a;
+	--cl-standard-active-background: #5a5a5a;
+	--cl-standard-active-border: #6a6a6a;
 
-	--primary-bg: #1E88E5;
-	--primary-color: #fff;
-	--primary-border: #1E88E5;
+	--cl-primary-background: #1E88E5;
+	--cl-primary-color: #fff;
+	--cl-primary-border: #1E88E5;
 
 	--primary-hover-bg: #1976d2;
 	--primary-hover-border: #1976d2;

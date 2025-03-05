@@ -62,8 +62,8 @@ li[aria-expanded="true"] > .content .expander {
 }
 
 li[aria-selected] > .content {
-    background-color: var(--selected-background-color);
-    color: var(--selected-color);
+    background-color: var(--selected-selected-color);
+    color: var(--cl-selected);
 
     border: var(--border);
 }

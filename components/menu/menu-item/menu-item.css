@@ -1,6 +1,6 @@
 :host {
-    --menu-item-hover-bg: var(--selected-background-color);
-    --menu-item-hover-fg: var(--selected-color);
+    --menu-item-hover-bg: var(--selected-selected-color);
+    --menu-item-hover-fg: var(--cl-selected);
 
     display: flex;
     flex-direction: row;
