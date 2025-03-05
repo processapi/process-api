@@ -49,7 +49,7 @@ The component uses the following CSS variables for styling:
 - `--border`
 - `--border-radius`
 - `--drop-shadow`
-- `--cl-bkg-l2`
+- `--cl-background-light2`
 - `--color-text`
 - `--cl-progress`
 - `--cl-invalid`

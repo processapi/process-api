@@ -42,14 +42,14 @@
 
 :root, body.light-theme {
 	/* ---------- Basic Colors ---------- */
-	--cl-brd: #cccccc;              /* Soft border color */
-	--cl-bkg-d: #fafafa;            /* Light “darker” background */
-	--cl-bkg-l: #ffffff;            /* Light background */
-	--cl-bkg-l2: #f2f2f2;           /* Another light grey background */
+	--cl-border: #cccccc;              /* Soft border color */
+	--cl-background-dark: #fafafa;            /* Light “darker” background */
+	--cl-background-light: #ffffff;            /* Light background */
+	--cl-background-light2: #f2f2f2;           /* Another light grey background */
 	
 	--cl-suppressed: #999999;       /* For less important text or placeholders */
 	--cl-text: #333333;             /* Main text color (darker grey) */
-	--cl-border: #cccccc;           /* Same as --cl-brd for consistency */
+	--cl-border: #cccccc;           /* Same as --cl-border for consistency */
 	--cl-icon: #666666;             /* Icon default shade */
 	
 	--cl-danger: #ff6a1a;           /* Orange-red highlight for errors or destructive actions */
@@ -122,19 +122,19 @@
 	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 	/* 5) Text Colors */
-	--color-text: #333333;        /* Main body text */
-	--color-heading: #111111;     /* Headings */
-	--color-subtle: #777777;      /* Muted/subtle text */
-	--color-link: #0a66c2;        /* Default link color */
-	--color-link-hover: #084c93;  /* Hover link color */
+	--text: #333333;        /* Main body text */
+	--heading: #111111;     /* Headings */
+	--subtle: #777777;      /* Muted/subtle text */
+	--link: #0a66c2;        /* Default link color */
+	--link-hover: #084c93;  /* Hover link color */
 }
 
 /* ----------------- Dark Theme ----------------- */
 :root, body.dark-theme {
-	--cl-brd: #4a4a4a;
-	--cl-bkg-d: #212121;
-	--cl-bkg-l: #2f2f2f;
-	--cl-bkg-l2: #404040;
+	--cl-border: #4a4a4a;
+	--cl-background-dark: #212121;
+	--cl-background-light: #2f2f2f;
+	--cl-background-light2: #404040;
 
 	--cl-icon: #f2f2f2;
 	--cl-suppressed: #b0b0b0;

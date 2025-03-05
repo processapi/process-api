@@ -7,7 +7,7 @@
 	--button-border: none;
 
 	--run-radius: 50% 0 0 50%;
-	--cl-run-bkg: var(--cl-bkg-l2);
+	--cl-run-bkg: var(--cl-background-light2);
 
 	--cl-strong: cornflowerblue;
 
@@ -57,7 +57,7 @@ input:focus {
 .input {
 	display: grid;
 	grid-template-columns: auto 1fr auto auto;
-	background: var(--cl-bkg-l);
+	background: var(--cl-background-light);
 	border-radius: 26px;
 	border: var(--border);
 }

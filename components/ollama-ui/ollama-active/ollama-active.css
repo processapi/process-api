@@ -7,7 +7,7 @@
     width: var(--width);
     height: var(--height);
     translate: -50% -50%;
-    background: var(--cl-bkg-l);
+    background: var(--cl-background-light);
     color: var(--cl-text);
     padding: var(--padding);
     filter: var(--drop-shadow);
@@ -16,7 +16,7 @@
 
 h2 {
     color: var(--cl-danger);
-    background: var(--cl-brd);
+    background: var(--cl-border);
     padding: 1rem;
     border-radius: 5px;
     margin-top: 0;

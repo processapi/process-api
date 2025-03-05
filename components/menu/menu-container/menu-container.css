@@ -1,6 +1,6 @@
 :host {
-    --menu-bg: var(--cl-bkg-l);
-    --menu-item-hover-bg: var(--cl-bkg-l2);
+    --menu-bg: var(--cl-background-light);
+    --menu-item-hover-bg: var(--cl-background-light2);
     --menu-border-radius: var(--border-radius);
     --min-width: 10rem;
 

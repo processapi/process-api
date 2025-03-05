@@ -12,7 +12,7 @@
     height: var(--height);
     translate: -50% -50%;
 
-    background: var(--cl-bkg-l);
+    background: var(--cl-background-light);
     color: var(--cl-text);
     padding: var(--padding);
     filter: var(--drop-shadow);
@@ -73,7 +73,7 @@ li {
 }
 
 li:nth-child(odd) {
-    background: var(--cl-bkg-l2);
+    background: var(--cl-background-light2);
 }
 
 [data-installed="true"]:after {
@@ -153,7 +153,7 @@ div#download {
     translate: -50% -50%;
     width: 300px;
     height: 200px;
-    background: var(--cl-bkg-l);
+    background: var(--cl-background-light);
     color: var(--cl-text);
     padding: var(--padding);
     filter: var(--drop-shadow);
@@ -217,7 +217,7 @@ svg * {
 
     .model {
         translate: 100% 0;
-        background: var(--cl-bkg-l);
+        background: var(--cl-background-light);
         color: var(--cl-text);    
     }
 

@@ -11,7 +11,7 @@
   border: var(--border);
   filter: var(--drop-shadow);
   border-radius: var(--border-radius);
-  background-color: var(--cl-bkg-l2);
+  background-color: var(--cl-background-light2);
 }
 
 .toast use {

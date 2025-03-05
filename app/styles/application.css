@@ -14,5 +14,5 @@ html, body, main {
 	margin: 0;
 	overflow: hidden;
 	color: var(--cl-text);
-	background-color: var(--cl-bkg-l);
+	background-color: var(--cl-background-light);
 }

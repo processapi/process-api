@@ -19,7 +19,7 @@
     padding: 0 !important;
     margin: 0 !important;
     cursor: ns-resize;
-    background-color: var(--cl-brd, #000) !important;
+    background-color: var(--cl-border, #000) !important;
 }
 
 ::slotted(.cell) {
