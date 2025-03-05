@@ -1,4 +1,13 @@
 :root {
+	--transition: 0.2s ease-in-out;
+	--border: 1px solid var(--cl-border);
+	--border-radius: 0.5rem;
+	--padding: 0.5rem;
+	--list-padding: 0.25rem;
+	--input-width: min(100%, 20rem);
+	--label-width: 10rem;
+	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
+
 	/* 1) Font Families */
 	--font-family-sans: "Open Sans", Arial, sans-serif;
 	--font-family-serif: "Merriweather", Georgia, serif;
@@ -55,18 +64,6 @@
 	);
 	--selected-color: var(--cl-focused);
 
-	/* ---------- Transitional Properties ---------- */
-	--transition: 0.2s ease-in-out;
-
-	/* ---------- Common Layout-Related Vars ---------- */
-	--border: 1px solid var(--cl-border);
-	--border-radius: 0.5rem;
-	--padding: 0.5rem;
-	--list-padding: 0.25rem;
-	--input-width: min(100%, 20rem);
-	--label-width: 10rem;
-	--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
-
 	/* ---------- Standard Button Variables ---------- */
 	--standard-bg: #f7f7f7;
 	--standard-color: #333333;
@@ -111,26 +108,6 @@
 	--anchor-visited-color: #6f42c1;  /* A rich purple for visited links */
 	--anchor-active-color: #cf5010;   /* A strong orange/brown for active state */
 
-	/* Background & Text */
-	--input-bg: #ffffff;
-	--input-text: #333333;
-	--input-placeholder: #999999;
-
-	/* Borders & Hover/Focus */
-	--input-border: #cccccc;
-	--input-hover-border: #b3b3b3;
-	--input-focus-border: #1E88E5;
-	--input-focus-background: #def0ff
-
-	/* Valid/Invalid States */
-	--input-valid-border: #28a745;
-
-	--input-invalid-border: #dc3545;
-	--input-invalid-background: #ffe8ea;
-
-	/* Subtle Shadow */
-	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-
 	/* Material Design Input Variables */
 	--input-bg: #ffffff;
 	--input-text: #333333;
@@ -159,7 +136,6 @@
 	--cl-bkg-l: #2f2f2f;
 	--cl-bkg-l2: #404040;
 
-	--cl-text: #f2f2f2;
 	--cl-icon: #f2f2f2;
 	--cl-suppressed: #b0b0b0;
 	--cl-border: #4a4a4a;
@@ -232,9 +208,6 @@
 	--input-valid-border: #28a745;
 	--input-invalid-border: #dc3545;
 	--input-invalid-bg: #ffe8ea;
-
-	/* Subtle Shadow */
-	--input-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
 	/* Material Design Input Variables */
 	--input-bg: #2f2f2f;

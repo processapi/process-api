@@ -2,6 +2,7 @@ import { HTML } from "./toast-notification.html.js";
 
 /**
  * The ToastNotification web component handles creating and displaying toasts.
+ * @extends HTMLElement
  */
 export class ToastNotification extends HTMLElement {
     static name = Object.freeze("toast-notification");
@@ -37,6 +38,7 @@ export class ToastNotification extends HTMLElement {
 
     /**
      * Checks whether user clicked the close icon and removes the toast if so.
+     * @param {Event} event - The click event.
      */
     #click(event) {
         const target = event.composedPath()[0];

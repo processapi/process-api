@@ -24,7 +24,7 @@
 }
 
 .toast .message {
-  color: black;
+  color: var(--color-text);
   margin-top: 0.25rem;
 }
 
