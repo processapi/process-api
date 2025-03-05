@@ -11,6 +11,7 @@ class AppHeader extends HTMLElement {
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = HTML;
         this.style.display = "flex";
+        this.setAttribute("role", "banner");
     }
 
     async connectedCallback() {

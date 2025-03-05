@@ -10,6 +10,8 @@ class BreadCrumb extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = HTML;
+        this.setAttribute("role", "navigation");
+        this.setAttribute("aria-label", "Breadcrumb");
     }
 
     async connectedCallback() {
@@ -34,4 +36,4 @@ class BreadCrumb extends HTMLElement {
     }
 }
 
-customElements.define(AppHeader.name, AppHeader);
+customElements.define(BreadCrumb.name, BreadCrumb);

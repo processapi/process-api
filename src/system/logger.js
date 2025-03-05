@@ -11,7 +11,7 @@
  * Date is set to current date and time
  */
 
-const LOG_LEVELS = {
+globalThis.LOG_LEVELS = {
     ERROR: 'error',
     WARN: 'warn',
     INFO: 'info',
