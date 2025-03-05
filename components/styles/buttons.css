@@ -1,4 +1,3 @@
-
 /* Base button styling (applies to all button types) */
 button {
     font-family: inherit;
@@ -31,37 +30,37 @@ button.primary {
 }
 
 button.primary:hover {
-    background-color: var(--primary-hover-bg);
-    border-color: var(--primary-hover-border);
+    background-color: var(--cl-primary-hover-background);
+    border-color: var(--cl-primary-hover-border);
 }
 
 button.primary:active {
-    background-color: var(--primary-active-bg);
-    border-color: var(--primary-active-border);
+    background-color: var(--cl-primary-active-background);
+    border-color: var(--cl-primary-active-border);
 }
 
 /* Secondary Button */
 button.secondary {
-    background-color: var(--secondary-bg);
-    color: var(--secondary-color);
-    border-color: var(--secondary-border);
+    background-color: var(--cl-secondary-background);
+    color: var(--cl-secondary-color);
+    border-color: var(--cl-secondary-border);
 }
 
 button.secondary:hover {
-    background-color: var(--secondary-hover-bg);
-    border-color: var(--secondary-hover-border);
+    background-color: var(--cl-secondary-hover-background);
+    border-color: var(--cl-secondary-hover-border);
 }
 
 button.secondary:active {
-    background-color: var(--secondary-active-bg);
-    border-color: var(--secondary-active-border);
+    background-color: var(--cl-secondary-active-background);
+    border-color: var(--cl-secondary-active-border);
 }
 
 button:disabled,
 button[disabled] {
-  background-color: var(--disabled-bg);
-  color: var(--disabled-color);
-  border-color: var(--disabled-border);
+  background-color: var(--cl-disabled-background);
+  color: var(--cl-disabled-color);
+  border-color: var(--cl-disabled-border);
   cursor: not-allowed;
   opacity: 0.6; /* optional, can help visually indicate disabled state */
 }

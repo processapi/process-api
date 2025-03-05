@@ -80,27 +80,27 @@
 	--cl-primary-color: #ffffff;
 	--cl-primary-border: #1E88E5;
   
-	--primary-hover-bg: #1976d2;
-	--primary-hover-border: #1976d2;
+	--cl-primary-hover-background: #1976d2;
+	--cl-primary-hover-border: #1976d2;
   
-	--primary-active-bg: #1565c0;
-	--primary-active-border: #1565c0;
+	--cl-primary-active-background: #1565c0;
+	--cl-primary-active-border: #1565c0;
   
 	/* ---------- Secondary Button Variables ---------- */
-	--secondary-bg: #6c757d;
-	--secondary-color: #ffffff;
-	--secondary-border: #6c757d;
+	--cl-secondary-background: #6c757d;
+	--cl-secondary-color: #ffffff;
+	--cl-secondary-border: #6c757d;
   
-	--secondary-hover-bg: #5a6268;
-	--secondary-hover-border: #545b62;
+	--cl-secondary-hover-background: #5a6268;
+	--cl-secondary-hover-border: #545b62;
   
-	--secondary-active-bg: #4e555b;
-	--secondary-active-border: #484e53;
+	--cl-secondary-active-background: #4e555b;
+	--cl-secondary-active-border: #484e53;
 
 	/* ---------- Disabled Button Variables ---------- */
-	--disabled-bg: #e0e0e0;
-	--disabled-color: #999999;
-	--disabled-border: #cccccc;
+	--cl-disabled-background: #e0e0e0;
+	--cl-disabled-color: #999999;
+	--cl-disabled-border: #cccccc;
 
 	/* ---------- Anchor Variables ---------- */
 	--anchor-color: #0a66c2;          /* A vivid blue that stands out against light bg */
@@ -166,25 +166,25 @@
 	--cl-primary-color: #fff;
 	--cl-primary-border: #1E88E5;
 
-	--primary-hover-bg: #1976d2;
-	--primary-hover-border: #1976d2;
+	--cl-primary-hover-background: #1976d2;
+	--cl-primary-hover-border: #1976d2;
 
-	--primary-active-bg: #1565c0;
-	--primary-active-border: #1565c0;
+	--cl-primary-active-background: #1565c0;
+	--cl-primary-active-border: #1565c0;
 
-	--secondary-bg: #5a6268;
-	--secondary-color: #fff;
-	--secondary-border: #5a6268;
+	--cl-secondary-background: #5a6268;
+	--cl-secondary-color: #fff;
+	--cl-secondary-border: #5a6268;
 
-	--secondary-hover-bg: #4a5258;
-	--secondary-hover-border: #424a4e;
+	--cl-secondary-hover-background: #4a5258;
+	--cl-secondary-hover-border: #424a4e;
 
-	--secondary-active-bg: #3a4248;
-	--secondary-active-border: #323a3e;
+	--cl-secondary-active-background: #3a4248;
+	--cl-secondary-active-border: #323a3e;
 
-	--disabled-bg: #4a4a4a;
-	--disabled-color: #999999;
-	--disabled-border: #5a5a5a;
+	--cl-disabled-background: #4a4a4a;
+	--cl-disabled-color: #999999;
+	--cl-disabled-border: #5a5a5a;
 
 	/* Anchor Colors */
 	--anchor-color: #58a6ff;          /* Brighter azure for dark bg contrast */

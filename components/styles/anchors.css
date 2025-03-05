@@ -1,18 +1,18 @@
 a {
-	color: var(--anchor-color);
+	color: var(--cl-anchor-color);
 	text-decoration: none;
 	transition: color var(--transition);
 }
 
 a:hover {
-	color: var(--anchor-hover-color);
+	color: var(--cl-anchor-hover-color);
 	text-decoration: underline;
 }
 
 a:visited {
-	color: var(--anchor-visited-color);
+	color: var(--cl-anchor-visited-color);
 }
 
 a:active {
-	color: var(--anchor-active-color);
+	color: var(--cl-anchor-active-color);
 }

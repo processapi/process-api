@@ -5,6 +5,6 @@
   align-items: center;
   padding: var(--padding);
   margin: 0;
-  background-color: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--cl-background);
+  border-bottom: 1px solid var(--cl-border);
 }
