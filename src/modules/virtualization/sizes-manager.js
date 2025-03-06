@@ -193,6 +193,10 @@ export class SizesManager {
         return this.#cumulativeSizes.findIndex(size => location <= size);
     }
 
+    top(index) {
+        return this.#cumulativeSizes[index] - this.#sizes[index];
+    }
+
     /**
      * Get the size at the given index.
      * @param {number} index - The index to get the size for.

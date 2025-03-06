@@ -73,11 +73,13 @@ export class VirtualList extends HTMLElement {
             this.#animating = false;
         }
 
+        let top = this.#sizeManager.top(this.#visibleRange.start);
         for (let i = 0; i < this.#listItems.length; i++) {
             const item = this.#listItems[i];
-            const index = this.#visibleRange.start + i;
-            const top = this.#sizeManager.cumulative(index);
             item.style.translate = `0px ${top}px`;
+
+            const index = this.#visibleRange.start + i;
+            top += this.#sizeManager.at(index);
 
             const data = this.#data[index];
             if (data != null) {
@@ -103,17 +105,17 @@ export class VirtualList extends HTMLElement {
 
     #loadElements() {
         const height = this.offsetHeight;
-        const visibleRange = this.#sizeManager.getVisibleRange(0, height);
+        this.#visibleRange = this.#sizeManager.getVisibleRange(0, height);
         const totalHeight = this.#sizeManager.totalSize;
 
         if (height <= totalHeight) {
-            this.#createElements(visibleRange, totalHeight);
+            this.#createElements(totalHeight);
         }
     }
 
-    #createElements(visibleRange, markerY) {
+    #createElements(markerY) {
         const fragment = document.createDocumentFragment();
-        const { start, end } = visibleRange;
+        const { start, end } = this.#visibleRange;
 
         let top = 0;
         for (let i = start; i <= end; i++) {
@@ -121,11 +123,14 @@ export class VirtualList extends HTMLElement {
             const element = this.#template.content.cloneNode(true).firstElementChild;
             element.style.position = "absolute";
             element.style.translate = `0px ${top}px`;
+
+            const index = this.#visibleRange.start + i;
+            top += this.#sizeManager.at(index);
+
             this.#inflateFn(element, item);
             fragment.appendChild(element);
 
             this.#listItems.push(element);
-            top += this.#sizeManager.at(i);
         }
 
         this.#ul.innerHTML = "";
@@ -153,6 +158,7 @@ export class VirtualList extends HTMLElement {
         // Update the virtual list with new items
         this.#data.push(...items);
         this.#sizeManager = new SizesManager(this.#data.length, height);
+        console.log(this.#sizeManager);
         IdleModule.perform({ tasks: [this.#loadElements.bind(this)] });
     }
 }
