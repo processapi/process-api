@@ -14,4 +14,18 @@ ul {
   margin: 0;
   padding: 0;
   color: var(--cl-text);
+  position: relative;
+  will-change: scroll-position;
+}
+
+li {
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.marker {
+  width: 1px;
+  height: 1px;
+  background: red;
+  position: absolute;
 }

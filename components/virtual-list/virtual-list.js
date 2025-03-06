@@ -7,9 +7,18 @@ import { IdleModule } from "../../src/modules/idle.js";
  * The VirtualList web component handles creating and displaying a virtual list.
  */
 export class VirtualList extends HTMLElement {
+    // container related properties
+    #ul;
+    #onULScrollHandler = this.#onULScroll.bind(this);
+    #scrollTop = 0;
+    #marker;
+    #listItems = [];
 
+    // item related properties
     #template;
     #inflateFn;
+
+    // data related properties
     #sizeManager;
     #data = [];
 
@@ -29,6 +38,8 @@ export class VirtualList extends HTMLElement {
      */
     async connectedCallback() {
         // Initialize the virtual list here
+        this.#ul = this.shadowRoot.querySelector("ul");
+        this.#ul.addEventListener("scroll", this.#onULScrollHandler);
         await ComponentModule.ready({element: this});
     }
 
@@ -36,37 +47,68 @@ export class VirtualList extends HTMLElement {
      * Clean up when the component is disconnected.
      */
     disconnectedCallback() {
+        this.#ul.removeEventListener("scroll", this.#onULScrollHandler);
+
         // Clean up resources here
+        this.#ul = null;
         this.#data = null;
         this.#sizeManager = this.#sizeManager.dispose();
         this.#template = null;
         this.#inflateFn = null;
+        this.#listItems = null;
+        this.#marker = null;
+        this.#onULScrollHandler = null;
     }
     
+    #onULScroll(event) {
+        this.#scrollTop = event.target.scrollTop;
+        const visibleRange = this.#sizeManager.getVisibleRange(this.#scrollTop, this.offsetHeight);
+
+        for (let i = 0; i < this.#listItems.length; i++) {
+            const item = this.#listItems[i];
+            const index = visibleRange.start + i;
+            const top = this.#sizeManager.cumulative(index);
+            item.style.translate = `0px ${top}px`;
+
+            const data = this.#data[index];
+            if (data != null) {
+                this.#inflateFn(item, this.#data[index]);
+            }
+        }
+    }
+
     #loadElements() {
         const height = this.offsetHeight;
         const visibleRange = this.#sizeManager.getVisibleRange(0, height);
         const totalHeight = this.#sizeManager.totalSize;
 
         if (height <= totalHeight) {
-            this.#createElements(visibleRange);
+            this.#createElements(visibleRange, totalHeight);
         }
     }
 
-    #createElements(visibleRange) {
+    #createElements(visibleRange, markerY) {
         const fragment = document.createDocumentFragment();
         const { start, end } = visibleRange;
 
+        let top = 0;
         for (let i = start; i <= end; i++) {
             const item = this.#data[i];
-            const element = this.#template.content.cloneNode(true);
+            const element = this.#template.content.cloneNode(true).firstElementChild;
+            element.style.position = "absolute";
+            element.style.translate = `0px ${top}px`;
             this.#inflateFn(element, item);
             fragment.appendChild(element);
+
+            this.#listItems.push(element);
+            top += this.#sizeManager.at(i);
         }
 
-        const container = this.shadowRoot.querySelector("#container");
-        container.innerHTML = "";
-        container.appendChild(fragment);
+        this.#ul.innerHTML = "";
+        this.#ul.appendChild(fragment);
+
+        this.#marker = createMarker(markerY);
+        this.#ul.appendChild(this.#marker);
     }
 
     /**
@@ -93,3 +135,13 @@ export class VirtualList extends HTMLElement {
 
 // Register custom element
 customElements.define(VirtualList.name, VirtualList);
+
+function createMarker(y) {
+    const marker = document.createElement("div");
+    marker.style.position = "absolute";
+    marker.style.width = "1px";
+    marker.style.height = "1px";
+    marker.style.visibility = "hidden";
+    marker.style.translate = `0px ${y}px`;
+    return marker;
+}
