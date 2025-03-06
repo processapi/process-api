@@ -13,6 +13,10 @@ export class VirtualList extends HTMLElement {
     #scrollTop = 0;
     #marker;
     #listItems = [];
+    #visibleRange;
+    #animating = false;
+    #animateHandler = this.#animate.bind(this);
+    #lastTime = 0;
 
     // item related properties
     #template;
@@ -58,15 +62,20 @@ export class VirtualList extends HTMLElement {
         this.#listItems = null;
         this.#marker = null;
         this.#onULScrollHandler = null;
+        this.#visibleRange = null;
+        this.#animateHandler = null;
+        this.#lastTime = null;
     }
     
-    #onULScroll(event) {
-        this.#scrollTop = event.target.scrollTop;
-        const visibleRange = this.#sizeManager.getVisibleRange(this.#scrollTop, this.offsetHeight);
+    #animate() {
+        const deltaTime = performance.now() - this.#lastTime;
+        if (deltaTime > 200) {
+            this.#animating = false;
+        }
 
         for (let i = 0; i < this.#listItems.length; i++) {
             const item = this.#listItems[i];
-            const index = visibleRange.start + i;
+            const index = this.#visibleRange.start + i;
             const top = this.#sizeManager.cumulative(index);
             item.style.translate = `0px ${top}px`;
 
@@ -74,6 +83,21 @@ export class VirtualList extends HTMLElement {
             if (data != null) {
                 this.#inflateFn(item, this.#data[index]);
             }
+        }
+
+        if (this.#animating) {
+            requestAnimationFrame(this.#animateHandler);
+        }
+    }
+
+    #onULScroll(event) {
+        this.#lastTime = performance.now();
+        this.#scrollTop = event.target.scrollTop;
+        this.#visibleRange = this.#sizeManager.getVisibleRange(this.#scrollTop, this.offsetHeight);
+
+        if (this.#animating === false) {
+            this.#animating = true;
+            this.#animateHandler();
         }
     }
 
