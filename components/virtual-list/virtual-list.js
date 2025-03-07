@@ -18,6 +18,13 @@ export class VirtualList extends HTMLElement {
     #animateHandler = this.#animate.bind(this);
     #lastTime = 0;
 
+    // input properties
+    #onClickHandler = this.#onClick.bind(this);
+    #onDoubleClickHandler = this.#onDoubleClick.bind(this);
+    #onKeyDownHandler = this.#onKeyDown.bind(this);
+    #selected;
+    #selectedIndex;
+
     // item related properties
     #template;
     #inflateFn;
@@ -44,6 +51,9 @@ export class VirtualList extends HTMLElement {
         // Initialize the virtual list here
         this.#ul = this.shadowRoot.querySelector("ul");
         this.#ul.addEventListener("scroll", this.#onULScrollHandler);
+        this.#ul.addEventListener("click", this.#onClickHandler);
+        this.#ul.addEventListener("dblclick", this.#onDoubleClickHandler);
+        this.#ul.addEventListener("keydown", this.#onKeyDownHandler);
         await ComponentModule.ready({element: this});
     }
 
@@ -52,6 +62,9 @@ export class VirtualList extends HTMLElement {
      */
     disconnectedCallback() {
         this.#ul.removeEventListener("scroll", this.#onULScrollHandler);
+        this.#ul.removeEventListener("click", this.#onClickHandler);
+        this.#ul.removeEventListener("dblclick", this.#onDoubleClickHandler);
+        this.#ul.removeEventListener("keydown", this.#onKeyDownHandler);
 
         // Clean up resources here
         this.#ul = null;
@@ -65,6 +78,8 @@ export class VirtualList extends HTMLElement {
         this.#visibleRange = null;
         this.#animateHandler = null;
         this.#lastTime = null;
+        this.#selected = null;
+        this.#selectedIndex = null;
     }
     
     #animate() {
@@ -75,15 +90,22 @@ export class VirtualList extends HTMLElement {
 
         let top = this.#sizeManager.top(this.#visibleRange.start);
         for (let i = 0; i < this.#listItems.length; i++) {
-            const item = this.#listItems[i];
-            item.style.translate = `0px ${top}px`;
+            const element = this.#listItems[i];
+            element.style.translate = `0px ${top}px`;
+            element.removeAttribute("aria-selected");
 
             const index = this.#visibleRange.start + i;
             top += this.#sizeManager.at(index);
+            element.dataset.index = index;
+
+            if (this.#selectedIndex === index) {
+                element.setAttribute("aria-selected", "true");
+                this.#selected = element;
+            }
 
             const data = this.#data[index];
             if (data != null) {
-                this.#inflateFn(item, this.#data[index]);
+                this.#inflateFn(element, this.#data[index]);
             }
         }
 
@@ -127,6 +149,7 @@ export class VirtualList extends HTMLElement {
             const index = this.#visibleRange.start + i;
             top += this.#sizeManager.at(index);
 
+            element.dataset.index = index;
             this.#inflateFn(element, item);
             fragment.appendChild(element);
 
@@ -160,6 +183,39 @@ export class VirtualList extends HTMLElement {
         this.#sizeManager = new SizesManager(this.#data.length, height);
         console.log(this.#sizeManager);
         IdleModule.perform({ tasks: [this.#loadElements.bind(this)] });
+    }
+
+    #setSelected(li, notify = false) {
+        if (this.#selected != null) {
+            this.#selected.removeAttribute("aria-selected");
+        }
+
+        this.#selected = li;
+        this.#selected.setAttribute("aria-selected", "true");
+        this.#selectedIndex = parseInt(li.dataset.index);
+        const selectedData = this.#data[this.#selectedIndex];
+
+        if (notify) {
+            this.dispatchEvent(new CustomEvent("item-selected", { detail: selectedData }));
+        }
+    }
+
+    #onClick(event) {
+        // Handle click event
+        const target = event.composedPath()[0];
+        const li = target.closest("li");
+        this.#setSelected(li, true);
+    }
+
+    #onDoubleClick(event) {
+        // Handle double click event
+        const target = event.composedPath()[0];
+        const li = target.closest("li");
+        this.dispatchEvent(new CustomEvent("item-dbclick", { detail: li }));
+    }
+
+    #onKeyDown(event) {
+        // Handle key down event
     }
 }
 

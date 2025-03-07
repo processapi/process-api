@@ -8,6 +8,8 @@ class CanvasWorker {
         this.#width = width;
         this.#height = height;
         this.#dpr = dpr;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
         this.#ctx = canvas.getContext("2d");
         this.#ctx.scale(dpr, dpr);
     }

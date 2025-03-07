@@ -21,6 +21,12 @@ ul {
 li {
   box-sizing: border-box;
   will-change: transform;
+  width: 100%;
+}
+
+li[aria-selected="true"] {
+  background: var(--cl-selected-background);
+  color: var(--cl-selected);
 }
 
 .marker {
