@@ -229,9 +229,17 @@ export class VirtualList extends HTMLElement {
         
         if (this.#selectedIndex < 0) {
             this.#selectedIndex = 0;
+            return;
         }
-        
-        this.#ul.scrollTop -= this.#sizeManager.at(this.#selectedIndex);
+
+        if (this.#visibleRange.start === 0) {
+            const li = this.#selected.previousElementSibling;
+            this.#setSelected(li);
+            this.#ul.scrollTop = 0;
+        }
+        else {
+            this.#ul.scrollTop -= this.#sizeManager.at(this.#selectedIndex);
+        }
     }
 
     #moveDown() {
