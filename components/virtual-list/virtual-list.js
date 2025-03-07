@@ -24,10 +24,19 @@ export class VirtualList extends HTMLElement {
     #onKeyDownHandler = this.#onKeyDown.bind(this);
     #selected;
     #selectedIndex;
-
     // item related properties
     #template;
     #inflateFn;
+
+    #inputMap = {
+        "ArrowUp"   : this.#moveUp,
+        "ArrowDown" : this.#moveDown,
+        "PageUp"    : this.#pageUp,
+        "PageDown"  : this.#pageDown,
+        "Home"      : this.#moveToStart,
+        "End"       : this.#moveToEnd,
+        "Enter"     : this.#onDoubleClick
+    }
 
     // data related properties
     #sizeManager;
@@ -50,6 +59,7 @@ export class VirtualList extends HTMLElement {
     async connectedCallback() {
         // Initialize the virtual list here
         this.#ul = this.shadowRoot.querySelector("ul");
+        this.#ul.tabIndex = 0;
         this.#ul.addEventListener("scroll", this.#onULScrollHandler);
         this.#ul.addEventListener("click", this.#onClickHandler);
         this.#ul.addEventListener("dblclick", this.#onDoubleClickHandler);
@@ -214,8 +224,61 @@ export class VirtualList extends HTMLElement {
         this.dispatchEvent(new CustomEvent("item-dbclick", { detail: li }));
     }
 
+    #moveUp() {
+        this.#selectedIndex--;
+        
+        if (this.#selectedIndex < 0) {
+            this.#selectedIndex = 0;
+        }
+        
+        this.#ul.scrollTop -= this.#sizeManager.at(this.#selectedIndex);
+    }
+
+    #moveDown() {
+        this.#selectedIndex++;
+
+        const lastIndex = this.#sizeManager.length - 1;
+
+        if (this.#selectedIndex > lastIndex) {
+            this.#selectedIndex = lastIndex;
+            return;
+        }
+
+        if (this.#visibleRange.end === lastIndex) {
+            const li = this.#selected.nextElementSibling;
+            this.#setSelected(li);
+            this.#ul.scrollTop = this.#ul.scrollHeight;
+        }
+        else {
+            this.#ul.scrollTop += this.#sizeManager.at(this.#selectedIndex);
+        }
+    }
+
+    #pageUp() {
+
+    }
+
+    #pageDown() {
+
+    }
+
+    #moveToStart() {
+        
+    }
+
+    #moveToEnd() {
+
+    }
+
     #onKeyDown(event) {
-        // Handle key down event
+        const fn = this.#inputMap[event.key];
+
+        if (fn != null) {
+            fn.call(this, event);
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
     }
 }
 
