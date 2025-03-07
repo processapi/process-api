@@ -191,7 +191,6 @@ export class VirtualList extends HTMLElement {
         // Update the virtual list with new items
         this.#data.push(...items);
         this.#sizeManager = new SizesManager(this.#data.length, height);
-        console.log(this.#sizeManager);
         IdleModule.perform({ tasks: [this.#loadElements.bind(this)] });
     }
 
@@ -224,7 +223,7 @@ export class VirtualList extends HTMLElement {
         this.dispatchEvent(new CustomEvent("item-dbclick", { detail: li }));
     }
 
-    #moveUp() {
+    #moveUp(event) {
         this.#selectedIndex--;
         
         if (this.#selectedIndex < 0) {
@@ -240,9 +239,12 @@ export class VirtualList extends HTMLElement {
         else {
             this.#ul.scrollTop -= this.#sizeManager.at(this.#selectedIndex);
         }
+
+        event.preventDefault();
+        event.stopPropagation();
     }
 
-    #moveDown() {
+    #moveDown(event) {
         this.#selectedIndex++;
 
         const lastIndex = this.#sizeManager.length - 1;
@@ -260,10 +262,12 @@ export class VirtualList extends HTMLElement {
         else {
             this.#ul.scrollTop += this.#sizeManager.at(this.#selectedIndex);
         }
+
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     #pageUp() {
-
     }
 
     #pageDown() {
@@ -282,11 +286,8 @@ export class VirtualList extends HTMLElement {
         const fn = this.#inputMap[event.key];
 
         if (fn != null) {
-            fn.call(this, event);
+            fn.call(this, event);        
         }
-
-        event.preventDefault();
-        event.stopPropagation();
     }
 }
 
